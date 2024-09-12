@@ -6,5 +6,5 @@
 
 * 支持 `Content` 组件 `Descriptions` 组件的组合
 * 支持 `Collapse` 组件组合
-* `InfoPage.Part`、`InfoPage.Collapse` 需要放在 `InfoPage` 之下，`Content`、`Descriptions` 需要放在 `InfoPage.Part` 之下
+* `InfoPage.Part`、`InfoPage.Collapse` 需要放在 `InfoPage` 之下，`Content`、`Descriptions` 可以任意组合
 
