@@ -1,3 +1,27 @@
+
+# info-page
+
+
+### 描述
+
+一般用在复杂的详情展示页面，InfoPage提供了一个标准的展示信息的格式
+
+
+### 安装
+
+```shell
+npm i --save @kne/info-page
+```
+
+### 示例
+
+#### 示例代码
+
+- 这里填写示例标题
+- 这里填写示例说明
+- _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),antd(antd)
+
+```jsx
 const {default: InfoPage} = _InfoPage;
 const {Button} = antd;
 
@@ -30,3 +54,13 @@ const BaseExample = () => {
 };
 
 render(<BaseExample />);
+
+```
+
+
+### API
+
+| 属性名 | 说明 | 类型 | 默认值 |
+|-----|----|----|-----|
+|     |    |    |     |
+
