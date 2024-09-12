@@ -9,6 +9,12 @@
         {
           "name": "_InfoPage",
           "packageName": "@kne/current-lib_info-page"
+        },{
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
         }
       ]
     }
