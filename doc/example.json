@@ -17,6 +17,23 @@
           "packageName": "antd"
         }
       ]
+    },
+    {
+      "title": "这里填写示例标题",
+      "description": "这里填写示例说明",
+      "code": "./content.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },{
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
     }
   ]
 }
