@@ -39,12 +39,7 @@
     :global(.ant-card-head-title) > .part-title {
       display: inline-block;
       border-radius: 12px;
-      background: rgba(
-        var(--primary-color-red),
-        var(--primary-color-green),
-        var(--primary-color-blue),
-        0.06
-      );
+      background: var(--primary-color-06);
       color: var(--primary-color);
       font-size: var(--font-size-small);
       line-height: 16px;
@@ -127,7 +122,7 @@
   padding: 0;
 
   &:before {
-    content: "";
+    content: '';
     display: inline-block;
     width: 3px;
     height: 14px;
