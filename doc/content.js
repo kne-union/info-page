@@ -15,6 +15,7 @@ const defaultData = [
 const BaseExample = () => {
   const [listProps, setListProps] = useState({
     col: 1,
+    size: 'default',
     labelAlign: 'left'
   });
   const onChange = (e, name) => {
@@ -35,6 +36,10 @@ const BaseExample = () => {
         <Radio.Button value='right'>右对齐</Radio.Button>
         <Radio.Button value='auto'>自适应</Radio.Button>
       </Radio.Group>
+      <Radio.Group onChange={(e) => onChange(e, 'size')} value={listProps.size}>
+        <Radio.Button value='default'>默认</Radio.Button>
+        <Radio.Button value='small'>small</Radio.Button>
+      </Radio.Group>
       <Content
         {...listProps}
         list={[
@@ -47,7 +52,6 @@ const BaseExample = () => {
           }
         ]}
         itemRender={(inner, other) => {
-          console.log(other);
           return other?.index === 2 ? '此处内容额外自定义' : inner;
         }}
       />
