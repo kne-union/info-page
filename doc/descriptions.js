@@ -51,11 +51,8 @@ const BaseExample = () => {
         ],
         [{ label: "附件", content: "附件名称" }],
         [
-          { label: "操作时间", content: "2022-08-01 16:32" },
-          {
-            label: "操作人",
-            content: "西西歪",
-          },
+          {label: "操作时间", content: "2022-08-01 16:32"},
+          {label: "操作人", content: "西西歪", display: false},
         ],
         [
           {

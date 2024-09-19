@@ -45,7 +45,7 @@ const Content = ({ list, labelAlign, col, gutter, className, size, itemRender })
       {list
         .filter(item => {
           if (typeof item.display === 'function') {
-            return item.display();
+            return item.display(item, list);
           }
           return item.display !== false;
         })
