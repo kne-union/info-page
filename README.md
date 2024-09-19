@@ -84,19 +84,9 @@ render(<BaseExample />);
 - _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),antd(antd)
 
 ```jsx
-const {default: InfoPage, Content} = _InfoPage;
+const { Content } = _InfoPage;
 const {Space, Radio} = antd;
 const {useState} = React;
-
-const defaultData = [
-  {label: '标题', content: '内容'},
-  {label: '标题标题', content: '内容内容'},
-  {label: '标题标', content: '内容内容内容内容内容内容内容内容内容内容'},
-  {
-    label: '标题标题标题',
-    content: '内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容'
-  }
-]
 
 const BaseExample = () => {
   const [listProps, setListProps] = useState({
