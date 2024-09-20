@@ -1,6 +1,6 @@
 {
   "name": "@kne/info-page",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0",
   "description": "一般用在复杂的详情展示页面，InfoPage提供了一个标准的展示信息的格式",
   "syntax": {
     "esmodules": true

@@ -2,9 +2,43 @@
   "isFull": false,
   "list": [
     {
-      "title": "这里填写示例标题",
+      "title": "InfoPage",
       "description": "这里填写示例说明",
       "code": "./base.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },{
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "Content",
+      "description": "展示了一个基本内容",
+      "code": "./content.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },{
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "Descriptions",
+      "description": "展示一个信息详情",
+      "code": "./descriptions.js",
       "scope": [
         {
           "name": "_InfoPage",
