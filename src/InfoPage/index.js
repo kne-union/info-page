@@ -1,34 +1,23 @@
-import {Card, Space} from "antd";
-import classnames from "classnames";
-import React from "react";
+import { Card, Space, Flex } from 'antd';
+import classnames from 'classnames';
+import React from 'react';
 
-import Collapse from "./Collapse";
-import style from "./style.module.scss";
+import Collapse from './Collapse';
+import style from './style.module.scss';
 
-const Part = ({className, title, subtitle, extra, children, ...props}) => {
+const Part = ({ className, title, subtitle, extra, children, ...props }) => {
   return (
     <Card
-      className={classnames(style["part"], "part", className, {
-        "no-title": !title,
-        [style["no-title"]]: !title,
+      className={classnames(style['part'], 'part', className, {
+        'no-title': !title,
+        [style['no-title']]: !title
       })}
       bordered={false}
       title={
         title && (
           <>
-            <div className={classnames("part-title", style["part-title"])}>
-              {title}
-            </div>
-            {subtitle && (
-              <div
-                className={classnames(
-                  "part-title-sub",
-                  style["part-title-sub"]
-                )}
-              >
-                {subtitle}
-              </div>
-            )}
+            <div className={classnames('part-title', style['part-title'])}>{title}</div>
+            {subtitle && <div className={classnames('part-title-sub', style['part-title-sub'])}>{subtitle}</div>}
           </>
         )
       }
@@ -40,11 +29,11 @@ const Part = ({className, title, subtitle, extra, children, ...props}) => {
   );
 };
 
-const InfoPage = ({className, children, ...props}) => {
+const InfoPage = ({ className, children, ...props }) => {
   return (
-    <Space {...props} className={className} direction="vertical" size={24}>
+    <Flex {...props} className={className} vertical gap={24}>
       {children}
-    </Space>
+    </Flex>
   );
 };
 
