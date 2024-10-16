@@ -250,9 +250,9 @@ const BaseExample = () => {
   }, {
     name: 'count', title: '数量', format: 'number'
   }, {
-    name: 'count2', title: '百分比', format: 'number-percent'
+    name: 'count2', title: '百分比', format: 'number-percent money-百分比'
   }, {
-    name: 'count3', title: '万元', format: 'number--10000'
+    name: 'count3', title: '万元', format: 'number--10000', render: (value) => `${value}万元`
   }, {
     name: 'empty', title: '空值显示'
   }, {
