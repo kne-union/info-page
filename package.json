@@ -1,6 +1,6 @@
 {
   "name": "@kne/info-page",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "一般用在复杂的详情展示页面，InfoPage提供了一个标准的展示信息的格式",
   "syntax": {
     "esmodules": true
@@ -84,5 +84,9 @@
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "@kne/is-empty": "^1.0.1",
+    "dayjs": "^1.11.13"
   }
 }
