@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { isEmpty } from '@kne/is-empty';
 import { Row, Col } from 'antd';
 import get from 'lodash/get';
@@ -35,6 +35,10 @@ const defaultFormat = {
         roundingMode
       }
     ).format(value / unit);
+  },
+  money: (value, { args }) => {
+    const unit = args[0] || '元';
+    return `${value}${unit}`;
   }
 };
 
@@ -51,8 +55,6 @@ const TableView = props => {
     props
   );
 
-  const totalColWidth = useRef(0);
-
   const renderColumns = useMemo(() => {
     return boxComputed(
       columns
@@ -63,9 +65,15 @@ const TableView = props => {
               return item.format(value, { dataSource, column: item });
             }
             if (typeof item.format === 'string') {
-              const [name, ...args] = item.format.split('-');
-              if (typeof defaultFormat[name] === 'function') {
-                return defaultFormat[name](value, { dataSource, column: item, args });
+              const formatList = item.format.split(' ').filter(item => !!item);
+              if (formatList.length > 0) {
+                return formatList.reduce((value, format) => {
+                  const [name, ...args] = format.split('-');
+                  if (typeof defaultFormat[name] === 'function') {
+                    return defaultFormat[name](value, { dataSource, column: item, args });
+                  }
+                  return value;
+                }, value);
               }
             }
             return value;
@@ -115,75 +123,13 @@ const TableView = props => {
               >
                 {item.title}
               </Col>
-              <Col className={classnames(style['table-view-content'], 'table-view-content')}>{item.isEmpty ? item.placeholder || placeholder : item.value}</Col>
+              <Col className={classnames(style['table-view-content'], 'table-view-content')}>{item.isEmpty ? item.placeholder || placeholder : typeof item.render === 'function' ? item.render(item.value) : item.value}</Col>
             </Row>
           </Col>
         );
       })}
     </Row>
   );
-
-  /*return <Row className={classnames(style['table-view'], className)}>
-    {columns.map((item, index) => {
-      const itemValue = typeof item.getValueOf === 'function' ? item.getValueOf(dataSource, { column: item }) : get(dataSource, item.name);
-      const displayValue = ((value) => {
-        if (typeof item.format === 'function') {
-          return item.format(value, { dataSource, column: item });
-        }
-        if (typeof item.format === 'string') {
-          const [name, ...args] = item.format.split('-');
-          if (typeof defaultFormat[name] === 'function') {
-            return defaultFormat[name](value, { dataSource, column: item, args });
-          }
-        }
-        return value;
-      })(itemValue);
-
-      const itemIsEmpty = (item.valueIsEmpty || valueIsEmpty)(itemValue);
-
-      if (item.display === false || (typeof item.display === 'function' && item.display(itemValue, {
-        dataSource, column: item
-      }) === false)) {
-        return null;
-      }
-
-      if (!(item.hasOwnProperty('emptyIsPlaceholder') ? item.emptyIsPlaceholder : emptyIsPlaceholder) && itemIsEmpty) {
-        return null;
-      }
-      const isLast = index === columns.length - 1;
-      const legacy = 24 - totalColWidth.current % 24;
-      const currentSpan = (() => {
-        if (item.block === true) {
-          return 24;
-        }
-
-        if (isLast) {
-          return legacy;
-        }
-
-        const itemSpan = 24 / (item.col || col);
-
-        //如果下一条放不下，则由当前补齐
-
-
-        return itemSpan;
-      })();
-      totalColWidth.current = totalColWidth.current + currentSpan;
-      const colWidth = currentSpan / 24;
-
-      return <Col className={classnames(style['table-view-col'], 'table-view-col')} key={index} style={{
-        '--col-width': `${100 * colWidth}%`
-      }}>
-        <Row className={classnames(style['table-view-item'], 'table-view-item')} wrap={false}>
-          <Col className={classnames(style['table-view-label'], 'table-view-label')} style={{
-            '--col-label-width': isLast && legacy > 0 ? `${100 / (3 * 24 / legacy)}%` : `${100 / (3 * currentSpan * col / 24)}%`
-          }}>{item.title}</Col>
-          <Col
-            className={classnames(style['table-view-content'], 'table-view-content')}>{itemIsEmpty ? (item.placeholder || placeholder) : displayValue}</Col>
-        </Row>
-      </Col>;
-    })}
-  </Row>;*/
 };
 
 export default TableView;
