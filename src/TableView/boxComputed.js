@@ -14,7 +14,7 @@ const boxComputed = (columns, col) => {
       box.push([]);
     }
     let currentLine = box[box.length - 1];
-    const legacy =
+    let legacy =
       24 -
       currentLine.reduce((a, b) => {
         return a + b.span;
@@ -22,6 +22,7 @@ const boxComputed = (columns, col) => {
     if (legacy < currentSpan) {
       currentLine[currentLine.length - 1].span += legacy;
       box.push([]);
+      legacy = 24;
       currentLine = box[box.length - 1];
     }
     const isLast = index === columns.length - 1;
