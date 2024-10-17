@@ -16,6 +16,20 @@ const defaultFormat = {
     const template = args[0] || 'YYYY-MM-DD HH:mm:ss';
     return dayjs(value).format(template);
   },
+  dateRange: (value, { args }) => {
+    const template = args[0] || 'YYYY-MM-DD',
+      allowNull = args[1];
+    if (!isEmpty(value[0]) && !isEmpty(value[1])) {
+      return `${dayjs(value[0]).format(template)}~${dayjs(value[1]).format(template)}`;
+    }
+    if (allowNull === 'allow' && !isEmpty(value[0])) {
+      return `${dayjs(value[0]).format(template)}以后`;
+    }
+    if (allowNull === 'allow' && !isEmpty(value[1])) {
+      return `${dayjs(value[1]).format(template)}以前`;
+    }
+    return '';
+  },
   boolean: value => {
     if (value) {
       return '是';
@@ -105,11 +119,11 @@ const TableView = props => {
 
   return (
     <Row className={classnames(style['table-view'], className)}>
-      {renderColumns.map(item => {
+      {renderColumns.map((item, index) => {
         return (
           <Col
             className={classnames(style['table-view-col'], 'table-view-col')}
-            key={item.name}
+            key={`${item.name}-${index}`}
             style={{
               '--col-width': `${(100 * item.span) / 24}%`
             }}
@@ -123,7 +137,22 @@ const TableView = props => {
               >
                 {item.title}
               </Col>
-              <Col className={classnames(style['table-view-content'], 'table-view-content')}>{item.isEmpty ? item.placeholder || placeholder : typeof item.render === 'function' ? item.render(item.value) : item.value}</Col>
+              <Col className={classnames(style['table-view-content'], 'table-view-content')}>
+                {item.isEmpty
+                  ? typeof item.renderPlaceholder === 'function'
+                    ? item.renderPlaceholder({
+                        column: item,
+                        dataSource,
+                        placeholder
+                      })
+                    : item.placeholder || placeholder
+                  : typeof item.render === 'function'
+                    ? item.render(item.value, {
+                        column: item,
+                        dataSource
+                      })
+                    : item.value}
+              </Col>
             </Row>
           </Col>
         );
