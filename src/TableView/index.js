@@ -1,60 +1,11 @@
 import React, { useMemo } from 'react';
 import { isEmpty } from '@kne/is-empty';
-import { Row, Col } from 'antd';
+import { Col, Row } from 'antd';
 import get from 'lodash/get';
-import dayjs from 'dayjs';
 import classnames from 'classnames';
 import boxComputed from './boxComputed';
 import style from './style.module.scss';
-
-const defaultFormat = {
-  date: (value, { args }) => {
-    const template = args[0] || 'YYYY-MM-DD';
-    return dayjs(value).format(template);
-  },
-  datetime: (value, { args }) => {
-    const template = args[0] || 'YYYY-MM-DD HH:mm:ss';
-    return dayjs(value).format(template);
-  },
-  dateRange: (value, { args }) => {
-    const template = args[0] || 'YYYY-MM-DD',
-      allowNull = args[1];
-    if (!isEmpty(value[0]) && !isEmpty(value[1])) {
-      return `${dayjs(value[0]).format(template)}~${dayjs(value[1]).format(template)}`;
-    }
-    if (allowNull === 'allow' && !isEmpty(value[0])) {
-      return `${dayjs(value[0]).format(template)}以后`;
-    }
-    if (allowNull === 'allow' && !isEmpty(value[1])) {
-      return `${dayjs(value[1]).format(template)}以前`;
-    }
-    return '';
-  },
-  boolean: value => {
-    if (value) {
-      return '是';
-    }
-    return '否';
-  },
-  number: (value, { args }) => {
-    const style = args[0] || 'decimal',
-      unit = args[1] || 1,
-      maximumFractionDigits = args[2] || 2,
-      roundingMode = args[3] || 'halfExpand';
-    return new Intl.NumberFormat(
-      {},
-      {
-        style,
-        maximumFractionDigits,
-        roundingMode
-      }
-    ).format(value / unit);
-  },
-  money: (value, { args }) => {
-    const unit = args[0] || '元';
-    return `${value}${unit}`;
-  }
-};
+import { formatView } from '../defaultFormat';
 
 const TableView = props => {
   const { dataSource, columns, col, valueIsEmpty, emptyIsPlaceholder, placeholder, className } = Object.assign(
@@ -79,15 +30,9 @@ const TableView = props => {
               return item.format(value, { dataSource, column: item });
             }
             if (typeof item.format === 'string') {
-              const formatList = item.format.split(' ').filter(item => !!item);
-              if (formatList.length > 0) {
-                return formatList.reduce((value, format) => {
-                  const [name, ...args] = format.split('-');
-                  if (typeof defaultFormat[name] === 'function') {
-                    return defaultFormat[name](value, { dataSource, column: item, args });
-                  }
-                  return value;
-                }, value);
+              const formatValue = formatView(value, item.format, { dataSource, column: item });
+              if (formatValue) {
+                return formatValue;
               }
             }
             return value;
