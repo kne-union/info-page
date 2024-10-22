@@ -1,0 +1,92 @@
+import React from 'react';
+import { Checkbox, Col, Row } from 'antd';
+import classnames from 'classnames';
+import get from 'lodash/get';
+import Label from '../Label';
+import style from './style.module.scss';
+import { CheckOutlined } from '@ant-design/icons';
+
+const Header = p => {
+  const { dataSource, columns, defaultSpan, rowKey, rowSelection, colsSize, setColsSize, sticky } = Object.assign(
+    {},
+    {
+      rowKey: 'id'
+    },
+    p
+  );
+  return (
+    <Row
+      wrap={false}
+      className={classnames(
+        style['header'],
+        {
+          [style['sticky']]: sticky
+        },
+        'info-page-table-header'
+      )}
+    >
+      {rowSelection && rowSelection.type === 'checkbox' && (
+        <Col className={classnames(style['col'], 'info-page-table-col')}>
+          <span className={style['col-content']}>
+            {rowSelection.allowSelectedAll ? (
+              (() => {
+                const checkedAll = rowSelection.isSelectedAll || dataSource.every(item => rowSelection.selectedRowKeys && rowSelection.selectedRowKeys.indexOf(get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey)) > -1);
+                return (
+                  <Checkbox
+                    checked={checkedAll}
+                    indeterminate={rowSelection.selectedRowKeys && rowSelection.selectedRowKeys.length > 0 && !checkedAll}
+                    onChange={e => {
+                      const checked = e.target.checked;
+                      if (!checked) {
+                        typeof rowSelection.onIsSelectAllChange === 'function' ? rowSelection.onIsSelectAllChange(false) : rowSelection.onChange([]);
+                      } else {
+                        typeof rowSelection.onIsSelectAllChange === 'function'
+                          ? rowSelection.onIsSelectAllChange(true)
+                          : rowSelection.onChange(
+                              dataSource.map(item => {
+                                return get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey);
+                              })
+                            );
+                      }
+                    }}
+                  />
+                );
+              })()
+            ) : (
+              <Checkbox style={{ visibility: 'hidden' }} />
+            )}
+          </span>
+        </Col>
+      )}
+      <Col flex={1}>
+        <Row wrap={false}>
+          {columns.map(column => {
+            const { name, title, span, width } = column;
+            return (
+              <Col
+                key={name}
+                style={{
+                  '--col-width': `${colsSize[name] || 0}px`,
+                  '--col-span': `${span || defaultSpan}`
+                }}
+                className={classnames(style['col'], 'info-page-table-col')}
+              >
+                <Label
+                  className={style['col-content']}
+                  onChange={size => {
+                    setColsSize(value => Object.assign({}, value, { [name]: Math.max(size.width, width || 0) }));
+                  }}
+                >
+                  {title}
+                </Label>
+              </Col>
+            );
+          })}
+        </Row>
+      </Col>
+      {rowSelection && rowSelection.type !== 'checkbox' && <Col className={classnames(style['col'], style['single-checked'], 'info-page-table-col')}></Col>}
+    </Row>
+  );
+};
+
+export default Header;

@@ -1,108 +1,164 @@
-import React, { useMemo } from 'react';
-import { isEmpty } from '@kne/is-empty';
-import { Col, Row } from 'antd';
-import get from 'lodash/get';
+import React, { useMemo, useState } from 'react';
+import Header from './Header';
+import { Checkbox, Col, Empty, Row } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
-import boxComputed from './boxComputed';
+import get from 'lodash/get';
+import formatView from '../formatView';
+import { isEmpty } from '@kne/is-empty';
 import style from './style.module.scss';
-import { formatView } from '../defaultFormat';
 
-const TableView = props => {
-  const { dataSource, columns, col, valueIsEmpty, emptyIsPlaceholder, placeholder, className } = Object.assign(
+const TableView = p => {
+  const [colsSize, setColsSize] = useState({});
+  const props = Object.assign(
+    {},
     {
-      dataSource: {}, //数据
-      columns: [], //列定义
-      col: 2, //展示列数
+      rowKey: 'id',
       valueIsEmpty: isEmpty,
       placeholder: '-',
-      emptyIsPlaceholder: true
+      emptyIsPlaceholder: true,
+      empty: <Empty />
     },
-    props
+    p
   );
+  const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect } = props;
 
-  const renderColumns = useMemo(() => {
-    return boxComputed(
-      columns
-        .map(item => {
-          const itemValue = typeof item.getValueOf === 'function' ? item.getValueOf(dataSource, { column: item }) : get(dataSource, item.name);
-          const displayValue = (value => {
-            if (typeof item.format === 'function') {
-              return item.format(value, { dataSource, column: item });
-            }
-            if (typeof item.format === 'string') {
-              const formatValue = formatView(value, item.format, { dataSource, column: item });
-              if (formatValue) {
-                return formatValue;
-              }
-            }
-            return value;
-          })(itemValue);
+  const defaultSpan = useMemo(() => {
+    const assignedSpan = columns.reduce((a, b) => {
+      return a + (b.span || 0);
+    }, 0);
+    const undistributedColCount = columns.filter(item => !item.span).length;
 
-          const itemIsEmpty = (item.valueIsEmpty || valueIsEmpty)(itemValue);
+    return Math.round(Math.max(24 - assignedSpan, 0) / undistributedColCount);
+  }, [columns]);
 
-          if (
-            item.display === false ||
-            (typeof item.display === 'function' &&
-              item.display(itemValue, {
-                dataSource,
-                column: item
-              }) === false)
-          ) {
-            return null;
-          }
+  const header = <Header {...props} defaultSpan={defaultSpan} colsSize={colsSize} setColsSize={setColsSize} />;
 
-          if (!(item.hasOwnProperty('emptyIsPlaceholder') ? item.emptyIsPlaceholder : emptyIsPlaceholder) && itemIsEmpty) {
-            return null;
-          }
-
-          return Object.assign({}, item, { isEmpty: itemIsEmpty, value: displayValue });
-        })
-        .filter(item => !!item),
-      col
-    );
-  }, [columns, col]);
-
-  return (
-    <Row className={classnames(style['table-view'], className)}>
-      {renderColumns.map((item, index) => {
+  const body =
+    dataSource.length > 0 ? (
+      dataSource.map(item => {
+        const id = get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey);
+        const isChecked = rowSelection?.selectedRowKeys && rowSelection.selectedRowKeys.indexOf(id) > -1;
         return (
-          <Col
-            className={classnames(style['table-view-col'], 'table-view-col')}
-            key={`${item.name}-${index}`}
-            style={{
-              '--col-width': `${(100 * item.span) / 24}%`
+          <Row
+            wrap={false}
+            key={id}
+            className={classnames(style['body'], 'info-page-table-body', [
+              {
+                [style['is-selected-all']]: rowSelection?.isSelectedAll,
+                [style['is-selected']]: isChecked,
+                [style['is-disabled']]: item.disabled
+              }
+            ])}
+            onClick={() => {
+              if (item.disabled) {
+                return;
+              }
+              onRowSelect && onRowSelect(item, { columns, dataSource });
+              if (!rowSelection) {
+                return;
+              }
+              if (rowSelection.isSelectedAll) {
+                return;
+              }
+              if (rowSelection.type === 'checkbox') {
+                const selectedRowKeys = (rowSelection.selectedRowKeys || []).slice(0);
+                isChecked ? selectedRowKeys.splice(rowSelection.selectedRowKeys.indexOf(id), 1) : selectedRowKeys.push(id);
+                rowSelection.onChange(selectedRowKeys);
+              } else {
+                rowSelection.onChange(rowSelection.selectedRowKeys.length && rowSelection.selectedRowKeys[0] === id ? [] : [id]);
+              }
             }}
           >
-            <Row className={classnames(style['table-view-item'], 'table-view-item')} wrap={false}>
-              <Col
-                className={classnames(style['table-view-label'], 'table-view-label')}
-                style={{
-                  '--col-label-width': `${(100 * 8) / (col * item.span)}%`
-                }}
-              >
-                {item.title}
+            {rowSelection && rowSelection.type === 'checkbox' && (
+              <Col className={classnames(style['col'], 'info-page-table-col')}>
+                <span className={style['col-content']}>
+                  <Checkbox disabled={item.disabled || rowSelection.isSelectedAll} checked={rowSelection.isSelectedAll || isChecked} />
+                </span>
               </Col>
-              <Col className={classnames(style['table-view-content'], 'table-view-content')}>
-                {item.isEmpty
-                  ? typeof item.renderPlaceholder === 'function'
-                    ? item.renderPlaceholder({
-                        column: item,
-                        dataSource,
-                        placeholder
-                      })
-                    : item.placeholder || placeholder
-                  : typeof item.render === 'function'
-                    ? item.render(item.value, {
-                        column: item,
-                        dataSource
-                      })
-                    : item.value}
-              </Col>
-            </Row>
-          </Col>
+            )}
+            <Col flex={1}>
+              <Row wrap={false}>
+                {columns.map(column => {
+                  const { name, span } = column;
+                  const colItem = (item => {
+                    const itemValue =
+                      typeof item.getValueOf === 'function'
+                        ? item.getValueOf(item, {
+                            dataSource,
+                            columns,
+                            column,
+                            target: item
+                          })
+                        : get(item, column.name);
+
+                    const displayValue = (value => {
+                      if (typeof column.format === 'function') {
+                        return column.format(value, { dataSource, columns, column, target: item });
+                      }
+                      if (typeof column.format === 'string') {
+                        const formatValue = formatView(value, column.format, { dataSource, columns, column, target: item });
+                        if (formatValue) {
+                          return formatValue;
+                        }
+                      }
+                      return value;
+                    })(itemValue);
+
+                    const itemIsEmpty = (column.valueIsEmpty || valueIsEmpty)(itemValue);
+
+                    if (!(column.hasOwnProperty('emptyIsPlaceholder') ? column.emptyIsPlaceholder : emptyIsPlaceholder) && itemIsEmpty) {
+                      return null;
+                    }
+                    return Object.assign({}, column, { isEmpty: itemIsEmpty, value: displayValue });
+                  })(item);
+
+                  return (
+                    <Col
+                      key={name}
+                      style={{
+                        '--col-width': `${colsSize[name] || 0}px`,
+                        '--col-span': `${span || defaultSpan}`
+                      }}
+                      className={classnames(style['col'], 'info-page-table-col')}
+                    >
+                      <span className={style['col-content']}>
+                        {colItem.isEmpty
+                          ? typeof colItem.renderPlaceholder === 'function'
+                            ? colItem.renderPlaceholder({
+                                column,
+                                dataSource,
+                                columns,
+                                placeholder,
+                                target: item
+                              })
+                            : colItem.placeholder || placeholder
+                          : typeof colItem.render === 'function'
+                            ? colItem.render(colItem.value, {
+                                column,
+                                columns,
+                                dataSource,
+                                target: item
+                              })
+                            : colItem.value}
+                      </span>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Col>
+            {rowSelection && rowSelection.type !== 'checkbox' && <Col className={classnames(style['col'], style['single-checked'], 'info-page-table-col')}>{isChecked && <CheckOutlined />}</Col>}
+          </Row>
         );
-      })}
-    </Row>
+      })
+    ) : (
+      <div className={style['empty']}>{empty}</div>
+    );
+  return (
+    <div className={classnames(style['table'], 'info-page-table', className)}>
+      {header}
+      {body}
+    </div>
   );
 };
 
