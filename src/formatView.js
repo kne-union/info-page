@@ -24,8 +24,9 @@ export const defaultFormat = {
     }
     return '';
   },
-  boolean: value => {
-    if (value) {
+  boolean: (value, { args }) => {
+    const trueValue = args[0] || 'true';
+    if (value.toString() === trueValue) {
       return '是';
     }
     return '否';
