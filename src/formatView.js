@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { isEmpty } from '@kne/is-empty';
 
-const defaultFormat = {
+export const defaultFormat = {
   date: (value, { args }) => {
     const template = args[0] || 'YYYY-MM-DD';
     return dayjs(value).format(template);
@@ -50,7 +50,10 @@ const defaultFormat = {
   }
 };
 
-export const formatView = (value, format, context) => {
+const formatView = (value, format, context) => {
+  if (!format) {
+    return value;
+  }
   const formatList = format.split(' ').filter(item => !!item);
   if (formatList.length > 0) {
     return formatList.reduce((value, format) => {
@@ -63,4 +66,4 @@ export const formatView = (value, format, context) => {
   }
 };
 
-export default defaultFormat;
+export default formatView;

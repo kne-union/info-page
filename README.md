@@ -221,15 +221,15 @@ render(<BaseExample />);
 
 ```
 
-- TableView
+- CentralContent
 - 请尽量使用该组件代替Descriptions组件。该组件比Descriptions组件添加了数据格式化和灵活的空判断和自定义空展示，并且优化了排列，可以实现任何栅格大小的数据项复杂组合。实现了尾行优化，使你不必担心末尾项的宽度问题，程序会自动计算并占满该行。
 - _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),antd(antd)
 
 ```jsx
-const { TableView } = _InfoPage;
+const { CentralContent } = _InfoPage;
 
 const BaseExample = () => {
-  return (<TableView dataSource={{
+  return (<CentralContent dataSource={{
     id: 'RC00101',
     name: '张三',
     birthday: '2020-03-03',
@@ -263,9 +263,100 @@ const BaseExample = () => {
     name: 'description', title: '描述'
   }, {
     name: 'description2', title: '描述'
-  }, {
-    name: 'end', title: '尾行优化'
   }]} />);
+};
+
+render(<BaseExample />);
+
+```
+
+- TableView
+- 
+- _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),antd(antd)
+
+```jsx
+const { TableView } = _InfoPage;
+const { Flex } = antd;
+const { useState } = React;
+
+const dataSource = [{
+  id: 'RC00101',
+  name: '张三',
+  birthday: '2020-03-03',
+  addTime: new Date(),
+  count: 2000.1322,
+  count2: 0.01234565,
+  count3: 1234523,
+  description: `描述描述描述描述描述描述描述描述`
+}, {
+  id: 'RC00102',
+  name: '李四',
+  birthday: '2020-03-03',
+  addTime: new Date(),
+  count: 2000.1322,
+  count2: 0.01234565,
+  count3: 1234523,
+  description: `描述描述描述描述描述描述描述描述`
+}, {
+  id: 'RC00103',
+  name: '王五',
+  birthday: '2020-03-03',
+  addTime: new Date(),
+  count: 2000.1322,
+  count2: 0.01234565,
+  count3: 1234523,
+  description: `描述描述描述描述描述描述描述描述`
+}, {
+  id: 'RC00104',
+  name: '马七',
+  birthday: '2020-03-03',
+  addTime: new Date(),
+  count: 2000.1322,
+  count2: 0.01234565,
+  count3: 1234523,
+  description: `描述描述描述描述描述描述描述描述`
+}];
+
+const columns = [{
+  name: 'id', title: 'ID'
+}, {
+  name: 'name', title: '姓名'
+}, {
+  name: 'birthday', title: '出生日期', format: 'date'
+}, {
+  name: 'addTime', title: '添加时间', format: 'datetime'
+}, {
+  name: 'count', title: '数量', format: 'number'
+}, {
+  name: 'description', title: '描述', span: 10
+}];
+
+const WithCheckbox = () => {
+  const [selectKeys, setSelectKeys] = useState([]);
+  return <TableView dataSource={dataSource} columns={columns} rowSelection={{
+    type: 'checkbox', allowSelectedAll: true, selectedRowKeys: selectKeys, onChange: setSelectKeys
+  }} />;
+};
+
+const WithSelected = () => {
+  const [selectKeys, setSelectKeys] = useState([]);
+  return <TableView dataSource={dataSource} columns={columns} rowSelection={{
+    selectedRowKeys: selectKeys, onChange: setSelectKeys
+  }} />;
+};
+
+const BaseExample = () => {
+  return <Flex vertical gap={10}>
+    <TableView dataSource={dataSource} columns={columns} />
+    <WithCheckbox />
+    <WithSelected />
+    <TableView dataSource={[]} columns={columns} />
+    <div style={{
+      height: '200px', overflowY: 'scroll'
+    }}>
+      <TableView dataSource={dataSource} columns={columns} sticky/>
+    </div>
+  </Flex>;
 };
 
 render(<BaseExample />);

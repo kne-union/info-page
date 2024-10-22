@@ -1,0 +1,41 @@
+.table-view {
+  border-bottom: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
+  line-height: 20px;
+
+  &:not(:last-child) {
+    border-bottom: none;
+  }
+}
+
+.table-view-col {
+  flex: 0 0 var(--col-width);
+  max-width: var(--col-width);
+}
+
+.table-view-item {
+  height: 100%;
+}
+
+.table-view-label,
+.table-view-content {
+  font-size: var(--font-size-default);
+  padding: 8px 16px;
+  border-top: 1px solid #eeeeee;
+  border-left: 1px solid #eeeeee;
+  line-height: 20px;
+  word-break: break-all;
+}
+
+.table-view-label {
+  background: var(--bg-color-grey-1);
+  color: var(--font-color-grey);
+  flex: 0 0 var(--col-label-width);
+  max-width: var(--col-label-width);
+}
+
+.table-view-content {
+  word-break: break-all;
+  white-space: pre-line;
+  flex: 1;
+}
