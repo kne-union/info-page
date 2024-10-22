@@ -21,7 +21,7 @@ const TableView = p => {
     },
     p
   );
-  const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect } = props;
+  const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect, ...others } = props;
 
   const defaultSpan = useMemo(() => {
     const assignedSpan = columns.reduce((a, b) => {
@@ -97,7 +97,12 @@ const TableView = p => {
                         return column.format(value, { dataSource, columns, column, target: item });
                       }
                       if (typeof column.format === 'string') {
-                        const formatValue = formatView(value, column.format, { dataSource, columns, column, target: item });
+                        const formatValue = formatView(value, column.format, {
+                          dataSource,
+                          columns,
+                          column,
+                          target: item
+                        });
                         if (formatValue) {
                           return formatValue;
                         }
@@ -155,7 +160,7 @@ const TableView = p => {
       <div className={style['empty']}>{empty}</div>
     );
   return (
-    <div className={classnames(style['table'], 'info-page-table', className)}>
+    <div {...others} className={classnames(style['table'], 'info-page-table', className)}>
       {header}
       {body}
     </div>
