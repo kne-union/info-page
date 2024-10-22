@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import get from 'lodash/get';
 import Label from '../Label';
 import style from './style.module.scss';
-import { CheckOutlined } from '@ant-design/icons';
 
 const Header = p => {
   const { dataSource, columns, defaultSpan, rowKey, rowSelection, colsSize, setColsSize, sticky } = Object.assign(

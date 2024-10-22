@@ -351,11 +351,9 @@ const BaseExample = () => {
     <WithCheckbox />
     <WithSelected />
     <TableView dataSource={[]} columns={columns} />
-    <div style={{
+    <TableView style={{
       height: '200px', overflowY: 'scroll'
-    }}>
-      <TableView dataSource={dataSource} columns={columns} sticky/>
-    </div>
+    }} dataSource={dataSource} columns={columns} sticky/>
   </Flex>;
 };
 
