@@ -26,7 +26,7 @@ export const defaultFormat = {
   },
   boolean: (value, { args }) => {
     const trueValue = args[0] || 'true';
-    if (value.toString() === trueValue) {
+    if ((value || '').toString() === trueValue) {
       return '是';
     }
     return '否';
