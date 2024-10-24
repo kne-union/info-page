@@ -248,11 +248,11 @@ const BaseExample = () => {
   }, {
     name: 'addTime', title: '添加时间', format: 'datetime'
   }, {
-    name: 'count', title: '数量', format: 'number'
+    name: 'count', title: '数量', format: 'number-useGrouping:false-suffix:个'
   }, {
     name: 'count2', title: '百分比', format: 'number-percent money-百分比'
   }, {
-    name: 'count3', title: '万元', format: 'number--10000', render: (value) => `${value}万元`
+    name: 'count3', title: '万元', format: 'number-suffix:万元--10000'
   }, {
     name: 'empty', title: '空值显示'
   }, {

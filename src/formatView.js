@@ -1,5 +1,57 @@
 import dayjs from 'dayjs';
 import { isEmpty } from '@kne/is-empty';
+import groupBy from 'lodash/groupBy';
+import get from 'lodash/get';
+import transform from 'lodash/transform';
+
+export const calcArgs = (args, template) => {
+  const { attr, normal } = groupBy(args, item => (/^.+:.+$/.test(item) ? 'attr' : 'normal'));
+  const output = {};
+
+  const typeTransform = (value, type) => {
+    if (type === 'string') {
+      return String(value);
+    }
+    if (type === 'number') {
+      return Number(value);
+    }
+    if (type === 'boolean') {
+      return value === 'true';
+    }
+    return value;
+  };
+
+  (normal || []).forEach((target, index) => {
+    const currentTemplate = Object.assign({}, { type: 'string', defaultValue: '' }, get(template, index));
+    if (currentTemplate.name && target) {
+      output[currentTemplate.name] = typeTransform(target, currentTemplate.type);
+    }
+  });
+
+  (attr || []).forEach(target => {
+    const [key, value] = target.split(':');
+    const currentTemplate = template.find(item => item.name === key);
+    if (!currentTemplate) {
+      return;
+    }
+    const { name, type } = Object.assign({}, { type: 'string', defaultValue: '' }, currentTemplate);
+    output[name] = typeTransform(value, type);
+  });
+
+  return Object.assign(
+    {},
+    transform(
+      template,
+      (result, value) => {
+        if (value.name && value.hasOwnProperty('defaultValue')) {
+          result[value.name] = value.defaultValue;
+        }
+      },
+      {}
+    ),
+    output
+  );
+};
 
 export const defaultFormat = {
   date: (value, { args }) => {
@@ -32,18 +84,50 @@ export const defaultFormat = {
     return '否';
   },
   number: (value, { args }) => {
-    const style = args[0] || 'decimal',
-      unit = args[1] || 1,
-      maximumFractionDigits = args[2] || 2,
-      roundingMode = args[3] || 'halfExpand';
-    return new Intl.NumberFormat(
-      {},
+    const { style, unit, maximumFractionDigits, useGrouping, roundingMode, suffix } = calcArgs(args, [
       {
-        style,
-        maximumFractionDigits,
-        roundingMode
+        name: 'style',
+        type: 'string',
+        defaultValue: 'decimal'
+      },
+      {
+        name: 'unit',
+        type: 'number',
+        defaultValue: 1
+      },
+      {
+        name: 'maximumFractionDigits',
+        type: 'number',
+        defaultValue: 2
+      },
+      {
+        name: 'useGrouping',
+        type: 'boolean',
+        defaultValue: true
+      },
+      {
+        name: 'roundingMode',
+        type: 'string',
+        defaultValue: 'halfExpand'
+      },
+      {
+        name: 'suffix',
+        type: 'string',
+        defaultValue: ''
       }
-    ).format(value / unit);
+    ]);
+
+    return (
+      new Intl.NumberFormat(
+        {},
+        {
+          style,
+          maximumFractionDigits,
+          roundingMode,
+          useGrouping
+        }
+      ).format(value / unit) + suffix
+    );
   },
   money: (value, { args }) => {
     const unit = args[0] || '元';
