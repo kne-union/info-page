@@ -144,7 +144,14 @@ const formatView = (value, format, context) => {
     return formatList.reduce((value, format) => {
       const [name, ...args] = format.split('-');
       if (typeof defaultFormat[name] === 'function') {
-        return defaultFormat[name](value, Object.assign({}, context, { args }));
+        return defaultFormat[name](
+          value,
+          Object.assign({}, context, {
+            args: args.map(item => {
+              return item && item.replace(/\(\)/g, ' ').replace(/\(_\)/g, '-');
+            })
+          })
+        );
       }
       return value;
     }, value);
