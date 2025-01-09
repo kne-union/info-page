@@ -26,7 +26,7 @@ const Header = p => {
     >
       {rowSelection && rowSelection.type === 'checkbox' && (
         <Col className={classnames(style['col'], 'info-page-table-col')}>
-          <span className={style['col-content']}>
+          <span className={classnames(style['col-content'], 'info-page-table-col-content')}>
             {rowSelection.allowSelectedAll ? (
               (() => {
                 const checkedAll = rowSelection.isSelectedAll || dataSource.every(item => rowSelection.selectedRowKeys && rowSelection.selectedRowKeys.indexOf(get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey)) > -1);
