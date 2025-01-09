@@ -324,7 +324,7 @@ const columns = [{
 }, {
   name: 'birthday', title: '出生日期', format: 'date'
 }, {
-  name: 'addTime', title: '添加时间', format: 'datetime'
+  name: 'addTime', title: '添加时间', format: 'datetime-YY(_)MM(_)DD()HH'
 }, {
   name: 'count', title: '数量', format: 'number'
 }, {
