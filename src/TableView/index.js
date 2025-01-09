@@ -43,7 +43,7 @@ const TableView = p => {
           <Row
             wrap={false}
             key={id}
-            className={classnames(style['body'], 'info-page-table-body', [
+            className={classnames(style['body'], 'info-page-table-row', [
               {
                 [style['is-selected-all']]: rowSelection?.isSelectedAll,
                 [style['is-selected']]: isChecked,
@@ -72,13 +72,13 @@ const TableView = p => {
           >
             {rowSelection && rowSelection.type === 'checkbox' && (
               <Col className={classnames(style['col'], 'info-page-table-col')}>
-                <span className={style['col-content']}>
+                <span className={classnames(style['col-content'], 'info-page-table-col-content')}>
                   <Checkbox disabled={item.disabled || rowSelection.isSelectedAll} checked={rowSelection.isSelectedAll || isChecked} />
                 </span>
               </Col>
             )}
             <Col flex={1}>
-              <Row wrap={false}>
+              <Row className={classnames('info-page-table-row-content')} wrap={false}>
                 {columns.map(column => {
                   const { name, span } = column;
                   const colItem = (item => {
@@ -94,7 +94,12 @@ const TableView = p => {
 
                     const displayValue = (value => {
                       if (typeof column.format === 'function') {
-                        return column.format(value, { dataSource, columns, column, target: item });
+                        return column.format(value, {
+                          dataSource,
+                          columns,
+                          column,
+                          target: item
+                        });
                       }
                       if (typeof column.format === 'string') {
                         const formatValue = formatView(value, column.format, {
@@ -162,7 +167,7 @@ const TableView = p => {
   return (
     <div {...others} className={classnames(style['table'], 'info-page-table', className)}>
       {header}
-      {body}
+      <div className={classnames('info-page-table-body')}>{body}</div>
     </div>
   );
 };
