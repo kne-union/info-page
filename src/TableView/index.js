@@ -83,8 +83,8 @@ const TableView = p => {
                   const { name, span } = column;
                   const colItem = (item => {
                     const itemValue =
-                      typeof item.getValueOf === 'function'
-                        ? item.getValueOf(item, {
+                      typeof column.getValueOf === 'function'
+                        ? column.getValueOf(item, {
                             dataSource,
                             columns,
                             column,
