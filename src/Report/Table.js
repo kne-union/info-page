@@ -67,7 +67,7 @@ const Table = ({ report }) => {
             }, 0);
 
           return (
-            <div>
+            <div key={groupName}>
               {groupColumn?.isSubTitle && currentGroup ? (
                 <Divider>{currentGroup.label}</Divider> /*<Row wrap={false} className={style['table-sub-header']}>
                     <Col>
@@ -75,15 +75,15 @@ const Table = ({ report }) => {
                     </Col>
                   </Row>*/
               ) : null}
-              <Row key={groupName} wrap={false}>
+              <Row wrap={false}>
                 {/*<Col span={groupColumn.span}>
                 <div className={style['table-group-label']}>{currentGroup.label}</div>
               </Col>*/}
                 <Col span={otherSpan}>
                   {list.map((item, index) => {
                     return (
-                      <Flex vertical gap={8}>
-                        <Row wrap={false} key={index} className={classNames({ [style['table-row-item']]: index !== list?.length - 1 })}>
+                      <Flex vertical gap={8} key={index}>
+                        <Row wrap={false} className={classNames({ [style['table-row-item']]: index !== list?.length - 1 })}>
                           {Array.from(otherColumns.values()).map(({ name }) => {
                             const currentColumn = otherColumns.get(name);
                             return (
