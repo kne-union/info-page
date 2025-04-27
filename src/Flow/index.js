@@ -9,21 +9,21 @@ import { isEmpty } from '@kne/is-empty';
 
 export const ActionList = ({ name, action, options, content }) => {
   return (
-    <div className={style['step-content-wrap']}>
+    <div className={classnames('step-content-wrap', style['step-content-wrap'])}>
       <Space align="center">
-        <Col className={style['step-left']}>
-          <span className={style['step-name']}>{name}</span>
-          <span className={style['step-action']}>{action}</span>
+        <Col className={classnames('step-left', style['step-left'])}>
+          <span className={classnames('step-name', style['step-name'])}>{name}</span>
+          <span className={classnames('step-action', style['step-action'])}>{action}</span>
         </Col>
-        <Col className={style['step-action-time']}>{options}</Col>
+        <Col className={classnames('step-action-time', style['step-action-time'])}>{options}</Col>
       </Space>
-      <div className={style['step-content']}>{content}</div>
+      <div className={classnames('step-content', style['step-content'])}>{content}</div>
     </div>
   );
 };
 
 const Flow = p => {
-  const { dataSource, size, columns, empty, valueIsEmpty, placeholder, emptyIsPlaceholder, ...props } = Object.assign(
+  const { className, dataSource, size, columns, empty, valueIsEmpty, placeholder, emptyIsPlaceholder, ...props } = Object.assign(
     {},
     {
       size: 'small',
@@ -59,7 +59,7 @@ const Flow = p => {
   return (
     <Steps
       {...props}
-      items={dataSource.map(dataItem => {
+      items={dataSource.map((dataItem, index) => {
         const computedDisplayValue = (target, dataItem, context) => {
           const itemValue =
             typeof target.getValueOf === 'function'
@@ -74,7 +74,14 @@ const Flow = p => {
 
           const displayValue = (value => {
             if (typeof target.format === 'function') {
-              return target.format(value, Object.assign({}, context, { dataSource, column: target, target: dataItem }));
+              return target.format(
+                value,
+                Object.assign({}, context, {
+                  dataSource,
+                  column: target,
+                  target: dataItem
+                })
+              );
             }
             if (typeof target.format === 'string') {
               const formatValue = formatView(
@@ -93,7 +100,7 @@ const Flow = p => {
             return value;
           })(itemValue);
 
-          const itemIsEmpty = (target.valueIsEmpty || valueIsEmpty)(itemValue);
+          const itemIsEmpty = (target.valueIsEmpty || valueIsEmpty)(itemValue, context);
 
           if (
             target.display === false ||
@@ -140,7 +147,7 @@ const Flow = p => {
           return displayValue;
         };
         const { actionList, ...renderData } = transform(
-          ['title', 'subTitle', 'description', 'status', 'actionList'],
+          ['title', 'subTitle', 'description', 'status', 'content', 'actionList'],
           (result, name) => {
             const target = columnsMap.get(name) || { name };
             if (target.children instanceof Map && name !== 'actionList') {
@@ -148,18 +155,19 @@ const Flow = p => {
               return;
             }
             if (target.children instanceof Map && name === 'actionList') {
-              const targetValue = computedDisplayValue(target, dataItem);
+              const targetValue = computedDisplayValue(target, dataItem, { index });
               if (!(Array.isArray(targetValue) && targetValue.length > 0)) {
                 return targetValue;
               }
-              result[name] = targetValue.map((dataItem, index) => {
+              result[name] = targetValue.map((dataItem, itemIndex) => {
                 return transform(
                   ['name', 'action', 'options', 'content'],
                   (result, name) => {
                     const childrenTarget = target.children.get(name) || { name };
                     result[name] = computedDisplayValue(childrenTarget, dataItem, {
                       parent: targetValue,
-                      targetIndex: index
+                      targetIndex: itemIndex,
+                      index
                     });
                   },
                   {}
@@ -167,7 +175,7 @@ const Flow = p => {
               });
               return;
             }
-            result[name] = computedDisplayValue(target, dataItem);
+            result[name] = computedDisplayValue(target, dataItem, { index });
           },
           {}
         );
@@ -185,9 +193,23 @@ const Flow = p => {
           });
         }
 
+        if (renderData.content) {
+          return Object.assign({}, renderData, {
+            description: (
+              <>
+                {renderData.description}
+                <div className={classnames('step-content-wrap', style['step-content-wrap'])}>
+                  <div className={classnames('step-content', style['step-content'])}>{renderData.content}</div>
+                </div>
+              </>
+            )
+          });
+        }
+
         return renderData;
       })}
-      className={classnames(style['steps'], style[`steps-${size}`], {
+      className={classnames(className, style['steps'], style[`steps-${size}`], {
+        'steps-dot': props.progressDot,
         [style['steps-dot']]: props.progressDot
       })}
     />
