@@ -128,7 +128,9 @@ const TableView = p => {
                       key={name}
                       style={{
                         '--col-width': `${colsSize[name] || 0}px`,
-                        '--col-span': `${span || defaultSpan}`
+                        '--col-span': `${span || defaultSpan}`,
+                        '--col-align': column.align || 'top',
+                        '--col-justify': column.justify || 'flex-start'
                       }}
                       className={classnames(style['col'], 'info-page-table-col')}
                     >

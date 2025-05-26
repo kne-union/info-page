@@ -65,6 +65,9 @@
   transition: background-color 300ms;
   flex: var(--col-span) 0 var(--col-width);
   overflow: hidden;
+  display: flex;
+  align-items: var(--col-align);
+  justify-content: var(--col-justify);
 }
 
 .col-content {
