@@ -31,7 +31,7 @@ export const Label = ({ className, children, setWidth }) => {
   );
 };
 
-const Content = ({ list, labelAlign, col, gutter, className, size, itemRender }) => {
+const Content = ({ list = [], labelAlign = 'left', col = 1, gutter = 0, className, size, itemRender }) => {
   const labelWidthListRef = useRef([]);
   const [maxLabelWidth, setMaxLabelWidth] = useState(0);
   return (
@@ -84,13 +84,6 @@ const Content = ({ list, labelAlign, col, gutter, className, size, itemRender })
         })}
     </Row>
   );
-};
-
-Content.defaultProps = {
-  labelAlign: 'left',
-  col: 1,
-  gutter: 0,
-  list: []
 };
 
 export default Content;
