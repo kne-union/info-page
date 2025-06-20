@@ -29,6 +29,7 @@
 .list-label-col {
   background: #6d40a81a;
   border-radius: 8px 0 0 8px;
+  min-width: 80px;
 }
 
 .list-label {
@@ -63,6 +64,10 @@
     font-size: 16px;
     font-weight: bold;
   }
+}
+
+.result-total-col {
+  min-width: 100px;
 }
 
 .result-total {

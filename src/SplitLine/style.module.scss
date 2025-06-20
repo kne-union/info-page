@@ -1,0 +1,9 @@
+.split-line-label {
+  color: var(--font-color-grey-1);
+}
+
+.label-horizontal {
+  &:after {
+    content: ':';
+  }
+}
