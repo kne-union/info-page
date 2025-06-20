@@ -7,13 +7,14 @@ import Table from './Table';
 import Part from './Part';
 import Score from './Score';
 import PrintPageBreak from './PrintPageBreak';
-import classNames from 'classnames';
+import classnames from 'classnames';
 
 const Report = ({ title, subtitle, extra, className, border, children }) => {
   return (
     <div
-      className={classNames(
+      className={classnames(
         style['report-view'],
+        'report-view',
         {
           [style['no-title']]: !(title || extra),
           [style['no-border']]: border === false
@@ -21,14 +22,14 @@ const Report = ({ title, subtitle, extra, className, border, children }) => {
         className
       )}
     >
-      <Flex className={style['title-outer']} justify="space-between">
+      <Flex className={classnames('title-outer', style['title-outer'])} justify="space-between">
         {title && (
           <Flex vertical>
-            <div className={style['title']}>{title}</div>
-            {subtitle && <div className={style['subtitle']}>{subtitle}</div>}
+            <div className={classnames('title', style['title'])}>{title}</div>
+            {subtitle && <div className={classnames('subtitle', style['subtitle'])}>{subtitle}</div>}
           </Flex>
         )}
-        {extra && <div className={style['title-extra']}>{extra}</div>}
+        {extra && <div className={classnames('title-extra', style['title-extra'])}>{extra}</div>}
       </Flex>
       {children}
     </div>

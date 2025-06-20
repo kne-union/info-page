@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import { Row, Col, Space, Flex, Divider } from 'antd';
 import groupBy from 'lodash/groupBy';
 import style from './style.module.scss';
-import classNames from 'classnames';
+import classnames from 'classnames';
 
-const Table = ({ report }) => {
+const Table = ({ className, report }) => {
   const { columns, list, group, groupName, footer } = Object.assign(
     {},
     {
@@ -35,11 +35,11 @@ const Table = ({ report }) => {
     return new Map(group.map(item => [item.name, item]));
   }, [group]);
   return (
-    <Flex vertical gap={groupColumn?.isSubTitle ? 10 : 32} className={style['table-view']}>
-      <Row wrap={false} className={style['table-header']}>
+    <Flex vertical gap={groupColumn?.isSubTitle ? 10 : 32} className={classnames('table-view', className, style['table-view'])}>
+      <Row wrap={false} className={classnames('table-header', style['table-header'])}>
         {groupColumn?.isSubTitle || !groupColumn ? null : (
           <Col span={groupColumn?.span}>
-            <div className={style['table-header-col-item']}>{groupColumn?.title}-</div>
+            <div className={classnames('table-header-col-item', style['table-header-col-item'])}>{groupColumn?.title}-</div>
           </Col>
         )}
         <Col span={groupColumn?.isSubTitle || !groupColumn ? 24 : 24 - groupColumn?.span}>
@@ -47,7 +47,7 @@ const Table = ({ report }) => {
             {Array.from(otherColumns.values()).map(({ title, name, span }) => {
               return (
                 <Col span={span} key={name}>
-                  <div className={style['table-header-col-item']}>{title}</div>
+                  <div className={classnames('table-header-col-item', style['table-header-col-item'])}>{title}</div>
                 </Col>
               );
             })}
@@ -83,12 +83,12 @@ const Table = ({ report }) => {
                   {list.map((item, index) => {
                     return (
                       <Flex vertical gap={8} key={index}>
-                        <Row wrap={false} className={classNames({ [style['table-row-item']]: index !== list?.length - 1 })}>
+                        <Row wrap={false} className={classnames('table-row-item', { [style['table-row-item']]: index !== list?.length - 1 })}>
                           {Array.from(otherColumns.values()).map(({ name }) => {
                             const currentColumn = otherColumns.get(name);
                             return (
                               <Col span={currentColumn.span} key={name}>
-                                <div className={classNames(style['table-col-item'], { [style['table-col-item-description']]: name === 'description' })}>
+                                <div className={classnames('table-col-item', style['table-col-item'], { [style['table-col-item-description']]: name === 'description' })}>
                                   {currentColumn.hasOwnProperty('valueOf') && typeof currentColumn.valueOf === 'function' ? currentColumn.valueOf(item[name], item) : item[name]}
                                 </div>
                               </Col>

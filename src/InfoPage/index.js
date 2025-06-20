@@ -12,7 +12,7 @@ const Part = ({ className, title, subtitle, extra, children, ...props }) => {
         'no-title': !title,
         [style['no-title']]: !title
       })}
-      bordered={false}
+      variant="borderless"
       title={
         title && (
           <>
