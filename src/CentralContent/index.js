@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import { isEmpty } from '@kne/is-empty';
 import { Col, Row } from 'antd';
-import get from 'lodash/get';
 import classnames from 'classnames';
 import boxComputed from './boxComputed';
 import style from './style.module.scss';
-import formatView from '../formatView';
+import computeColumnsValue from '../computeColumnsValue';
 
 const TableView = props => {
   const { dataSource, columns, col, valueIsEmpty, emptyIsPlaceholder, placeholder, className } = Object.assign(
@@ -22,42 +21,12 @@ const TableView = props => {
 
   const renderColumns = useMemo(() => {
     return boxComputed(
-      columns
-        .map(item => {
-          const itemValue = typeof item.getValueOf === 'function' ? item.getValueOf(dataSource, { column: item }) : get(dataSource, item.name);
-          const displayValue = (value => {
-            if (typeof item.format === 'function') {
-              return item.format(value, { dataSource, column: item });
-            }
-            if (typeof item.format === 'string') {
-              const formatValue = formatView(value, item.format, { dataSource, column: item });
-              if (formatValue) {
-                return formatValue;
-              }
-            }
-            return value;
-          })(itemValue);
-
-          const itemIsEmpty = (item.valueIsEmpty || valueIsEmpty)(itemValue);
-
-          if (
-            item.display === false ||
-            (typeof item.display === 'function' &&
-              item.display(itemValue, {
-                dataSource,
-                column: item
-              }) === false)
-          ) {
-            return null;
-          }
-
-          if (!(item.hasOwnProperty('emptyIsPlaceholder') ? item.emptyIsPlaceholder : emptyIsPlaceholder) && itemIsEmpty) {
-            return null;
-          }
-
-          return Object.assign({}, item, { isEmpty: itemIsEmpty, value: displayValue });
-        })
-        .filter(item => !!item),
+      computeColumnsValue({
+        dataSource,
+        columns,
+        valueIsEmpty,
+        emptyIsPlaceholder
+      }),
       col
     );
   }, [columns, col]);
@@ -83,20 +52,10 @@ const TableView = props => {
                 {item.title}
               </Col>
               <Col className={classnames(style['table-view-content'], 'table-view-content')}>
-                {item.isEmpty
-                  ? typeof item.renderPlaceholder === 'function'
-                    ? item.renderPlaceholder({
-                        column: item,
-                        dataSource,
-                        placeholder
-                      })
-                    : item.placeholder || placeholder
-                  : typeof item.render === 'function'
-                    ? item.render(item.value, {
-                        column: item,
-                        dataSource
-                      })
-                    : item.value}
+                {computeColumnsValue.computeDisplay({
+                  column: item,
+                  placeholder
+                })}
               </Col>
             </Row>
           </Col>
