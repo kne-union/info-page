@@ -10,7 +10,7 @@ const SplitLine = ({ className, dataSource, columns, valueIsEmpty = isEmpty, pla
     <Space {...props} split={split} size={size} className={classnames(style['split-line'], 'split-line', className)}>
       {computeColumnsValue({ columns, emptyIsPlaceholder, valueIsEmpty, dataSource, placeholder }).map(item => {
         return (
-          <Flex className="split-line-item" gap={labelGap} justify="space-between" align="center" vertical={labelMode === 'vertical'}>
+          <Flex flex={item.flex || 1} className="split-line-item" gap={labelGap} justify="space-between" align="center" vertical={labelMode === 'vertical'}>
             {item.title && (
               <div
                 className={classnames('split-line-label', style['split-line-label'], {
