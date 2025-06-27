@@ -40,7 +40,7 @@ const computeColumnsValue = ({ columns, emptyIsPlaceholder, valueIsEmpty, dataSo
     .filter(item => !!item);
 };
 
-export const computeDisplay = ({ column, placeholder }) => {
+export const computeDisplay = ({ column, dataSource, placeholder }) => {
   return column.isEmpty
     ? typeof column.renderPlaceholder === 'function'
       ? column.renderPlaceholder({
@@ -59,7 +59,7 @@ export const computeDisplay = ({ column, placeholder }) => {
 
 export const computeColumnsDisplay = ({ columns, emptyIsPlaceholder, valueIsEmpty, dataSource, placeholder }) => {
   return computeColumnsValue({ columns, emptyIsPlaceholder, valueIsEmpty, dataSource }).map(column => {
-    return computeDisplay({ column, placeholder });
+    return computeDisplay({ column, placeholder, dataSource });
   });
 };
 
