@@ -1,10 +1,13 @@
 .part {
   //border: none;
   //width: 100%;
+  white-space: pre-wrap;
   &.no-title {
     :global {
       .ant-card-body {
         padding-top: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
       }
     }
   }
@@ -20,6 +23,9 @@
 
   :global(.ant-card-body) {
     padding: 16px 0 0 0;
+    white-space: pre-wrap;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   :global(.ant-card-extra) {
@@ -34,6 +40,8 @@
 
     :global(.ant-card-body) {
       padding: 8px 0;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     :global(.ant-card-head-title) > .part-title {
@@ -45,6 +53,7 @@
       line-height: 16px;
       padding: 4px 8px;
       flex: none;
+      white-space: pre-wrap;
 
       &:before {
         content: normal;
@@ -64,6 +73,8 @@
     & > .ant-card-head {
       padding-left: 0;
       padding-right: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
   }
 }
@@ -83,6 +94,8 @@
       padding: 8px 16px;
       line-height: 20px;
       color: var(--font-color);
+      white-space: pre-wrap;
+      word-break: break-word;
 
       :global(.ant-collapse-arrow) {
         transform: scale(0.6);
@@ -101,6 +114,8 @@
   :global(.ant-collapse-content) {
     border-top: 1px solid #eeeeee;
     border-bottom: 1px solid #eeeeee;
+    white-space: pre-wrap;
+    word-break: break-word;
 
     :global(.ant-collapse-content-box) {
       padding: 16px 30px;
@@ -120,6 +135,7 @@
   font-weight: 600;
   line-height: 20px;
   padding: 0;
+  white-space: pre-wrap;
 
   &:before {
     content: '';
@@ -139,4 +155,5 @@
   color: var(--font-color-grey-1);
   font-weight: normal;
   margin-top: 4px;
+  white-space: pre-wrap;
 }
