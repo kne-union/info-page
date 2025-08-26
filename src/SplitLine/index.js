@@ -8,9 +8,15 @@ import style from './style.module.scss';
 const SplitLine = ({ className, dataSource, columns, valueIsEmpty = isEmpty, placeholder = '-', emptyIsPlaceholder = false, size = 0, labelGap = 4, labelMode = 'horizontal', split = <Divider type="vertical" />, ...props }) => {
   return (
     <Space {...props} split={split} size={size} className={classnames(style['split-line'], 'split-line', className)}>
-      {computeColumnsValue({ columns, emptyIsPlaceholder, valueIsEmpty, dataSource, placeholder }).map(item => {
+      {computeColumnsValue({
+        columns,
+        emptyIsPlaceholder,
+        valueIsEmpty,
+        dataSource,
+        placeholder
+      }).map((item, index) => {
         return (
-          <Flex flex={item.flex || 1} className="split-line-item" gap={labelGap} justify="space-between" align="center" vertical={labelMode === 'vertical'}>
+          <Flex key={item.key || index} flex={item.flex || 1} className="split-line-item" gap={labelGap} justify="space-between" align="center" vertical={labelMode === 'vertical'}>
             {item.title && (
               <div
                 className={classnames('split-line-label', style['split-line-label'], {
