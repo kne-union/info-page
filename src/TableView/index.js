@@ -21,7 +21,7 @@ const TableView = p => {
     },
     p
   );
-  const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect, ...others } = props;
+  const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect, render, ...others } = props;
 
   const defaultSpan = useMemo(() => {
     const assignedSpan = columns.reduce((a, b) => {
@@ -166,6 +166,9 @@ const TableView = p => {
     ) : (
       <div className={style['empty']}>{empty}</div>
     );
+  if (typeof render === 'function') {
+    return render({ ...others, header, body });
+  }
   return (
     <div {...others} className={classnames(style['table'], 'info-page-table', className)}>
       {header}
