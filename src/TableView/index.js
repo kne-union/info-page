@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import Header from './Header';
 import { Checkbox, Col, Empty, Row } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
@@ -22,7 +22,7 @@ const TableView = p => {
     p
   );
   const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect, render, ...others } = props;
-
+  const dataSourceMapRef = useRef(new Map());
   const defaultSpan = useMemo(() => {
     const assignedSpan = columns.reduce((a, b) => {
       return a + (b.span || 0);
@@ -35,9 +35,11 @@ const TableView = p => {
   const header = <Header {...props} defaultSpan={defaultSpan} colsSize={colsSize} setColsSize={setColsSize} />;
 
   const renderBody = dataSource => {
+    const getId = item => get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey);
     return dataSource && dataSource.length > 0 ? (
       dataSource.map(item => {
-        const id = get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey);
+        const id = getId(item);
+        dataSourceMapRef.current.set(id, item);
         const isChecked = rowSelection?.selectedRowKeys && rowSelection.selectedRowKeys.indexOf(id) > -1;
         return (
           <Row
@@ -64,16 +66,23 @@ const TableView = p => {
               if (rowSelection.type === 'checkbox') {
                 const selectedRowKeys = (rowSelection.selectedRowKeys || []).slice(0);
                 isChecked ? selectedRowKeys.splice(rowSelection.selectedRowKeys.indexOf(id), 1) : selectedRowKeys.push(id);
-                rowSelection.onChange(selectedRowKeys);
+                rowSelection.onChange(
+                  selectedRowKeys,
+                  selectedRowKeys.map(id => dataSourceMapRef.current.get(id))
+                );
               } else {
-                rowSelection.onChange(rowSelection.selectedRowKeys.length && rowSelection.selectedRowKeys[0] === id ? [] : [id]);
+                const selectedRowKeys = rowSelection.selectedRowKeys.length && rowSelection.selectedRowKeys[0] === id ? [] : [id];
+                rowSelection.onChange(
+                  selectedRowKeys,
+                  selectedRowKeys.map(id => dataSourceMapRef.current.get(id))
+                );
               }
             }}
           >
             {rowSelection && rowSelection.type === 'checkbox' && (
               <Col className={classnames(style['col'], 'info-page-table-col')}>
                 <span className={classnames(style['col-content'], 'info-page-table-col-content')}>
-                  <Checkbox disabled={item.disabled || rowSelection.isSelectedAll} checked={rowSelection.isSelectedAll || isChecked} />
+                  <Checkbox disabled={item.disabled || rowSelection.isSelectedAll} checked={(rowSelection.isSelectedAll && !item.disabled) || isChecked} />
                 </span>
               </Col>
             )}
@@ -177,5 +186,5 @@ const TableView = p => {
     </div>
   );
 };
-
+TableView.Header = Header;
 export default TableView;
