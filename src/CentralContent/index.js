@@ -6,8 +6,8 @@ import boxComputed from './boxComputed';
 import style from './style.module.scss';
 import computeColumnsValue from '../computeColumnsValue';
 
-const TableView = props => {
-  const { dataSource, columns, col, valueIsEmpty, emptyIsPlaceholder, placeholder, className } = Object.assign(
+const CentralContent = props => {
+  const { dataSource, columns, col, valueIsEmpty, emptyIsPlaceholder, placeholder, className, context } = Object.assign(
     {
       dataSource: {}, //数据
       columns: [], //列定义
@@ -25,7 +25,8 @@ const TableView = props => {
         dataSource,
         columns,
         valueIsEmpty,
-        emptyIsPlaceholder
+        emptyIsPlaceholder,
+        context
       }),
       col
     );
@@ -54,7 +55,8 @@ const TableView = props => {
               <Col className={classnames(style['table-view-content'], 'table-view-content')}>
                 {computeColumnsValue.computeDisplay({
                   column: item,
-                  placeholder
+                  placeholder,
+                  context
                 })}
               </Col>
             </Row>
@@ -65,4 +67,4 @@ const TableView = props => {
   );
 };
 
-export default TableView;
+export default CentralContent;
