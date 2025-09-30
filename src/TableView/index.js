@@ -4,7 +4,7 @@ import { Checkbox, Col, Empty, Row } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import get from 'lodash/get';
-import formatView from '../formatView';
+import computeColumnsValue, { computeDisplay, computeColumnsDisplay } from '../computeColumnsValue';
 import { isEmpty } from '@kne/is-empty';
 import style from './style.module.scss';
 
@@ -21,7 +21,7 @@ const TableView = p => {
     },
     p
   );
-  const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect, render, ...others } = props;
+  const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect, render, context, sticky, ...others } = props;
   const dataSourceMapRef = useRef(new Map());
   const defaultSpan = useMemo(() => {
     const assignedSpan = columns.reduce((a, b) => {
@@ -32,15 +32,16 @@ const TableView = p => {
     return Math.round(Math.max(24 - assignedSpan, 0) / undistributedColCount);
   }, [columns]);
 
-  const header = <Header {...props} defaultSpan={defaultSpan} colsSize={colsSize} setColsSize={setColsSize} />;
+  const header = <Header {...props} sticky={sticky} defaultSpan={defaultSpan} colsSize={colsSize} setColsSize={setColsSize} />;
 
-  const renderBody = dataSource => {
+  const renderBody = (dataSource, context) => {
     const getId = item => get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey);
     return dataSource && dataSource.length > 0 ? (
       dataSource.map(item => {
         const id = getId(item);
         dataSourceMapRef.current.set(id, item);
         const isChecked = rowSelection?.selectedRowKeys && rowSelection.selectedRowKeys.indexOf(id) > -1;
+        const columnsValue = computeColumnsValue({ columns, emptyIsPlaceholder, valueIsEmpty, removeEmpty: false, dataSource: item, placeholder, context });
         return (
           <Row
             wrap={false}
@@ -88,50 +89,8 @@ const TableView = p => {
             )}
             <Col flex={1}>
               <Row className={classnames('info-page-table-row-content')} wrap={false}>
-                {columns.map(column => {
+                {columnsValue.map(column => {
                   const { name, span } = column;
-                  const colItem = (item => {
-                    const itemValue =
-                      typeof column.getValueOf === 'function'
-                        ? column.getValueOf(item, {
-                            dataSource,
-                            columns,
-                            column,
-                            target: item
-                          })
-                        : get(item, column.name);
-
-                    const displayValue = (value => {
-                      if (typeof column.format === 'function') {
-                        return column.format(value, {
-                          dataSource,
-                          columns,
-                          column,
-                          target: item
-                        });
-                      }
-                      if (typeof column.format === 'string') {
-                        const formatValue = formatView(value, column.format, {
-                          dataSource,
-                          columns,
-                          column,
-                          target: item
-                        });
-                        if (formatValue) {
-                          return formatValue;
-                        }
-                      }
-                      return value;
-                    })(itemValue);
-
-                    const itemIsEmpty = (column.valueIsEmpty || valueIsEmpty)(itemValue);
-
-                    if (!(column.hasOwnProperty('emptyIsPlaceholder') ? column.emptyIsPlaceholder : emptyIsPlaceholder) && itemIsEmpty) {
-                      return null;
-                    }
-                    return Object.assign({}, column, { isEmpty: itemIsEmpty, value: displayValue });
-                  })(item);
-
                   return (
                     <Col
                       key={name}
@@ -143,26 +102,7 @@ const TableView = p => {
                       }}
                       className={classnames(style['col'], 'info-page-table-col')}
                     >
-                      <span className={style['col-content']}>
-                        {colItem.isEmpty
-                          ? typeof colItem.renderPlaceholder === 'function'
-                            ? colItem.renderPlaceholder({
-                                column,
-                                dataSource,
-                                columns,
-                                placeholder,
-                                target: item
-                              })
-                            : colItem.placeholder || placeholder
-                          : typeof colItem.render === 'function'
-                            ? colItem.render(colItem.value, {
-                                column,
-                                columns,
-                                dataSource,
-                                target: item
-                              })
-                            : colItem.value}
-                      </span>
+                      <span className={style['col-content']}>{computeDisplay({ column, placeholder, dataSource: item, context })}</span>
                     </Col>
                   );
                 })}
@@ -182,7 +122,7 @@ const TableView = p => {
   return (
     <div {...others} className={classnames(style['table'], 'info-page-table', className)}>
       {header}
-      <div className={classnames('info-page-table-body')}>{renderBody(dataSource)}</div>
+      <div className={classnames('info-page-table-body')}>{renderBody(dataSource, context)}</div>
     </div>
   );
 };
