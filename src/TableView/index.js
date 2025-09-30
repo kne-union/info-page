@@ -4,7 +4,7 @@ import { Checkbox, Col, Empty, Row } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import get from 'lodash/get';
-import computeColumnsValue, { computeDisplay, computeColumnsDisplay } from '../computeColumnsValue';
+import computeColumnsValue, { computeDisplay } from '../computeColumnsValue';
 import { isEmpty } from '@kne/is-empty';
 import style from './style.module.scss';
 
@@ -69,13 +69,15 @@ const TableView = p => {
                 isChecked ? selectedRowKeys.splice(rowSelection.selectedRowKeys.indexOf(id), 1) : selectedRowKeys.push(id);
                 rowSelection.onChange(
                   selectedRowKeys,
-                  selectedRowKeys.map(id => dataSourceMapRef.current.get(id))
+                  selectedRowKeys.map(id => dataSourceMapRef.current.get(id)),
+                  { context }
                 );
               } else {
                 const selectedRowKeys = rowSelection.selectedRowKeys.length && rowSelection.selectedRowKeys[0] === id ? [] : [id];
                 rowSelection.onChange(
                   selectedRowKeys,
-                  selectedRowKeys.map(id => dataSourceMapRef.current.get(id))
+                  selectedRowKeys.map(id => dataSourceMapRef.current.get(id)),
+                  { context }
                 );
               }
             }}
