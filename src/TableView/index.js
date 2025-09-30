@@ -34,8 +34,8 @@ const TableView = p => {
 
   const header = <Header {...props} defaultSpan={defaultSpan} colsSize={colsSize} setColsSize={setColsSize} />;
 
-  const body =
-    dataSource.length > 0 ? (
+  const renderBody = dataSource => {
+    return dataSource && dataSource.length > 0 ? (
       dataSource.map(item => {
         const id = get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey);
         const isChecked = rowSelection?.selectedRowKeys && rowSelection.selectedRowKeys.indexOf(id) > -1;
@@ -166,13 +166,14 @@ const TableView = p => {
     ) : (
       <div className={style['empty']}>{empty}</div>
     );
+  };
   if (typeof render === 'function') {
-    return render({ ...others, header, body });
+    return render({ ...others, header, renderBody });
   }
   return (
     <div {...others} className={classnames(style['table'], 'info-page-table', className)}>
       {header}
-      <div className={classnames('info-page-table-body')}>{body}</div>
+      <div className={classnames('info-page-table-body')}>{renderBody(dataSource)}</div>
     </div>
   );
 };
