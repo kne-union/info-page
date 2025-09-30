@@ -29,7 +29,8 @@ const Header = p => {
           <span className={classnames(style['col-content'], 'info-page-table-col-content')}>
             {rowSelection.allowSelectedAll ? (
               (() => {
-                const checkedAll = rowSelection.isSelectedAll || dataSource.every(item => rowSelection.selectedRowKeys && rowSelection.selectedRowKeys.indexOf(get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey)) > -1);
+                const checkedAll =
+                  rowSelection.isSelectedAll || (dataSource && dataSource.every(item => rowSelection.selectedRowKeys && rowSelection.selectedRowKeys.indexOf(get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey)) > -1));
                 return (
                   <Checkbox
                     checked={checkedAll}
@@ -41,7 +42,9 @@ const Header = p => {
                       } else {
                         typeof rowSelection.onIsSelectAllChange === 'function'
                           ? rowSelection.onIsSelectAllChange(true)
-                          : rowSelection.onChange(
+                          : dataSource &&
+                            dataSource.length > 0 &&
+                            rowSelection.onChange(
                               dataSource.map(item => {
                                 return get(item, typeof rowKey === 'function' ? rowKey(item) : rowKey);
                               })
