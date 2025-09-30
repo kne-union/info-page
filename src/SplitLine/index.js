@@ -5,7 +5,7 @@ import computeColumnsValue from '../computeColumnsValue';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const SplitLine = ({ className, dataSource, columns, valueIsEmpty = isEmpty, placeholder = '-', emptyIsPlaceholder = false, size = 0, labelGap = 4, labelMode = 'horizontal', split = <Divider type="vertical" />, ...props }) => {
+const SplitLine = ({ className, dataSource, columns, valueIsEmpty = isEmpty, placeholder = '-', emptyIsPlaceholder = false, size = 0, labelGap = 4, labelMode = 'horizontal', split = <Divider type="vertical" />, context, ...props }) => {
   return (
     <Space {...props} split={split} size={size} className={classnames(style['split-line'], 'split-line', className)}>
       {computeColumnsValue({
@@ -13,7 +13,8 @@ const SplitLine = ({ className, dataSource, columns, valueIsEmpty = isEmpty, pla
         emptyIsPlaceholder,
         valueIsEmpty,
         dataSource,
-        placeholder
+        placeholder,
+        context
       }).map((item, index) => {
         return (
           <Flex key={item.key || index} flex={item.flex || 1} className="split-line-item" gap={labelGap} justify="space-between" align="center" vertical={labelMode === 'vertical'}>
