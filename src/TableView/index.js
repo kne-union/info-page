@@ -22,7 +22,6 @@ const TableView = p => {
     p
   );
   const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect, render, context, sticky, ...others } = props;
-  const dataSourceMapRef = useRef(new Map());
   const defaultSpan = useMemo(() => {
     const assignedSpan = columns.reduce((a, b) => {
       return a + (b.span || 0);
@@ -39,7 +38,6 @@ const TableView = p => {
     return dataSource && dataSource.length > 0 ? (
       dataSource.map(item => {
         const id = getId(item);
-        dataSourceMapRef.current.set(id, item);
         const isChecked = rowSelection?.selectedRowKeys && rowSelection.selectedRowKeys.indexOf(id) > -1;
         const columnsValue = computeColumnsValue({ columns, emptyIsPlaceholder, valueIsEmpty, removeEmpty: false, dataSource: item, placeholder, context });
         return (
@@ -67,21 +65,12 @@ const TableView = p => {
               if (rowSelection.type === 'checkbox') {
                 const selectedRowKeys = (rowSelection.selectedRowKeys || []).slice(0);
                 isChecked ? selectedRowKeys.splice(rowSelection.selectedRowKeys.indexOf(id), 1) : selectedRowKeys.push(id);
-                rowSelection.onChange(
-                  selectedRowKeys,
-                  selectedRowKeys.map(id => dataSourceMapRef.current.get(id)),
-                  { context }
-                );
+                rowSelection.onChange(selectedRowKeys, id, { context, checked: !isChecked });
               } else {
                 const selectedRowKeys = rowSelection.selectedRowKeys.length && rowSelection.selectedRowKeys[0] === id ? [] : [id];
-                rowSelection.onChange(
-                  selectedRowKeys,
-                  selectedRowKeys.map(id => dataSourceMapRef.current.get(id)),
-                  { context }
-                );
+                rowSelection.onChange(selectedRowKeys, id, { context, checked: !isChecked });
               }
-            }}
-          >
+            }}>
             {rowSelection && rowSelection.type === 'checkbox' && (
               <Col className={classnames(style['col'], 'info-page-table-col')}>
                 <span className={classnames(style['col-content'], 'info-page-table-col-content')}>
@@ -102,8 +91,7 @@ const TableView = p => {
                         '--col-align': column.align || 'top',
                         '--col-justify': column.justify || 'flex-start'
                       }}
-                      className={classnames(style['col'], 'info-page-table-col')}
-                    >
+                      className={classnames(style['col'], 'info-page-table-col')}>
                       <span className={style['col-content']}>{computeDisplay({ column, placeholder, dataSource: item, context })}</span>
                     </Col>
                   );
