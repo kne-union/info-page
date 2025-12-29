@@ -9,11 +9,12 @@
 
     > :global(.ant-card-head) {
       .part-title:before {
+        margin-right: 20px;
         border-radius: 0 4px 4px 0;
       }
 
       .part-title-sub {
-        padding-left: 10px;
+        padding-left: 24px;
       }
     }
 
