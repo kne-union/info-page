@@ -8,3 +8,4 @@ export { default as computeColumnsValue, computeDisplay, computeColumnsDisplay }
 export { default as SplitLine } from './SplitLine';
 export { default as Flow } from './Flow';
 export { default as Report } from './Report';
+export { default as Score } from './Score';
