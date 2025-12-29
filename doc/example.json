@@ -2,8 +2,8 @@
   "isFull": false,
   "list": [
     {
-      "title": "InfoPage",
-      "description": "这里填写示例说明",
+      "title": "基础布局",
+      "description": "展示InfoPage容器组件和Part区块组件的基本使用方法",
       "code": "./base.js",
       "scope": [
         {
@@ -20,8 +20,8 @@
       ]
     },
     {
-      "title": "Content",
-      "description": "展示了一个基本内容",
+      "title": "内容列表",
+      "description": "支持多列布局和标签对齐的灵活内容展示组件",
       "code": "./content.js",
       "scope": [
         {
@@ -38,8 +38,8 @@
       ]
     },
     {
-      "title": "Descriptions",
-      "description": "展示一个信息详情",
+      "title": "描述列表",
+      "description": "二维数组结构的详情信息展示，适合表单数据展示",
       "code": "./descriptions.js",
       "scope": [
         {
@@ -56,8 +56,8 @@
       ]
     },
     {
-      "title": "CentralContent",
-      "description": "请尽量使用该组件代替Descriptions组件。该组件比Descriptions组件添加了数据格式化和灵活的空判断和自定义空展示，并且优化了排列，可以实现任何栅格大小的数据项复杂组合。实现了尾行优化，使你不必担心末尾项的宽度问题，程序会自动计算并占满该行。",
+      "title": "智能布局",
+      "description": "支持数据格式化和自动栅格优化的高级内容展示组件",
       "code": "./central-content.js",
       "scope": [
         {
@@ -74,8 +74,8 @@
       ]
     },
     {
-      "title": "TableView",
-      "description": "",
+      "title": "表格视图",
+      "description": "支持行选择、固定表头和多数据展示的表格组件",
       "code": "./table-view.js",
       "scope": [
         {
@@ -92,8 +92,8 @@
       ]
     },
     {
-      "title": "SplitLine",
-      "description": "",
+      "title": "分割线展示",
+      "description": "支持图标和垂直/横向布局的紧凑信息展示",
       "code": "./split-line.js",
       "scope": [
         {
@@ -118,8 +118,8 @@
       ]
     },
     {
-      "title": "Flow",
-      "description": "",
+      "title": "流程步骤",
+      "description": "支持自定义渲染和多种状态的流程时序展示组件",
       "code": "./flow.js",
       "scope": [
         {
@@ -136,8 +136,8 @@
       ]
     },
     {
-      "title": "Report",
-      "description": "",
+      "title": "报告页面",
+      "description": "完整的测评报告生成组件，支持评分、表格和详细描述",
       "code": "./report.js",
       "scope": [
         {

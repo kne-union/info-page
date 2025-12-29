@@ -5,7 +5,7 @@ import List from './List';
 import Result from './Result';
 import Table from './Table';
 import Part from './Part';
-import Score from './Score';
+import Score from '../Score';
 import PrintPageBreak from './PrintPageBreak';
 import classnames from 'classnames';
 

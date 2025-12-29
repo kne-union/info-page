@@ -17,9 +17,9 @@ const ScoreItem = ({ score, staticScore }) => {
   );
 };
 
-const Score = ({ className, value, total = 5 }) => {
+const Score = ({ className, value, gap = 4, total = 5 }) => {
   return (
-    <Row justify="space-between" gutter={[4, 0]} className={classnames(className, 'score-view', style['score'])} wrap={false} flex={1}>
+    <Row justify="space-between" gutter={[gap, 0]} className={classnames(className, 'score-view', style['score'])} wrap={false} flex={1}>
       {Array.from({ length: total }).map((n, index) => (
         <Col key={index + 1} span={5} className={classnames('score-item-col', style['score-item-col'])}>
           <ScoreItem score={value} staticScore={index + 1} />

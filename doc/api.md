@@ -1,261 +1,202 @@
 ### InfoPage
+信息展示页面容器组件，提供统一的页面布局和间距控制
 
-同 [`Ant Design Card`](https://ant.design/components/Card#api)
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| className | string | 否 | - | 自定义样式类名 |
+| children | ReactNode | 否 | - | 子组件内容 |
 
-新增参数：
+### InfoPage.Part
+信息展示区块组件，用于包装具体的信息内容
 
-| 属性名       | 说明                       | 类型        | 默认值 |
-|-----------|--------------------------|-----------|-----|
-| subtitle  | 副标题                      | ReactNode | -   |
-| className | `InfoPage` 的 `className` | string    | -   |
-
-#### InfoPage.Part
-
-同 [`Ant Design Card`](https://ant.design/components/Card#api)
-
-新增参数：
-
-| 属性名       | 说明                   | 类型        | 默认值 |
-|-----------|----------------------|-----------|-----|
-| subtitle  | 副标题                  | ReactNode | -   |
-| className | `Part` 的 `className` | string    | -   |
-
-#### InfoPage.Collapse
-
-同 [`Ant Design Collapse`](https://ant.design/components/Collapse#collapse)
-
-新增参数：
-
-| 属性名       | 说明                   | 类型     | 默认值 |
-|-----------|----------------------|--------|-----|
-| className | `Part` 的 `className` | string | -   |
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| className | string | 否 | - | 自定义样式类名 |
+| title | ReactNode | 否 | - | 区块标题 |
+| subtitle | ReactNode | 否 | - | 区块副标题 |
+| extra | ReactNode | 否 | - | 区块额外操作区域 |
+| children | ReactNode | 否 | - | 区块内容 |
+| bordered | boolean | 否 | false | 是否显示边框 |
 
 ### Content
+通用内容展示组件，支持标签-内容的灵活布局
 
-| 属性名        | 说明                                                                                  | 类型                | 默认值  |
-|------------|-------------------------------------------------------------------------------------|-------------------|------|
-| list       | `Content` 的内容列表                                                                     | `listItemProps[]` | []   |
-| labelAlign | `label` 的对齐方式可以传入的值 `left,right,center,auto`,为 `auto` 时 `label` 不计算最小宽度             | string            | left |
-| col        | 列数                                                                                  | number            | 1    |
-| size       | 默认为 `14px`，可以传值为 `small`，`size` 为 `small` 时字号为 `12px`                               | string            | -    |
-| gutter     | 栅格间隔，可以写成像素值或支持响应式的对象写法来设置水平间隔 `{ xs: 8, sm: 16, md: 24}`。或者使用数组形式同时设置 [水平间距, 垂直间距] | number            | 0    |
-| className  | `Content` 的 `className`                                                             | string            | -    |
-| itemRender | 接收 `Content Inner` 和 `Inner` 的 `label, content, index`，可以根据数据信息返回想要渲染的内容            | function          | -    |
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| list | array | 否 | [] | 展示数据列表 |
+| labelAlign | string | 否 | 'left' | 标签对齐方式，可选 'left'、'right'、'auto' |
+| col | number | 否 | 1 | 每行显示的列数 |
+| gutter | number | 否 | 0 | 栅格间隔 |
+| className | string | 否 | - | 自定义样式类名 |
+| size | string | 否 | - | 尺寸大小，可选 'small' |
+| itemRender | function | 否 | - | 自定义列表项渲染函数 |
 
-#### listItemProps
-
-| 属性名     | 说明                                                                                            | 类型                  | 默认值  |
-|---------|-----------------------------------------------------------------------------------------------|---------------------|------|
-| display | 数据是否展示，当为 `function` 时可以接收到 `item, list` 参数，`item` 为当前项配置，`dataSource` 为整个组件的 `dataSource` 配置 | boolean \| function | true |
-| block   | 是否单行显示该条信息                                                                                    | ReactNode \| string | -    |
-| label   | 标题                                                                                            | ReactNode \| string | -    |
-| content | 内容                                                                                            | ReactNode \| string | -    |
+#### 列表项数据结构
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| label | ReactNode | 否 | - | 标签内容 |
+| content | ReactNode | 否 | - | 内容区域 |
+| block | boolean | 否 | false | 是否占据整行 |
+| display | boolean/function | 否 | true | 是否显示该项 |
 
 ### Descriptions
+描述列表组件，类似于 Ant Design 的 Descriptions，专为详情页设计
 
-| 属性名        | 说明                                                                                      | 类型                      | 默认值   |
-|------------|-----------------------------------------------------------------------------------------|-------------------------|-------|
-| dataSource | 详情数据源，内部每个数组为一行数据，每行数据中每个对象为一列数据，每行最多包含 `2` 列内容，多余的会被丢弃                                 | `dataSourceItemProps[]` | -     |
-| itemRender | 接收 `Descriptions Inner` 和 `Inner` 的 `label, content, displaty, index`，可以根据数据信息返回想要渲染的内容 | function                | -     |
-| isFull     | 是否使用完整布局（标签占8列）                                                                         | boolean                 | false |
-| className  | 自定义类名                                                                                   | string                  | -     |
-
-#### dataSourceItemProps
-
-| 属性名     | 说明                                                                                                  | 类型                  | 默认值  |
-|---------|-----------------------------------------------------------------------------------------------------|---------------------|------|
-| display | 数据是否展示，当为 `function` 时可以接收到 `item, dataSource` 参数，`item` 为当前项配置，`dataSource` 为整个组件的 `dataSource` 配置 | boolean \| function | true |
-| label   | 数据展示的标题                                                                                             | ReactNode \| string | -    |
-| content | 数据展示的内容                                                                                             | ReactNode \| string | -    |
-
-### Flow
-
-| 参数        | 说明    | 类型            | 默认值 |
-|-----------|-------|---------------|-----|
-| className | 自定义类名 | string        | -   |
-| style     | 自定义样式 | CSSProperties | -   |
-| steps     | 步骤配置  | Step[]        | []  |
-| current   | 当前步骤  | number        | 0   |
-
-#### Step
-
-| 参数          | 说明   | 类型                                         | 默认值    |
-|-------------|------|--------------------------------------------|--------|
-| title       | 标题   | ReactNode                                  | -      |
-| subTitle    | 副标题  | ReactNode                                  | -      |
-| description | 描述   | ReactNode                                  | -      |
-| status      | 状态   | 'wait' \| 'process' \| 'finish' \| 'error' | 'wait' |
-| content     | 步骤内容 | ReactNode                                  | -      |
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| dataSource | array | 是 | - | 二维数组数据源，每个子数组代表一行 |
+| isFull | boolean | 否 | false | 标签是否占据更大空间 |
+| className | string | 否 | - | 自定义样式类名 |
+| itemRender | function | 否 | - | 自定义项渲染函数 |
 
 ### CentralContent
+居中内容展示组件，支持列定义和自动布局
 
-| 参数        | 说明    | 类型            | 默认值 |
-|-----------|-------|---------------|-----|
-| className | 自定义类名 | string        | -   |
-| style     | 自定义样式 | CSSProperties | -   |
-| children  | 内容    | ReactNode     | -   |
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| dataSource | object | 否 | {} | 数据源对象 |
+| columns | array | 否 | [] | 列定义数组 |
+| col | number | 否 | 2 | 展示列数 |
+| valueIsEmpty | function | 否 | isEmpty | 值为空的判断函数 |
+| emptyIsPlaceholder | boolean | 否 | true | 空值是否显示占位符 |
+| placeholder | ReactNode | 否 | '-' | 空值占位符 |
+| className | string | 否 | - | 自定义样式类名 |
+| context | object | 否 | - | 上下文数据 |
 
-### SplitLine
-
-| 参数        | 说明    | 类型                         | 默认值          |
-|-----------|-------|----------------------------|--------------|
-| className | 自定义类名 | string                     | -            |
-| style     | 自定义样式 | CSSProperties              | -            |
-| direction | 排列方向  | 'horizontal' \| 'vertical' | 'horizontal' |
-| items     | 项目配置  | SplitLineItem[]            | []           |
-
-#### SplitLineItem
-
-| 参数      | 说明 | 类型        | 默认值 |
-|---------|----|-----------|-----|
-| label   | 标签 | ReactNode | -   |
-| content | 内容 | ReactNode | -   |
+#### 列定义数据结构
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| name | string | 是 | - | 字段名称 |
+| title | ReactNode | 否 | - | 显示标题 |
+| format | string/function | 否 | - | 格式化规则 |
+| render | function | 否 | - | 自定义渲染函数 |
+| span | number | 否 | - | 栅格占位格数 |
 
 ### TableView
+表格视图组件，支持行选择和自定义列配置
 
-| 参数                 | 说明         | 类型                                                                    | 默认值         |
-|--------------------|------------|-----------------------------------------------------------------------|-------------|
-| className          | 自定义类名      | string                                                                | -           |
-| dataSource         | 数据源        | any[]                                                                 | []          |
-| columns            | 列配置        | Column[]                                                              | []          |
-| rowKey             | 行数据的唯一标识字段 | string \| ((record: any) => string)                                   | 'id'        |
-| rowSelection       | 行选择配置      | RowSelection                                                          | -           |
-| valueIsEmpty       | 判断值是否为空的函数 | (value: any) => boolean                                               | isEmpty     |
-| placeholder        | 空值占位符      | ReactNode                                                             | '-'         |
-| emptyIsPlaceholder | 是否显示空值占位符  | boolean                                                               | true        |
-| empty              | 无数据时的展示内容  | ReactNode                                                             | `<Empty />` |
-| onRowSelect        | 行选择回调      | (record: any, info: { columns: Column[], dataSource: any[] }) => void | -           |
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| dataSource | array | 否 | [] | 表格数据源 |
+| columns | array | 是 | - | 列定义数组 |
+| rowKey | string/function | 否 | 'id' | 行数据的唯一标识 |
+| rowSelection | object | 否 | - | 行选择配置 |
+| valueIsEmpty | function | 否 | isEmpty | 值为空的判断函数 |
+| emptyIsPlaceholder | boolean | 否 | true | 空值是否显示占位符 |
+| placeholder | ReactNode | 否 | '-' | 空值占位符 |
+| empty | ReactNode | 否 | <Empty /> | 空数据展示内容 |
+| onRowSelect | function | 否 | - | 行选择回调函数 |
+| render | function | 否 | - | 自定义渲染函数 |
+| context | object | 否 | - | 上下文数据 |
+| sticky | boolean | 否 | false | 表头是否固定 |
+| className | string | 否 | - | 自定义样式类名 |
 
-#### 行选择 (Row Selection) 配置
+#### 行选择配置
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| type | string | 否 | 'checkbox' | 选择类型，可选 'checkbox'、'radio' |
+| selectedRowKeys | array | 否 | [] | 已选中行的key数组 |
+| onChange | function | 否 | - | 选择变化回调函数 |
+| isSelectedAll | boolean | 否 | false | 是否全选状态 |
 
-| 参数              | 说明          | 类型                        | 默认值   | 可选值                  |
-|-----------------|-------------|---------------------------|-------|----------------------|
-| type            | 选择类型        | string                    | -     | 'checkbox' / 'radio' |
-| selectedRowKeys | 当前选中的行key数组 | array                     | []    | -                    |
-| onChange        | 选择变化时的回调函数  | function(selectedRowKeys) | -     | -                    |
-| isSelectedAll   | 是否全选        | boolean                   | false | true/false           |
+### Flow
+流程展示组件，基于 Ant Design Steps 组件扩展
 
-#### 列配置 (Columns)
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| dataSource | array | 否 | [] | 流程数据源 |
+| columns | array | 否 | [] | 列定义数组 |
+| size | string | 否 | 'small' | 步骤条大小 |
+| empty | ReactNode | 否 | <Empty /> | 空数据展示内容 |
+| valueIsEmpty | function | 否 | isEmpty | 值为空的判断函数 |
+| placeholder | ReactNode | 否 | '-' | 空值占位符 |
+| emptyIsPlaceholder | boolean | 否 | false | 空值是否显示占位符 |
+| className | string | 否 | - | 自定义样式类名 |
 
-| 参数                 | 说明           | 类型                 | 默认值          | 可选值                                  |
-|--------------------|--------------|--------------------|--------------|--------------------------------------|
-| name               | 列标识          | string             | -            | -                                    |
-| title              | 列标题          | ReactNode          | -            | -                                    |
-| span               | 列宽度（24栅格）    | number             | -            | -                                    |
-| align              | 对齐方式         | string             | 'top'        | 'top' / 'middle' / 'bottom'          |
-| justify            | 水平对齐方式       | string             | 'flex-start' | 'flex-start' / 'center' / 'flex-end' |
-| getValueOf         | 获取列值的函数      | function           | -            | -                                    |
-| format             | 格式化函数或格式化字符串 | function \| string | -            | -                                    |
-| render             | 自定义渲染函数      | function           | -            | -                                    |
-| renderPlaceholder  | 自定义空值渲染函数    | function           | -            | -                                    |
-| valueIsEmpty       | 判断值是否为空的函数   | function           | -            | -                                    |
-| emptyIsPlaceholder | 是否显示空值占位符    | boolean            | -            | -                                    |
-| placeholder        | 列空值占位符       | ReactNode          | -            | -                                    |
+### SplitLine
+分割线展示组件，用于横向展示多个字段
+
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| dataSource | object | 否 | - | 数据源对象 |
+| columns | array | 是 | - | 列定义数组 |
+| valueIsEmpty | function | 否 | isEmpty | 值为空的判断函数 |
+| placeholder | ReactNode | 否 | '-' | 空值占位符 |
+| emptyIsPlaceholder | boolean | 否 | false | 空值是否显示占位符 |
+| size | number | 否 | 0 | 分割线间距 |
+| labelGap | number | 否 | 4 | 标签与内容的间距 |
+| labelMode | string | 否 | 'horizontal' | 标签模式，可选 'horizontal'、'vertical' |
+| split | ReactNode | 否 | <Divider type="vertical" /> | 分割线组件 |
+| context | object | 否 | - | 上下文数据 |
+| className | string | 否 | - | 自定义样式类名 |
 
 ### Report
+报告容器组件，用于生成打印友好的报告页面
 
-#### 基础属性 (Props)
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| title | ReactNode | 否 | - | 报告标题 |
+| subtitle | ReactNode | 否 | - | 报告副标题 |
+| extra | ReactNode | 否 | - | 标题额外内容 |
+| border | boolean | 否 | true | 是否显示边框 |
+| children | ReactNode | 否 | - | 子组件内容 |
+| className | string | 否 | - | 自定义样式类名 |
 
-| 参数        | 说明       | 类型        | 默认值  | 可选值        |
-|-----------|----------|-----------|------|------------|
-| title     | 主标题      | ReactNode | -    | 任意可渲染节点    |
-| subtitle  | 副标题      | ReactNode | -    | 任意可渲染节点    |
-| extra     | 标题区域额外内容 | ReactNode | -    | 任意可渲染节点    |
-| border    | 是否显示边框   | boolean   | true | true/false |
-| className | 自定义类名    | string    | -    | -          |
-| children  | 内容区域     | ReactNode | -    | -          |
+### Score
+评分展示组件，以星形图标展示评分
 
-#### Report.List
+#### 属性说明
+| 属性名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| value | number | 是 | - | 当前评分值 |
+| gap | number | 否 | 4 | 评分项之间的间距 |
+| total | number | 否 | 5 | 总评分项数 |
+| className | string | 否 | - | 自定义样式类名 |
 
-| 参数          | 说明     | 类型     | 默认值 | 可选值 |
-|-------------|--------|--------|-----|-----|
-| report      | 报告数据对象 | object | -   | -   |
-| report.list | 列表数据数组 | array  | []  | -   |
+### formatView
+数据格式化工具函数，提供多种常用格式化规则
 
-##### listItem
+#### 方法说明
+| 方法名 | 参数 | 返回值 | 说明 |
+|--------|------|--------|------|
+| default | (value, format, context) | string/object | 根据格式规则格式化数据 |
 
-| 属性      | 说明    | 类型        | 默认值 |
-|---------|-------|-----------|-----|
-| label   | 列表项标签 | ReactNode | -   |
-| content | 列表项内容 | ReactNode | -   |
+#### 支持的格式化规则
+| 格式名 | 说明 | 参数 |
+|--------|------|------|
+| date | 日期格式化 | 模板字符串，默认 'YYYY-MM-DD' |
+| datetime | 日期时间格式化 | 模板字符串，默认 'YYYY-MM-DD HH:mm:ss' |
+| dateRange | 日期范围格式化 | 模板字符串、是否允许空值 |
+| boolean | 布尔值格式化 | true值对应的文本，默认 'true' |
+| number | 数字格式化 | 样式、单位、小数位数等 |
+| money | 金额格式化 | 单位，默认 '元' |
 
-#### Report.Part
+### computeColumnsValue
+列值计算工具函数，用于统一处理列数据的显示逻辑
 
-| 参数          | 说明     | 类型     | 默认值 | 可选值 |
-|-------------|--------|--------|-----|-----|
-| report      | 分区数据对象 | object | -   | -   |
-| report.list | 分区数据数组 | array  | []  | -   |
+#### 方法说明
+| 方法名 | 参数 | 返回值 | 说明 |
+|--------|------|--------|------|
+| default | (config) | array | 计算列的显示值 |
+| computeDisplay | (config) | ReactNode | 计算单个列的显示内容 |
+| computeColumnsDisplay | (config) | array | 计算所有列的显示内容 |
 
-##### listItem
-
-| 属性         | 说明       | 类型        | 默认值   | 备注        |
-|------------|----------|-----------|-------|-----------|
-| label      | 分区标签     | ReactNode | -     | 必填        |
-| content    | 分区内容     | ReactNode | -     | 必填        |
-| hasBgColor | 是否有背景色   | boolean   | false | 控制内容区域背景  |
-| ...props   | 其他HTML属性 | object    | -     | 会传递给外层div |
-
-#### Report.Result
-
-| 参数     | 说明     | 类型     | 默认值 | 必填 |
-|--------|--------|--------|-----|----|
-| report | 结果数据对象 | object | -   | 是  |
-
-##### report
-
-| 属性                 | 说明     | 类型            | 默认值 | 必填 |
-|--------------------|--------|---------------|-----|----|
-| report.total       | 总分数据   | object        | -   | 是  |
-| report.total.score | 总分值    | number/string | -   | 是  |
-| report.total.label | 总分标签   | string        | -   | 是  |
-| report.list        | 分项结果列表 | array         | []  | 否  |
-
-##### listItem
-
-| 属性      | 说明   | 类型            | 默认值 |
-|---------|------|---------------|-----|
-| label   | 分项标签 | string        | -   |
-| content | 分项内容 | ReactNode     | -   |
-| score   | 分项得分 | number/string | -   |
-
-#### Report.Score
-
-| 参数        | 说明       | 类型     | 默认值 | 可选值   |
-|-----------|----------|--------|-----|-------|
-| className | 自定义类名    | string | -   | -     |
-| value     | 当前得分值    | number | -   | 0-5   |
-| total     | 总分值/星星总数 | number | 5   | 任意正整数 |
-
-#### Report.Table
-
-| 参数               | 说明     | 类型     | 默认值 | 必填 |
-|------------------|--------|--------|-----|----|
-| report           | 表格数据对象 | object | -   | 是  |
-| report.list      | 表格数据数组 | array  | []  | 否  |
-| report.columns   | 列配置数组  | array  | -   | 是  |
-| report.group     | 分组配置数组 | array  | -   | 否  |
-| report.groupName | 分组字段名  | string | -   | 否  |
-
-##### columns
-
-| 参数         | 说明      | 类型      | 默认值   | 示例         |
-|------------|---------|---------|-------|------------|
-| name       | 列字段名    | string  | -     | "username" |
-| title      | 列标题     | string  | -     | "用户名"      |
-| span       | 列宽度比例   | number  | -     | 6          |
-| isSubTitle | 是否作为子标题 | boolean | false | true       |
-
-##### group
-
-| 参数   | 说明   | 类型     | 默认值 |
-|------|------|--------|-----|
-| name | 分组名称 | string | -   |
-
-#### Report.PrintPageBreak
-
-用于在打印时强制分页的组件。
-
-| 参数        | 说明    | 类型            | 默认值 |
-|-----------|-------|---------------|-----|
-| className | 自定义类名 | string        | -   |
-| style     | 自定义样式 | CSSProperties 
+#### 配置参数
+| 参数名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| columns | array | 是 | - | 列定义数组 |
+| dataSource | object/array | 是 | - | 数据源 |
+| context | object | 否 | - | 上下文数据 |
+| valueIsEmpty | function | 否 | isEmpty | 值为空的判断函数 |
+| emptyIsPlaceholder | boolean | 否 | true | 空值是否显示占位符 |
+| removeEmpty | boolean | 否 | true | 是否移除空值列 |
+| placeholder | ReactNode | 否 | '-' | 空值占位符 |

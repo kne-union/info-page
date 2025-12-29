@@ -1,6 +1,6 @@
 {
   "name": "@kne/info-page",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "一般用在复杂的详情展示页面，InfoPage提供了一个标准的展示信息的格式",
   "syntax": {
     "esmodules": true
@@ -8,6 +8,7 @@
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "init": "husky && npm run init-example",
     "start": "run-p start:lib start:md start:example",
@@ -15,7 +16,10 @@
     "init-example": "modules-dev-libs-init",
     "build:md": "npx @kne/md-doc",
     "start:md": "npx @kne/md-doc --watch",
-    "build:lib": "microbundle --no-compress --format modern,cjs --jsx React.createElement --jsxFragment React.Fragment",
+    "build:types": "cp src/index.d.ts dist/",
+    "build:package-manifest": "cp src/package-manifest.json dist/",
+    "build:lib-main": "microbundle --no-compress --format modern,cjs --jsx React.createElement --jsxFragment React.Fragment",
+    "build:lib": "run-s build:lib-main build:types build:package-manifest",
     "start:lib": "microbundle watch --no-compress --format modern,cjs --jsx React.createElement --jsxFragment React.Fragment",
     "build:example": "cd example && npm run build",
     "start:example": "cd example && npm run start",
