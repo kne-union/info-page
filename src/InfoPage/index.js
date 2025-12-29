@@ -5,12 +5,14 @@ import React from 'react';
 import Collapse from './Collapse';
 import style from './style.module.scss';
 
-const Part = ({ className, title, subtitle, extra, children, ...props }) => {
+const Part = ({ className, title, subtitle, extra, children, bordered, ...props }) => {
   return (
     <Card
       className={classnames(style['part'], 'part', className, {
         'no-title': !title,
-        [style['no-title']]: !title
+        [style['no-title']]: !title,
+        bordered: bordered,
+        [style['bordered']]: bordered
       })}
       variant="borderless"
       title={
@@ -22,8 +24,7 @@ const Part = ({ className, title, subtitle, extra, children, ...props }) => {
         )
       }
       extra={extra}
-      {...props}
-    >
+      {...props}>
       {children}
     </Card>
   );

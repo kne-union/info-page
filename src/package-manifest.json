@@ -1,0 +1,451 @@
+{
+  "description": "信息展示页面组件库，提供标准化的详情页展示格式",
+  "modules": {
+    "default": {
+      "description": "信息展示页面容器组件，提供统一的页面布局和间距控制",
+      "type": "ReactNode",
+      "props": {
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        },
+        "children": {
+          "description": "子组件内容",
+          "type": "ReactNode"
+        }
+      }
+    },
+    "InfoPage": {
+      "description": "信息展示页面容器组件，提供统一的页面布局和间距控制",
+      "type": "ReactNode",
+      "props": {
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        },
+        "children": {
+          "description": "子组件内容",
+          "type": "ReactNode"
+        }
+      }
+    },
+    "InfoPage.Part": {
+      "description": "信息展示区块组件，用于包装具体的信息内容",
+      "type": "ReactNode",
+      "props": {
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        },
+        "title": {
+          "description": "区块标题",
+          "type": "ReactNode"
+        },
+        "subtitle": {
+          "description": "区块副标题",
+          "type": "ReactNode"
+        },
+        "extra": {
+          "description": "区块额外操作区域",
+          "type": "ReactNode"
+        },
+        "children": {
+          "description": "区块内容",
+          "type": "ReactNode"
+        },
+        "bordered": {
+          "description": "是否显示边框",
+          "type": "boolean"
+        }
+      }
+    },
+    "Content": {
+      "description": "通用内容展示组件，支持标签-内容的灵活布局",
+      "type": "ReactNode",
+      "props": {
+        "list": {
+          "description": "展示数据列表",
+          "type": "array"
+        },
+        "labelAlign": {
+          "description": "标签对齐方式",
+          "type": "string"
+        },
+        "col": {
+          "description": "每行显示的列数",
+          "type": "number"
+        },
+        "gutter": {
+          "description": "栅格间隔",
+          "type": "number"
+        },
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        },
+        "size": {
+          "description": "尺寸大小",
+          "type": "string"
+        },
+        "itemRender": {
+          "description": "自定义列表项渲染函数",
+          "type": "function"
+        }
+      }
+    },
+    "Descriptions": {
+      "description": "描述列表组件，二维数组结构的详情信息展示",
+      "type": "ReactNode",
+      "props": {
+        "dataSource": {
+          "description": "二维数组数据源，每个子数组代表一行",
+          "type": "array"
+        },
+        "isFull": {
+          "description": "标签是否占据更大空间",
+          "type": "boolean"
+        },
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        },
+        "itemRender": {
+          "description": "自定义项渲染函数",
+          "type": "function"
+        }
+      }
+    },
+    "CentralContent": {
+      "description": "居中内容展示组件，支持列定义和自动布局优化",
+      "type": "ReactNode",
+      "props": {
+        "dataSource": {
+          "description": "数据源对象",
+          "type": "object"
+        },
+        "columns": {
+          "description": "列定义数组",
+          "type": "array"
+        },
+        "col": {
+          "description": "展示列数",
+          "type": "number"
+        },
+        "valueIsEmpty": {
+          "description": "值为空的判断函数",
+          "type": "function"
+        },
+        "emptyIsPlaceholder": {
+          "description": "空值是否显示占位符",
+          "type": "boolean"
+        },
+        "placeholder": {
+          "description": "空值占位符",
+          "type": "ReactNode"
+        },
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        },
+        "context": {
+          "description": "上下文数据",
+          "type": "object"
+        }
+      }
+    },
+    "TableView": {
+      "description": "表格视图组件，支持行选择、固定表头和自定义列配置",
+      "type": "ReactNode",
+      "props": {
+        "dataSource": {
+          "description": "表格数据源",
+          "type": "array"
+        },
+        "columns": {
+          "description": "列定义数组",
+          "type": "array"
+        },
+        "rowKey": {
+          "description": "行数据的唯一标识",
+          "type": "string|function"
+        },
+        "rowSelection": {
+          "description": "行选择配置",
+          "type": "object"
+        },
+        "valueIsEmpty": {
+          "description": "值为空的判断函数",
+          "type": "function"
+        },
+        "emptyIsPlaceholder": {
+          "description": "空值是否显示占位符",
+          "type": "boolean"
+        },
+        "placeholder": {
+          "description": "空值占位符",
+          "type": "ReactNode"
+        },
+        "empty": {
+          "description": "空数据展示内容",
+          "type": "ReactNode"
+        },
+        "onRowSelect": {
+          "description": "行选择回调函数",
+          "type": "function"
+        },
+        "render": {
+          "description": "自定义渲染函数",
+          "type": "function"
+        },
+        "context": {
+          "description": "上下文数据",
+          "type": "object"
+        },
+        "sticky": {
+          "description": "表头是否固定",
+          "type": "boolean"
+        },
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        }
+      }
+    },
+    "Flow": {
+      "description": "流程展示组件，基于Steps的时序信息展示",
+      "type": "ReactNode",
+      "props": {
+        "dataSource": {
+          "description": "流程数据源",
+          "type": "array"
+        },
+        "columns": {
+          "description": "列定义数组",
+          "type": "array"
+        },
+        "size": {
+          "description": "步骤条大小",
+          "type": "string"
+        },
+        "empty": {
+          "description": "空数据展示内容",
+          "type": "ReactNode"
+        },
+        "valueIsEmpty": {
+          "description": "值为空的判断函数",
+          "type": "function"
+        },
+        "placeholder": {
+          "description": "空值占位符",
+          "type": "ReactNode"
+        },
+        "emptyIsPlaceholder": {
+          "description": "空值是否显示占位符",
+          "type": "boolean"
+        },
+        "progressDot": {
+          "description": "是否使用点状步骤条",
+          "type": "boolean"
+        },
+        "labelPlacement": {
+          "description": "标签放置位置",
+          "type": "string"
+        },
+        "direction": {
+          "description": "步骤条方向",
+          "type": "string"
+        },
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        }
+      }
+    },
+    "SplitLine": {
+      "description": "分割线展示组件，支持图标和紧凑信息展示",
+      "type": "ReactNode",
+      "props": {
+        "dataSource": {
+          "description": "数据源对象",
+          "type": "object"
+        },
+        "columns": {
+          "description": "列定义数组",
+          "type": "array"
+        },
+        "valueIsEmpty": {
+          "description": "值为空的判断函数",
+          "type": "function"
+        },
+        "placeholder": {
+          "description": "空值占位符",
+          "type": "ReactNode"
+        },
+        "emptyIsPlaceholder": {
+          "description": "空值是否显示占位符",
+          "type": "boolean"
+        },
+        "size": {
+          "description": "分割线间距",
+          "type": "number"
+        },
+        "labelGap": {
+          "description": "标签与内容的间距",
+          "type": "number"
+        },
+        "labelMode": {
+          "description": "标签模式",
+          "type": "string"
+        },
+        "split": {
+          "description": "分割线组件",
+          "type": "ReactNode"
+        },
+        "context": {
+          "description": "上下文数据",
+          "type": "object"
+        },
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        }
+      }
+    },
+    "Report": {
+      "description": "报告容器组件，用于生成打印友好的报告页面",
+      "type": "ReactNode",
+      "props": {
+        "title": {
+          "description": "报告标题",
+          "type": "ReactNode"
+        },
+        "subtitle": {
+          "description": "报告副标题",
+          "type": "ReactNode"
+        },
+        "extra": {
+          "description": "标题额外内容",
+          "type": "ReactNode"
+        },
+        "border": {
+          "description": "是否显示边框",
+          "type": "boolean"
+        },
+        "children": {
+          "description": "子组件内容",
+          "type": "ReactNode"
+        },
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        }
+      }
+    },
+    "Score": {
+      "description": "评分展示组件，以星形图标展示评分",
+      "type": "ReactNode",
+      "props": {
+        "value": {
+          "description": "当前评分值",
+          "type": "number"
+        },
+        "gap": {
+          "description": "评分项之间的间距",
+          "type": "number"
+        },
+        "total": {
+          "description": "总评分项数",
+          "type": "number"
+        },
+        "className": {
+          "description": "自定义样式类名",
+          "type": "string"
+        }
+      }
+    },
+    "formatView": {
+      "description": "数据格式化工具函数，提供多种常用格式化规则",
+      "type": "string|ReactNode",
+      "parameters": [
+        {
+          "name": "value",
+          "description": "需要格式化的值",
+          "type": "any"
+        },
+        {
+          "name": "format",
+          "description": "格式化规则字符串",
+          "type": "string"
+        },
+        {
+          "name": "context",
+          "description": "格式化上下文",
+          "type": "object"
+        }
+      ]
+    },
+    "defaultFormat": {
+      "description": "默认格式化规则集合",
+      "type": "object",
+      "properties": {
+        "date": {
+          "description": "日期格式化函数",
+          "type": "function"
+        },
+        "datetime": {
+          "description": "日期时间格式化函数",
+          "type": "function"
+        },
+        "dateRange": {
+          "description": "日期范围格式化函数",
+          "type": "function"
+        },
+        "boolean": {
+          "description": "布尔值格式化函数",
+          "type": "function"
+        },
+        "number": {
+          "description": "数字格式化函数",
+          "type": "function"
+        },
+        "money": {
+          "description": "金额格式化函数",
+          "type": "function"
+        }
+      }
+    },
+    "computeColumnsValue": {
+      "description": "列值计算工具函数，用于统一处理列数据的显示逻辑",
+      "type": "function",
+      "parameters": [
+        {
+          "name": "config",
+          "description": "列计算配置对象",
+          "type": "object"
+        }
+      ]
+    },
+    "computeColumnsValue.computeDisplay": {
+      "description": "计算单个列的显示内容",
+      "type": "ReactNode",
+      "parameters": [
+        {
+          "name": "config",
+          "description": "显示配置对象",
+          "type": "object"
+        }
+      ]
+    },
+    "computeColumnsValue.computeColumnsDisplay": {
+      "description": "计算所有列的显示内容",
+      "type": "array",
+      "parameters": [
+        {
+          "name": "config",
+          "description": "列计算配置对象",
+          "type": "object"
+        }
+      ]
+    }
+  }
+}

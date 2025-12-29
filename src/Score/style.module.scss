@@ -1,0 +1,31 @@
+.score {
+  height: 100%;
+  padding-top: 4px;
+}
+
+.score-item-col {
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.score-item {
+  width: 100%;
+  height: 14px;
+
+  &.is-grey {
+    background: #f1f1f1 !important;
+  }
+
+  &.low-score {
+    background: #f66969;
+  }
+
+  &.middle-score {
+    background: #ffb566;
+  }
+
+  &.high-score {
+    background: #a2de91;
+  }
+}

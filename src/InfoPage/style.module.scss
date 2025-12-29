@@ -2,6 +2,26 @@
   //border: none;
   //width: 100%;
   white-space: pre-wrap;
+
+  &.bordered {
+    border: 1px solid #eeeeee;
+    padding: 24px 24px 24px 0;
+
+    > :global(.ant-card-head) {
+      .part-title:before {
+        border-radius: 0 4px 4px 0;
+      }
+
+      .part-title-sub {
+        padding-left: 10px;
+      }
+    }
+
+    > :global(.ant-card-body) {
+      padding: 16px 24px 0;
+    }
+  }
+
   &.no-title {
     :global {
       .ant-card-body {
@@ -11,6 +31,7 @@
       }
     }
   }
+
   &:global(.ant-card:not(.ant-card-bordered)) {
     box-shadow: none;
   }
@@ -33,6 +54,7 @@
   }
 
   .part {
+
     :global(.ant-card-head) {
       padding-left: 0;
       padding-right: 0;
