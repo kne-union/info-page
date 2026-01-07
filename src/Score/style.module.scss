@@ -12,20 +12,6 @@
 .score-item {
   width: 100%;
   height: 14px;
-
-  &.is-grey {
-    background: #f1f1f1 !important;
-  }
-
-  &.low-score {
-    background: #f66969;
-  }
-
-  &.middle-score {
-    background: #ffb566;
-  }
-
-  &.high-score {
-    background: #a2de91;
-  }
+  background: var(--score-item-color);
+  min-width: 10px;
 }

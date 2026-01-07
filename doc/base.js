@@ -23,6 +23,9 @@ const BaseExample = () => {
           InfoPage.InfoPage.Part
         </InfoPage.Part>
       </InfoPage.Part>
+      <InfoPage.Part title="我是一个标题">
+        xxxx
+      </InfoPage.Part>
     </InfoPage>
   );
 };
