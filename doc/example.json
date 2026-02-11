@@ -38,6 +38,24 @@
       ]
     },
     {
+      "title": "内容展示",
+      "description": "展示Content组件的各种配置和用法",
+      "code": "./content-display.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },
+        {
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "描述列表",
       "description": "二维数组结构的详情信息展示，适合表单数据展示",
       "code": "./descriptions.js",
@@ -74,9 +92,45 @@
       ]
     },
     {
+      "title": "边框区块",
+      "description": "展示InfoPage.Part的bordered属性配合CentralContent使用",
+      "code": "./bordered-part-content.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },
+        {
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "表格视图",
       "description": "支持行选择、固定表头和多数据展示的表格组件",
       "code": "./table-view.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },
+        {
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "表格选择",
+      "description": "展示TableView组件的各种选择模式",
+      "code": "./table-selection.js",
       "scope": [
         {
           "name": "_InfoPage",
@@ -154,9 +208,45 @@
       ]
     },
     {
-      "title": "评分",
-      "description": "展示评分组件",
+      "title": "报告组件",
+      "description": "展示Report的各子组件：List、Result、Table、Part",
+      "code": "./report-components.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },
+        {
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "评分展示",
+      "description": "支持自定义总分和间距的星级评分组件",
       "code": "./score.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },
+        {
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
+      "title": "格式化视图",
+      "description": "展示formatView工具函数的各种格式化用法",
+      "code": "./format-view.js",
       "scope": [
         {
           "name": "_InfoPage",
