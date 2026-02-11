@@ -1,70 +1,86 @@
-const {Descriptions} = _InfoPage;
+const { Descriptions } = _InfoPage;
+const { Tag, Space } = antd;
 
 const BaseExample = () => {
   return (
     <Descriptions
       dataSource={[
+        // 基本信息分组
         [
-          { label: "客户名称", content: "腾讯" },
-          {
-            label: "发票抬头",
-            content: "腾讯科技公司",
-          },
+          { label: "订单编号", content: <strong style={{ color: '#1890ff' }}>ORD20240115001</strong> },
+          { label: "订单类型", content: <Tag color="blue">普通订单</Tag> },
         ],
         [
-          { label: "发票类型", content: "增值税专用发票" },
-          {
-            label: "发票开具日期",
-            content: "2022-08-15",
-          },
+          { label: "下单时间", content: "2024-01-15 10:30:25" },
+          { label: "支付时间", content: "2024-01-15 10:32:18" },
         ],
-        [{ label: "退票金额", content: "22000.00元" }],
+        [
+          { label: "客户名称", content: "深圳市腾讯计算机系统有限公司" },
+          { label: "客户类型", content: <Tag color="gold">VIP客户</Tag> },
+        ],
+        // 收货信息分组
+        [
+          { label: "收货人", content: "张三" },
+          { label: "联系电话", content: "138-0013-8000" },
+        ],
+        [
+          { label: "收货地址", content: "广东省深圳市南山区科技园科技中一路腾讯大厦A座18层" },
+        ],
+        // 商品信息分组
         [
           {
-            label: "发票号",
+            label: "商品清单",
             content: (
-              <div>
-                <div>00384895992774</div>
-                <div>00384895992774</div>
-                <div>00384895992774</div>
-                <div>00384895992774</div>
-              </div>
+              <Space direction="vertical" size={4}>
+                <div>1. 腾讯云服务器（2核4G）× 1台 - ¥3000.00</div>
+                <div>2. 云数据库 MySQL（50GB）× 1个 - ¥1200.00</div>
+                <div>3. 对象存储（500GB）× 1个 - ¥800.00</div>
+              </Space>
             ),
           },
         ],
+        // 金额信息分组
         [
-          { label: "是否需要重开发票", content: "否" },
-          {
-            label: "是否涉及金融变动",
-            content: "否",
-          },
+          { label: "商品总额", content: <strong>¥5,000.00</strong> },
+          { label: "运费", content: "¥0.00" },
         ],
         [
-          { label: "是否造成实质损失", content: "否" },
-          { label: "责任归属", content: "客户原因" },
+          { label: "优惠金额", content: <span style={{ color: '#52c41a' }}>-¥750.00</span> },
+          { label: "实付金额", content: <strong style={{ color: '#f5222d', fontSize: '16px' }}>¥4,250.00</strong> },
+        ],
+        // 发票信息分组
+        [
+          { label: "发票类型", content: "增值税专用发票" },
+          { label: "发票抬头", content: "深圳市腾讯计算机系统有限公司" },
         ],
         [
-          {
-            label: "退票原因",
-            content: "退票原因的描述退票原因的描述退票原因的描",
-          },
+          { label: "纳税人识别号", content: "914403007109410773" },
+          { label: "发票状态", content: <Tag color="success">已开具</Tag> },
         ],
-        [{ label: "附件", content: "附件名称" }],
+        // 售后信息分组
         [
-          {label: "操作时间", content: "2022-08-01 16:32"},
-          {label: "操作人", content: "西西歪", display: false},
+          { label: "退款状态", content: "无退款" },
+          { label: "发票抬头", content: "未申请" },
         ],
         [
+          { label: "订单状态", content: <Tag color="processing">处理中</Tag> },
           {
-            label: "超长内容",
-            content:
-              "超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容超长内容",
+            label: "预计送达",
+            content: "2024-01-17",
           },
+        ],
+        // 备注信息
+        [
           {
-            label: "超长英文",
-            content:
-              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            label: "订单备注",
+            content: "请务必在工作日配送，配送前请提前电话联系收货人。收到商品后请当面验货，确认无误后再签收。",
+            block: true
           },
+        ],
+        // 操作记录
+        [
+          { label: "创建时间", content: "2024-01-15 10:30:25" },
+          { label: "创建人", content: "张三（客户）" },
         ],
       ]}
     />

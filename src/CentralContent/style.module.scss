@@ -2,9 +2,30 @@
   border-bottom: 1px solid #eeeeee;
   border-right: 1px solid #eeeeee;
   line-height: 20px;
-/*  &:not(:last-child) {
-    border-bottom: none;
-  }*/
+  /*  &:not(:last-child) {
+      border-bottom: none;
+    }*/
+  &.compact {
+    border: none;
+
+    .table-view-label {
+      flex: none;
+      background: unset;
+      font-weight: bolder;
+      margin-bottom: 8px;
+      white-space: nowrap;
+    }
+
+    .table-view-item {
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    .table-view-content, .table-view-label {
+      border: none;
+      padding: 0 8px 0 0;
+    }
+  }
 }
 
 .table-view-col {

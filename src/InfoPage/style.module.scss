@@ -46,7 +46,6 @@
   :global(.ant-card-body) {
     padding: 16px 0 0 0;
     white-space: pre-wrap;
-    white-space: pre-wrap;
     word-break: break-word;
   }
 
@@ -89,8 +88,8 @@
   }
 }
 
-:global(.ant-modal-body) .part,
-:global(.ant-drawer-body) .part {
+:global(.ant-modal-body) .part:not(.bordered),
+:global(.ant-drawer-body) .part:not(.bordered) {
   &:global {
     & > .ant-card-body,
     & > .ant-card-head {

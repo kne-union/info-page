@@ -1,83 +1,132 @@
 const { TableView } = _InfoPage;
-const { Flex } = antd;
+const { Flex, Tag, Badge } = antd;
 const { useState } = React;
 
-const dataSource = [{
-  id: 'RC00101',
-  name: '张三',
-  birthday: '2020-03-03',
-  addTime: new Date(),
-  count: 2000.1322,
-  count2: 0.01234565,
-  count3: 1234523,
-  description: `描述描述描述描述描述描述描述描述`
-}, {
-  id: 'RC00102',
-  name: '李四',
-  birthday: '2020-03-03',
-  addTime: new Date(),
-  count: 2000.1322,
-  count2: 0.01234565,
-  count3: 1234523,
-  description: `描述描述描述描述描述描述描述描述`
-}, {
-  id: 'RC00103',
-  name: '王五',
-  birthday: '2020-03-03',
-  addTime: new Date(),
-  count: 2000.1322,
-  count2: 0.01234565,
-  count3: 1234523,
-  description: `描述描述描述描述描述描述描述描述`
-}, {
-  id: 'RC00104',
-  name: '马七',
-  birthday: '2020-03-03',
-  addTime: new Date(),
-  count: 2000.1322,
-  count2: 0.01234565,
-  count3: 1234523,
-  description: `描述描述描述描述描述描述描述描述`
-}];
+const dataSource = [
+  {
+    id: 'ORD20240115001',
+    customerName: '深圳市腾讯计算机系统有限公司',
+    contact: '张三',
+    phone: '138-0013-8000',
+    amount: 42500,
+    status: '已完成',
+    orderDate: '2024-01-15',
+    deliveryDate: '2024-01-17'
+  },
+  {
+    id: 'ORD20240115002',
+    customerName: '华为技术有限公司',
+    contact: '李四',
+    phone: '139-0014-9000',
+    amount: 85000,
+    status: '处理中',
+    orderDate: '2024-01-15',
+    deliveryDate: '2024-01-20'
+  },
+  {
+    id: 'ORD20240115003',
+    customerName: '阿里巴巴集团控股有限公司',
+    contact: '王五',
+    phone: '137-0015-7000',
+    amount: 120000,
+    status: '待发货',
+    orderDate: '2024-01-14',
+    deliveryDate: '2024-01-22'
+  },
+  {
+    id: 'ORD20240115004',
+    customerName: '北京字节跳动科技有限公司',
+    contact: '赵六',
+    phone: '136-0016-6000',
+    amount: 65000,
+    status: '已完成',
+    orderDate: '2024-01-13',
+    deliveryDate: '2024-01-16'
+  },
+  {
+    id: 'ORD20240115005',
+    customerName: '百度在线网络技术（北京）有限公司',
+    contact: '钱七',
+    phone: '135-0017-5000',
+    amount: 95000,
+    status: '已取消',
+    orderDate: '2024-01-12',
+    deliveryDate: ''
+  }
+];
 
-const columns = [{
-  name: 'id', title: 'ID'
-}, {
-  name: 'name', title: '姓名'
-}, {
-  name: 'birthday', title: '出生日期', format: 'date'
-}, {
-  name: 'addTime', title: '添加时间', format: 'datetime-YY(_)MM(_)DD()HH'
-}, {
-  name: 'count', title: '数量', format: 'number'
-}, {
-  name: 'description', title: '描述', span: 10
-}];
+const columns = [
+  { name: 'id', title: '订单编号' },
+  { name: 'customerName', title: '客户名称', span: 10 },
+  { name: 'contact', title: '联系人' },
+  { name: 'phone', title: '联系电话', render: (value) => value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') },
+  { name: 'amount', title: '订单金额(元)', render: (value) => <strong style={{ color: '#f5222d' }}>¥{value.toLocaleString()}</strong> },
+  { name: 'orderDate', title: '下单日期', format: 'date' },
+  { name: 'deliveryDate', title: '预计送达', format: 'date' },
+  { name: 'status', title: '订单状态', render: (value) => {
+    const config = {
+      '已完成': { color: 'success', text: '已完成' },
+      '处理中': { color: 'processing', text: '处理中' },
+      '待发货': { color: 'warning', text: '待发货' },
+      '已取消': { color: 'default', text: '已取消' }
+    };
+    const { color, text } = config[value] || { color: 'default', text: value };
+    return <Badge status={color} text={text} />;
+  }}
+];
 
 const WithCheckbox = () => {
   const [selectKeys, setSelectKeys] = useState([]);
-  return <TableView dataSource={dataSource} columns={columns} rowSelection={{
-    type: 'checkbox', allowSelectedAll: true, selectedRowKeys: selectKeys, onChange: setSelectKeys
-  }} />;
+  const totalAmount = selectKeys.reduce((sum, id) => sum + (dataSource.find(d => d.id === id)?.amount || 0), 0);
+  return (
+    <div>
+      <Flex justify="space-between" align="center" style={{ marginBottom: 12 }}>
+        <span>已选 <strong>{selectKeys.length}</strong> 个订单，总金额 <strong style={{ color: '#52c41a' }}>¥{totalAmount.toLocaleString()}</strong></span>
+      </Flex>
+      <TableView dataSource={dataSource} columns={columns} rowSelection={{
+        type: 'checkbox', allowSelectedAll: true, selectedRowKeys: selectKeys, onChange: setSelectKeys
+      }} />
+    </div>
+  );
 };
 
 const WithSelected = () => {
   const [selectKeys, setSelectKeys] = useState([]);
-  return <TableView dataSource={dataSource} columns={columns} rowSelection={{
-    selectedRowKeys: selectKeys, onChange: setSelectKeys
-  }} />;
+  const selectedOrder = dataSource.find(d => d.id === selectKeys[0]);
+  return (
+    <div>
+      <Flex justify="space-between" align="center" style={{ marginBottom: 12 }}>
+        <span>已选订单：{selectedOrder ? `${selectedOrder.id} (${selectedOrder.customerName})` : '无'}</span>
+        {selectedOrder && <Tag color="blue">¥{selectedOrder.amount.toLocaleString()}</Tag>}
+      </Flex>
+      <TableView dataSource={dataSource} columns={columns} rowSelection={{
+        type: 'radio', selectedRowKeys: selectKeys, onChange: setSelectKeys
+      }} />
+    </div>
+  );
 };
 
 const BaseExample = () => {
-  return <Flex vertical gap={10}>
-    <TableView dataSource={dataSource} columns={columns} />
-    <WithCheckbox />
-    <WithSelected />
-    <TableView dataSource={[]} columns={columns} />
-    <TableView style={{
-      height: '200px', overflowY: 'scroll'
-    }} dataSource={dataSource} columns={columns} sticky/>
-  </Flex>;
+  return (
+    <Flex vertical gap={16}>
+      <div style={{ background: '#f5f5f5', padding: '12px', borderRadius: '8px' }}>
+        订单列表 - 共 <strong>{dataSource.length}</strong> 个订单
+      </div>
+      <TableView dataSource={dataSource} columns={columns} />
+      <WithCheckbox />
+      <WithSelected />
+      <div style={{ padding: '16px', background: '#fafafa', border: '1px dashed #d9d9d9', borderRadius: '8px' }}>
+        暂无订单数据
+      </div>
+      <TableView
+        style={{ height: '250px', overflowY: 'scroll' }}
+        dataSource={dataSource}
+        columns={columns}
+        sticky
+        headerStyle={{ position: 'sticky', top: 0, zIndex: 1, background: '#fafafa' }}
+      />
+    </Flex>
+  );
 };
 
 render(<BaseExample />);
