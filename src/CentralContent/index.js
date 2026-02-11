@@ -7,7 +7,7 @@ import style from './style.module.scss';
 import computeColumnsValue from '../computeColumnsValue';
 
 const CentralContent = props => {
-  const { dataSource, columns, col, valueIsEmpty, emptyIsPlaceholder, placeholder, className, context } = Object.assign(
+  const { dataSource, columns, type, col, valueIsEmpty, emptyIsPlaceholder, placeholder, className, context } = Object.assign(
     {
       dataSource: {}, //数据
       columns: [], //列定义
@@ -33,7 +33,16 @@ const CentralContent = props => {
   }, [columns, col]);
 
   return (
-    <Row className={classnames(style['table-view'], className)}>
+    <Row
+      className={classnames(
+        style['table-view'],
+        'table-view',
+        {
+          compact: type === 'compact',
+          [style['compact']]: type === 'compact'
+        },
+        className
+      )}>
       {renderColumns.map((item, index) => {
         return (
           <Col
@@ -41,15 +50,13 @@ const CentralContent = props => {
             key={`${item.name}-${index}`}
             style={{
               '--col-width': `${(100 * item.span) / 24}%`
-            }}
-          >
+            }}>
             <Row className={classnames(style['table-view-item'], 'table-view-item')} wrap={false}>
               <Col
                 className={classnames(style['table-view-label'], 'table-view-label')}
                 style={{
                   '--col-label-width': `${(100 * 8) / (col * item.span)}%`
-                }}
-              >
+                }}>
                 {item.title}
               </Col>
               <Col className={classnames(style['table-view-content'], 'table-view-content')}>

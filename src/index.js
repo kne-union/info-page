@@ -1,7 +1,7 @@
 export { default } from './InfoPage';
-export { default as Content } from './Content';
-export { default as Descriptions } from './Descriptions';
-export { default as CentralContent } from './CentralContent';
+export { default as Content, default as InfoList } from './Content';
+export { default as Descriptions, default as DetailList } from './Descriptions';
+export { default as CentralContent, default as FieldView } from './CentralContent';
 export { default as TableView } from './TableView';
 export { default as formatView, defaultFormat } from './formatView';
 export { default as computeColumnsValue, computeDisplay, computeColumnsDisplay } from './computeColumnsValue';
