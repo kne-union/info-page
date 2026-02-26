@@ -20,15 +20,12 @@
   }
 
   background: var(--bg-color-grey-1);
-
-  .col {
-    white-space: nowrap;
-  }
 }
 
 .body {
   .col {
     cursor: pointer;
+    word-break: break-all;
   }
 
   &.is-selected-all {
@@ -63,7 +60,7 @@
 .col {
   border-bottom: 1px solid #f0f0f0;
   transition: background-color 300ms;
-  flex: var(--col-span) 0 var(--col-width);
+  flex: var(--col-span) calc(1 / var(--col-span)) var(--col-width);
   overflow: hidden;
   display: flex;
   align-items: var(--col-align);
