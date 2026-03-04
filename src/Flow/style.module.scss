@@ -41,7 +41,25 @@
     }
   }
 
+  &:global {
+    &:not(.ant-steps-dot) .ant-steps-item:not(.ant-steps-item-custom).ant-steps-item-active {
+      .ant-steps-item-icon {
+        background: var(--ant-cmp-steps-item-icon-bg-color);
+      }
+    }
+
+    &.ant-steps-dot .ant-steps-item .ant-steps-item-rail {
+      border-block-start-width: 1px;
+      border-inline-start-width: 1px;
+    }
+  }
+
   &:global(.ant-steps-vertical) {
+    :global(.ant-steps-item-rail) {
+      top: 28px !important;
+      bottom: 0 !important;
+    }
+
     > :global(.ant-steps-item) {
       :global(.ant-steps-item-title) {
         justify-content: space-between;
@@ -98,6 +116,7 @@
     :global(.ant-steps-item-icon) {
       position: relative;
       border: none;
+      transform: translate(8px, 8px);
     }
 
     //:global(.ant-steps-item-active),
@@ -142,7 +161,7 @@
           }
         }
 
-        border: 1px solid var(--font-color-grey-2);
+        border: 1px solid var(--font-color-grey-2) !important;
       }
 
       > :global(.ant-steps-item-container) {
@@ -157,24 +176,25 @@
 
     &:global(.ant-steps-vertical) {
       :global(.ant-steps-item-process) {
-        :global(.ant-steps-item-container) {
-          :global(.ant-steps-item-icon) {
-            background: var(--primary-color-2);
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        //:global(.ant-steps-item-container) {
+        :global(.ant-steps-item-icon) {
+          background: var(--primary-color-2) !important;
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
 
-            &:after {
-              content: ' ';
-              width: calc(var(--default-size) / 2);
-              height: calc(var(--default-size) / 2);
-              background: var(--primary-color);
-              display: inline-block !important;
-              border-radius: 50%;
-            }
+          &:after {
+            content: ' ';
+            width: calc(var(--default-size) / 2);
+            height: calc(var(--default-size) / 2);
+            background: var(--primary-color);
+            display: inline-block !important;
+            border-radius: 50%;
           }
         }
+
+        //}
       }
     }
   }
@@ -344,6 +364,14 @@
         }
       }
     }
+  }
+
+  :global(.ant-steps-item-icon-number) {
+    display: none;
+  }
+
+  :global(.ant-steps-item-icon-finish) {
+    display: none;
   }
 }
 
