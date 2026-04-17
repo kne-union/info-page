@@ -21,7 +21,7 @@ const TableView = p => {
     },
     p
   );
-  const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect, render, context, sticky, ...others } = props;
+  const { className, dataSource, columns, rowKey, rowSelection, valueIsEmpty, emptyIsPlaceholder, placeholder, empty, onRowSelect, render, context, sticky, headerStyle, ...others } = props;
   const defaultSpan = useMemo(() => {
     const assignedSpan = columns.reduce((a, b) => {
       return a + (b.span || 0);
@@ -70,9 +70,10 @@ const TableView = p => {
                 const selectedRowKeys = rowSelection.selectedRowKeys.length && rowSelection.selectedRowKeys[0] === id ? [] : [id];
                 rowSelection.onChange(selectedRowKeys, id, { context, checked: !isChecked });
               }
-            }}>
+            }}
+          >
             {rowSelection && rowSelection.type === 'checkbox' && (
-              <Col className={classnames(style['col'], 'info-page-table-col')}>
+              <Col className={classnames(style['col'], style['col-fixed'], 'info-page-table-col')}>
                 <span className={classnames(style['col-content'], 'info-page-table-col-content')}>
                   <Checkbox disabled={item.disabled || rowSelection.isSelectedAll} checked={(rowSelection.isSelectedAll && !item.disabled) || isChecked} />
                 </span>
@@ -91,7 +92,8 @@ const TableView = p => {
                         '--col-align': column.align || 'top',
                         '--col-justify': column.justify || 'flex-start'
                       }}
-                      className={classnames(style['col'], 'info-page-table-col')}>
+                      className={classnames(style['col'], 'info-page-table-col')}
+                    >
                       <span className={style['col-content']}>{computeDisplay({ column, placeholder, dataSource: item, context })}</span>
                     </Col>
                   );

@@ -6,7 +6,7 @@ import Label from '../Label';
 import style from './style.module.scss';
 
 const Header = p => {
-  const { dataSource, columns, defaultSpan, rowKey, rowSelection, colsSize, setColsSize, sticky } = Object.assign(
+  const { dataSource, columns, defaultSpan, rowKey, rowSelection, colsSize, setColsSize, sticky, headerStyle } = Object.assign(
     {},
     {
       rowKey: 'id'
@@ -16,6 +16,7 @@ const Header = p => {
   return (
     <Row
       wrap={false}
+      style={headerStyle}
       className={classnames(
         style['header'],
         {
@@ -25,7 +26,7 @@ const Header = p => {
       )}
     >
       {rowSelection && rowSelection.type === 'checkbox' && (
-        <Col className={classnames(style['col'], 'info-page-table-col')}>
+        <Col className={classnames(style['col'], style['col-fixed'], 'info-page-table-col')}>
           <span className={classnames(style['col-content'], 'info-page-table-col-content')}>
             {rowSelection.allowSelectedAll ? (
               (() => {

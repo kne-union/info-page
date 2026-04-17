@@ -7,8 +7,6 @@ import get from 'lodash/get';
 import formatView from '../formatView';
 import { isEmpty } from '@kne/is-empty';
 
-//todo: 渲染方法迁移到computeColumnsValue
-
 export const ActionList = ({ name, action, options, content }) => {
   return (
     <div className={classnames('step-content-wrap', style['step-content-wrap'])}>

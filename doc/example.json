@@ -110,6 +110,24 @@
       ]
     },
     {
+      "title": "Modal中展示",
+      "description": "展示InfoPage在Modal弹窗中的典型用法",
+      "code": "./modal-example.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },
+        {
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "表格视图",
       "description": "支持行选择、固定表头和多数据展示的表格组件",
       "code": "./table-view.js",
