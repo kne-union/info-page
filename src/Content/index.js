@@ -52,8 +52,8 @@ const Content = ({ list = [], labelAlign = 'left', col = 1, gutter = 0, classNam
         .map((listItem, index) => {
           const { label, content, block } = listItem;
           const innerComponent = (
-            <Col span={block === true ? 24 : 24 / col} key={index} className={style['item']}>
-              <Space key={index} className={classnames(style['item'], 'content-item')}>
+            <Col span={block === true ? 24 : 24 / col} className={style['item']}>
+              <Space className={classnames(style['item'], 'content-item')}>
                 {label ? (
                   <div
                     style={
@@ -80,7 +80,8 @@ const Content = ({ list = [], labelAlign = 'left', col = 1, gutter = 0, classNam
               </Space>
             </Col>
           );
-          return typeof itemRender === 'function' ? itemRender(innerComponent, Object.assign({}, listItem, { index })) : innerComponent;
+          const item = typeof itemRender === 'function' ? itemRender(innerComponent, Object.assign({}, listItem, { index })) : innerComponent;
+          return React.cloneElement(item, { key: index });
         })}
     </Row>
   );
