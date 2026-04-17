@@ -77,6 +77,10 @@
   align-content: center;
 }
 
+.col-fixed {
+  flex: 0 0 auto;
+}
+
 .empty {
   padding: 8px;
 }
