@@ -1,6 +1,6 @@
 {
   "name": "@kne/info-page",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "一般用在复杂的详情展示页面，InfoPage提供了一个标准的展示信息的格式",
   "syntax": {
     "esmodules": true
@@ -19,7 +19,8 @@
     "build:types": "cp src/index.d.ts dist/",
     "build:package-manifest": "cp src/package-manifest.json dist/",
     "build:lib-main": "microbundle --no-compress --format modern,cjs --jsx React.createElement --jsxFragment React.Fragment",
-    "build:lib": "run-s build:lib-main build:types build:package-manifest",
+    "build:lib-css": "cat node_modules/@kne/table-view/dist/index.css >> dist/index.css",
+    "build:lib": "run-s build:lib-main build:lib-css build:types build:package-manifest",
     "start:lib": "microbundle watch --no-compress --format modern,cjs --jsx React.createElement --jsxFragment React.Fragment",
     "build:example": "cd example && npm run build",
     "start:example": "cd example && npm run start",
@@ -91,6 +92,7 @@
   },
   "dependencies": {
     "@kne/is-empty": "^1.0.1",
+    "@kne/table-view": "^0.1.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
     "lodash": "^4.17.21"

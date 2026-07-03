@@ -1,8 +1,9 @@
+import '@kne/table-view/dist/index.css';
 export { default } from './InfoPage';
 export { default as Content, default as InfoList } from './Content';
 export { default as Descriptions, default as DetailList } from './Descriptions';
 export { default as CentralContent, default as FieldView } from './CentralContent';
-export { default as TableView } from './TableView';
+export { default as TableView } from '@kne/table-view';
 export { default as formatView, defaultFormat } from './formatView';
 export { default as computeColumnsValue, computeDisplay, computeColumnsDisplay } from './computeColumnsValue';
 export { default as SplitLine } from './SplitLine';
