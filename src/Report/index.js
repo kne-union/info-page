@@ -9,7 +9,12 @@ import Score from '../Score';
 import PrintPageBreak from './PrintPageBreak';
 import classnames from 'classnames';
 
-const Report = ({ title, subtitle, extra, className, border, children }) => {
+const Report = ({ title, subtitle, extra, className, border, primaryColor, primaryColor1, children }) => {
+  const themeStyle = {
+    ...(primaryColor && { '--primary-color': primaryColor }),
+    ...(primaryColor1 && { '--primary-color-1': primaryColor1 })
+  };
+
   return (
     <div
       className={classnames(
@@ -21,6 +26,7 @@ const Report = ({ title, subtitle, extra, className, border, children }) => {
         },
         className
       )}
+      style={Object.keys(themeStyle).length ? themeStyle : undefined}
     >
       <Flex className={classnames('title-outer', style['title-outer'])} justify="space-between">
         {title && (
