@@ -144,6 +144,8 @@ export interface ReportProps extends BaseComponentProps {
   subtitle?: ReactNode;
   extra?: ReactNode;
   border?: boolean;
+  primaryColor?: string;
+  primaryColor1?: string;
 }
 
 // Score 组件类型

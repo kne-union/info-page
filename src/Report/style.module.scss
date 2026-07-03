@@ -27,7 +27,7 @@
 }
 
 .list-label-col {
-  background: #6d40a81a;
+  background: var(--primary-color-1);
   border-radius: 8px 0 0 8px;
   min-width: 80px;
 }
@@ -60,7 +60,7 @@
   }
 
   li::marker {
-    color: var(--marker-color, #6d40a8);
+    color: var(--primary-color);
     font-size: 16px;
     font-weight: bold;
   }
@@ -71,7 +71,7 @@
 }
 
 .result-total {
-  background: #6d40a81a;
+  background: var(--primary-color-1);
   padding: 22px 0;
   text-align: center;
   border-radius: 8px;
@@ -80,7 +80,7 @@
 
 .result-total-score {
   font-size: 32px;
-  color: var(--marker-color, #6d40a8);
+  color: var(--primary-color);
   font-weight: bold;
 }
 
@@ -109,7 +109,7 @@
 
 .result-item-score {
   font-size: 16px;
-  color: #6d40a8;
+  color: var(--primary-color);
 }
 
 .result-item-content {
@@ -126,13 +126,13 @@
 }
 
 .table-header {
-  background: #6d40a81a;
+  background: var(--primary-color-1);
   border-radius: 8px;
   font-weight: bold;
 }
 
 .table-sub-header {
-  background: #6d40a81a;
+  background: var(--primary-color-1);
   border-radius: 8px;
   font-weight: bold;
   margin-bottom: 12px;
@@ -174,15 +174,15 @@
     .score {
       font-size: 16px;
       line-height: 24px;
-      color: #6d40a8;
+      color: var(--primary-color);
       font-weight: bold;
     }
   }
 }
 
 .part-label {
-  color: var(--marker-color, #6d40a8);
-  background: var(--label-bg-color, #6d40a81a);
+  color: var(--primary-color);
+  background: var(--primary-color-1);
   font-size: 16px;
   padding: 5px 10px;
   display: inline-block;
@@ -198,7 +198,7 @@
     height: 0;
     border-bottom: transparent 8px solid;
     border-right: transparent 8px solid;
-    border-left: 8px solid var(--label-bg-color, #6d40a81a);
+    border-left: 8px solid var(--primary-color-1);
     left: 0;
     bottom: -8px;
   }
@@ -218,7 +218,7 @@
   }
 
   li::marker {
-    color: var(--marker-color, #6d40a8);
+    color: var(--primary-color);
     font-size: 16px;
   }
 
@@ -235,7 +235,7 @@
   :global {
     .content-title {
       font-weight: bold;
-      color: var(--marker-color, #6d40a8);
+      color: var(--primary-color);
 
       &.warning {
         color: #ffb566;
