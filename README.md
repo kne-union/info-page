@@ -694,7 +694,7 @@ render(<BaseExample />);
 
 - Modal中展示
 - 展示InfoPage在Modal弹窗中的典型用法
-- _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),antd(antd)
+- _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),(@kne/table-view/dist/index.css),antd(antd)
 
 ```jsx
 const { default: InfoPage, Content, TableView } = _InfoPage;
@@ -787,7 +787,7 @@ render(<ModalExample />);
 
 - 表格视图
 - 支持行选择、固定表头和多数据展示的表格组件
-- _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),antd(antd)
+- _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),(@kne/table-view/dist/index.css),antd(antd)
 
 ```jsx
 const { TableView } = _InfoPage;
@@ -927,7 +927,7 @@ render(<BaseExample />);
 
 - 表格选择
 - 展示TableView组件的各种选择模式
-- _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),antd(antd)
+- _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),(@kne/table-view/dist/index.css),antd(antd)
 
 ```jsx
 const { TableView } = _InfoPage;
