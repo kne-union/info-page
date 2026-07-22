@@ -1,7 +1,6 @@
-import React from 'react';
-import { Row, Col } from 'antd';
-import get from 'lodash/get';
 import classnames from 'classnames';
+import get from 'lodash/get';
+import React from 'react';
 import style from './style.module.scss';
 
 const Result = ({ className, report }) => {
@@ -9,14 +8,14 @@ const Result = ({ className, report }) => {
   const totalLabel = get(report, 'total.label');
   const list = get(report, 'list', []);
   return (
-    <Row wrap={false} gutter={16} className={classnames('result-view', className, style['result-view'])}>
-      <Col span={3} className={classnames('result-total-col', style['result-total-col'])}>
+    <div className={classnames('result-view', style['result-view'], className)}>
+      <div className={classnames('result-total-col', style['result-total-col'])}>
         <div className={classnames('result-total', style['result-total'])}>
           <div className={classnames('result-total-score', style['result-total-score'])}>{totalScore}</div>
           <div className={classnames('result-total-label', style['result-total-label'])}>{totalLabel}</div>
         </div>
-      </Col>
-      <Col span={21}>
+      </div>
+      <div className={classnames('result-list-col', style['result-list-col'])}>
         <div className={classnames('result-list', style['result-list'])}>
           {list.map(({ label, content, score }, index) => {
             return (
@@ -29,8 +28,8 @@ const Result = ({ className, report }) => {
             );
           })}
         </div>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 
