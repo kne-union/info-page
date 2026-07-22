@@ -1,4 +1,5 @@
-import { Card, Space, Flex } from 'antd';
+import { useIsMobile } from '@kne/responsive-utils';
+import { Card, Flex } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 
@@ -24,15 +25,17 @@ const Part = ({ className, title, subtitle, extra, children, bordered, ...props 
         )
       }
       extra={extra}
-      {...props}>
+      {...props}
+    >
       {children}
     </Card>
   );
 };
 
 const InfoPage = ({ className, children, ...props }) => {
+  const isMobile = useIsMobile();
   return (
-    <Flex {...props} className={className} vertical gap={24}>
+    <Flex {...props} className={className} vertical gap={isMobile ? 12 : 24}>
       {children}
     </Flex>
   );

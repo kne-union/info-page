@@ -1,6 +1,6 @@
 {
   "name": "@kne/info-page",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "一般用在复杂的详情展示页面，InfoPage提供了一个标准的展示信息的格式",
   "syntax": {
     "esmodules": true
@@ -91,6 +91,7 @@
   },
   "dependencies": {
     "@kne/is-empty": "^1.0.1",
+    "@kne/responsive-utils": "^0.1.15",
     "@kne/table-view": "^0.1.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",

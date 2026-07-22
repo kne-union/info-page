@@ -72,6 +72,12 @@ export interface CentralContentProps extends BaseComponentProps {
   emptyIsPlaceholder?: boolean;
   placeholder?: ReactNode;
   context?: object;
+  /** label 最大宽度；设置后超出该宽度允许换行。数字按 px 处理 */
+  labelMaxWidth?: number | string;
+  /** label 最小宽度，默认 100 */
+  labelMinWidth?: number | string;
+  /** content 最小宽度，默认 100 */
+  contentMinWidth?: number | string;
 }
 
 // TableView 组件类型
