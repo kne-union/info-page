@@ -93,7 +93,7 @@
     },
     {
       "title": "边框区块",
-      "description": "展示InfoPage.Part的bordered属性配合CentralContent使用",
+      "description": "外层 bordered Part 内嵌子 Card；内层去掉边框，标题保留二级标签样式",
       "code": "./bordered-part-content.js",
       "scope": [
         {
