@@ -24,6 +24,59 @@
       padding: 16px 0 0 24px;
     }
 
+    // 外层已有边框：内层 Part / 信息表不再叠边框与底色，标题仍用二级标签样式
+    .part {
+      background: transparent;
+
+      &.bordered {
+        border: none;
+        padding: 0;
+
+        > :global(.ant-card-head) {
+          .part-title:before {
+            margin-right: 8px;
+            border-radius: 2px;
+          }
+
+          .part-title-sub {
+            padding-left: 0;
+          }
+        }
+
+        > :global(.ant-card-body) {
+          padding: 8px 0 0;
+        }
+      }
+    }
+
+    :global {
+      .table-view {
+        border: none;
+
+        .table-view-label {
+          background: unset;
+        }
+
+        .table-view-label,
+        .table-view-content {
+          border: none;
+        }
+      }
+
+      .descriptions {
+        border: none;
+
+        .col-label {
+          background: unset;
+        }
+
+        .col-label,
+        .col-content {
+          border: none;
+        }
+      }
+    }
+
     @include resp.mobile-container {
       padding: 12px 12px 12px 0;
 

@@ -484,7 +484,7 @@ render(<BaseExample />);
 ```
 
 - 边框区块
-- 展示InfoPage.Part的bordered属性配合CentralContent使用
+- 外层 bordered Part 内嵌子 Card；内层去掉边框，标题保留二级标签样式
 - _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),antd(antd)
 
 ```jsx
@@ -494,121 +494,119 @@ const { useState } = React;
 
 const BaseExample = () => {
   const [open, setOpen] = useState(false);
-  const baseInfo = (
-    <InfoPage.Part bordered title="员工档案" subtitle="基本信息">
-      <CentralContent
-        type="compact"
-        dataSource={{
-          id: 'RC20240115001',
-          name: '张三',
-          gender: '男',
-          birthday: '1992-03-15',
-          idCard: '440301199203154512',
-          maritalStatus: '已婚',
-          education: '本科',
-          graduationSchool: '深圳大学',
-          major: '计算机科学与技术',
-          entryDate: '2020-03-15',
-          workYears: 4,
-          phone: '138-0013-8000',
-          email: 'zhangsan@tencent.com',
-          address: '广东省深圳市南山区科技园科技中一路腾讯大厦',
-          emergencyContact: '李四',
-          emergencyPhone: '139-0014-9000',
-          emergencyRelation: '配偶'
-        }}
-        col={3}
-        columns={[
-          {
-            name: 'id',
-            title: '员工编号',
-            block: true
-          },
-          {
-            name: 'name',
-            title: '姓名',
-            render: value => (
-              <Space align="center">
-                <Avatar style={{ backgroundColor: '#1890ff' }}>{value[0]}</Avatar>
-                <strong>{value}</strong>
-              </Space>
-            ),
-            span: 10
-          },
-          {
-            name: 'gender',
-            title: '性别'
-          },
-          {
-            name: 'birthday',
-            title: '出生日期',
-            format: 'date'
-          },
-          {
-            name: 'idCard',
-            title: '身份证号',
-            render: value => value.replace(/(\d{6})(\d{8})(\d{4})/, '$1********$3')
-          },
-          {
-            name: 'maritalStatus',
-            title: '婚姻状况'
-          },
-          {
-            name: 'education',
-            title: '学历'
-          },
-          {
-            name: 'graduationSchool',
-            title: '毕业院校'
-          },
-          {
-            name: 'major',
-            title: '专业'
-          },
-          {
-            name: 'entryDate',
-            title: '入职日期',
-            format: 'date'
-          },
-          {
-            name: 'workYears',
-            title: '工作年限',
-            format: 'number-suffix:年'
-          },
-          {
-            name: 'phone',
-            title: '联系电话',
-            render: value => value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
-          },
-          {
-            name: 'email',
-            title: '电子邮箱'
-          },
-          {
-            name: 'address',
-            title: '家庭住址',
-            block: true
-          },
-          {
-            name: 'emergencyContact',
-            title: '紧急联系人'
-          },
-          {
-            name: 'emergencyPhone',
-            title: '紧急联系电话',
-            render: value => value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
-          },
-          {
-            name: 'emergencyRelation',
-            title: '与本人关系'
-          }
-        ]}
-      />
-    </InfoPage.Part>
-  );
-  return (
-    <InfoPage>
-      {baseInfo}
+  const employeeCard = (
+    <InfoPage.Part bordered title="员工档案" subtitle="外层 bordered，内层子 Card 无边框，标题为二级标签样式">
+      <InfoPage.Part bordered title="基本信息">
+        <CentralContent
+          type="compact"
+          dataSource={{
+            id: 'RC20240115001',
+            name: '张三',
+            gender: '男',
+            birthday: '1992-03-15',
+            idCard: '440301199203154512',
+            maritalStatus: '已婚',
+            education: '本科',
+            graduationSchool: '深圳大学',
+            major: '计算机科学与技术',
+            entryDate: '2020-03-15',
+            workYears: 4,
+            phone: '138-0013-8000',
+            email: 'zhangsan@tencent.com',
+            address: '广东省深圳市南山区科技园科技中一路腾讯大厦',
+            emergencyContact: '李四',
+            emergencyPhone: '139-0014-9000',
+            emergencyRelation: '配偶'
+          }}
+          col={3}
+          columns={[
+            {
+              name: 'id',
+              title: '员工编号',
+              block: true
+            },
+            {
+              name: 'name',
+              title: '姓名',
+              render: value => (
+                <Space align="center">
+                  <Avatar style={{ backgroundColor: '#1890ff' }}>{value[0]}</Avatar>
+                  <strong>{value}</strong>
+                </Space>
+              ),
+              span: 10
+            },
+            {
+              name: 'gender',
+              title: '性别'
+            },
+            {
+              name: 'birthday',
+              title: '出生日期',
+              format: 'date'
+            },
+            {
+              name: 'idCard',
+              title: '身份证号',
+              render: value => value.replace(/(\d{6})(\d{8})(\d{4})/, '$1********$3')
+            },
+            {
+              name: 'maritalStatus',
+              title: '婚姻状况'
+            },
+            {
+              name: 'education',
+              title: '学历'
+            },
+            {
+              name: 'graduationSchool',
+              title: '毕业院校'
+            },
+            {
+              name: 'major',
+              title: '专业'
+            },
+            {
+              name: 'entryDate',
+              title: '入职日期',
+              format: 'date'
+            },
+            {
+              name: 'workYears',
+              title: '工作年限',
+              format: 'number-suffix:年'
+            },
+            {
+              name: 'phone',
+              title: '联系电话',
+              render: value => value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
+            },
+            {
+              name: 'email',
+              title: '电子邮箱'
+            },
+            {
+              name: 'address',
+              title: '家庭住址',
+              block: true
+            },
+            {
+              name: 'emergencyContact',
+              title: '紧急联系人'
+            },
+            {
+              name: 'emergencyPhone',
+              title: '紧急联系电话',
+              render: value => value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
+            },
+            {
+              name: 'emergencyRelation',
+              title: '与本人关系'
+            }
+          ]}
+        />
+      </InfoPage.Part>
+
       <InfoPage.Part bordered title="工作信息" subtitle="部门与职位">
         <CentralContent
           type="compact"
@@ -674,7 +672,11 @@ const BaseExample = () => {
           ]}
         />
       </InfoPage.Part>
-
+    </InfoPage.Part>
+  );
+  return (
+    <InfoPage>
+      {employeeCard}
       <InfoPage.Part bordered title="放在Modal中">
         <Button
           onClick={() => {
@@ -682,7 +684,9 @@ const BaseExample = () => {
           }}>
           打开Modal
         </Button>
-        <Modal title="员工档案" open={open} onCancel={()=>setOpen(false)}>{baseInfo}</Modal>
+        <Modal title="员工档案" open={open} onCancel={() => setOpen(false)}>
+          {employeeCard}
+        </Modal>
       </InfoPage.Part>
     </InfoPage>
   );
