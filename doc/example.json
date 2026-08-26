@@ -3,7 +3,7 @@
   "list": [
     {
       "title": "基础布局",
-      "description": "展示InfoPage容器组件和Part区块组件的基本使用方法",
+      "description": "展示 InfoPage / Part / Collapse / Report，可切换灰色背景验证半透明白底",
       "code": "./base.js",
       "scope": [
         {
