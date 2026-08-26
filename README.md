@@ -45,96 +45,191 @@ info-page 是一个专为复杂详情展示页面设计的 React 组件库，提
 #### 示例代码
 
 - 基础布局
-- 展示InfoPage容器组件和Part区块组件的基本使用方法
+- 展示 InfoPage / Part / Collapse / Report，可切换灰色背景验证半透明白底
 - _InfoPage(@kne/current-lib_info-page),(@kne/current-lib_info-page/dist/index.css),antd(antd)
 
 ```jsx
-const { default: InfoPage } = _InfoPage;
-const { Button, Space, Flex, Tag } = antd;
+const { default: InfoPage, Report, Score } = _InfoPage;
+const { Button, Space, Flex, Tag, Switch, Card } = antd;
+const { useState } = React;
 
 const BaseExample = () => {
+  const [grayBg, setGrayBg] = useState(false);
+
   return (
-    <Flex vertical gap={24}>
-      <Space direction="vertical" size={16}>
-        {/* 基础 Part 使用 */}
-        <InfoPage.Part title="个人信息" subtitle="展示基础 Part 用法">
-          <Space direction="vertical" size={8}>
-            <div><strong>姓名：</strong>张三</div>
-            <div><strong>性别：</strong>男</div>
-            <div><strong>年龄：</strong>28岁</div>
-          </Space>
-        </InfoPage.Part>
+    <Flex vertical gap={16}>
+      <Space align="center">
+        <span>灰色背景</span>
+        <Switch checked={grayBg} onChange={setGrayBg} />
+      </Space>
 
-        {/* 带 extra 的 Part */}
-        <InfoPage.Part 
-          title="联系方式" 
-          subtitle="展示标题和额外操作区"
-          extra={<Button type="primary" size="small">编辑</Button>}
-        >
-          <Space direction="vertical" size={8}>
-            <div><strong>手机：</strong>138-0013-8000</div>
-            <div><strong>邮箱：</strong>zhangsan@example.com</div>
-            <div><strong>地址：</strong>深圳市南山区科技园</div>
-          </Space>
-        </InfoPage.Part>
-
-        {/* 嵌套 Part */}
-        <InfoPage.Part title="工作经历">
-          <p>以下展示了 Part 的嵌套使用：</p>
-          <InfoPage.Part subtitle="现任职位" style={{ background: '#f5f5f5', padding: '12px' }}>
+      <div
+        style={
+          grayBg
+            ? {
+                padding: 24,
+                borderRadius: 8,
+                background: '#f0f0f0'
+              }
+            : undefined
+        }
+      >
+        <InfoPage>
+          <InfoPage.Part title="个人信息" subtitle="展示基础 Part 用法">
             <Space direction="vertical" size={8}>
-              <div><strong>公司：</strong>腾讯科技</div>
-              <div><strong>职位：</strong>高级前端工程师</div>
-              <div><strong>入职时间：</strong>2020年3月</div>
+              <div>
+                <strong>姓名：</strong>张三
+              </div>
+              <div>
+                <strong>性别：</strong>男
+              </div>
+              <div>
+                <strong>年龄：</strong>28岁
+              </div>
             </Space>
           </InfoPage.Part>
-        </InfoPage.Part>
 
-        {/* 带 bordered 的 Part */}
-        <InfoPage.Part title="项目经验" bordered>
-          <Space direction="vertical" size={8}>
-            <div><strong>项目名称：</strong>企业级管理系统</div>
-            <div><strong>技术栈：</strong>React、TypeScript、Ant Design</div>
-            <div><strong>职责：</strong>负责前端架构设计与核心功能开发</div>
-          </Space>
-        </InfoPage.Part>
-
-        {/* Collapse 折叠面板 */}
-        <InfoPage.Collapse
-          items={[
-            { 
-              key: '1', 
-              label: '教育背景', 
-              children: (
-                <Space direction="vertical" size={8}>
-                  <div><strong>学校：</strong>深圳大学</div>
-                  <div><strong>专业：</strong>计算机科学与技术</div>
-                  <div><strong>学历：</strong>本科</div>
-                  <div><strong>毕业时间：</strong>2018年6月</div>
-                </Space>
-              )
-            },
-            { 
-              key: '2', 
-              label: '技能证书', 
-              children: (
-                <Space wrap>
-                  <Tag color="blue">PMP项目管理</Tag>
-                  <Tag color="green">阿里云ACP认证</Tag>
-                  <Tag color="purple">AWS解决方案架构师</Tag>
-                </Space>
-              )
+          <InfoPage.Part
+            title="联系方式"
+            subtitle="展示标题和额外操作区"
+            extra={
+              <Button type="primary" size="small">
+                编辑
+              </Button>
             }
-          ]}
-        />
+          >
+            <Space direction="vertical" size={8}>
+              <div>
+                <strong>手机：</strong>138-0013-8000
+              </div>
+              <div>
+                <strong>邮箱：</strong>zhangsan@example.com
+              </div>
+              <div>
+                <strong>地址：</strong>深圳市南山区科技园
+              </div>
+            </Space>
+          </InfoPage.Part>
 
-        {/* 无标题 Part */}
-        <InfoPage.Part>
-          <div style={{ color: '#666', padding: '12px', background: '#fafafa' }}>
-            <strong>备注：</strong>以上信息仅供示例展示，不代表真实数据
-          </div>
-        </InfoPage.Part>
-      </Space>
+          <InfoPage.Part title="工作经历">
+            <p>以下展示了 Part 的嵌套使用：</p>
+            <InfoPage.Part title="现任职位">
+              <Space direction="vertical" size={8}>
+                <div>
+                  <strong>公司：</strong>腾讯科技
+                </div>
+                <div>
+                  <strong>职位：</strong>高级前端工程师
+                </div>
+                <div>
+                  <strong>入职时间：</strong>2020年3月
+                </div>
+              </Space>
+            </InfoPage.Part>
+          </InfoPage.Part>
+
+          <InfoPage.Part title="项目经验" bordered>
+            <Space direction="vertical" size={16} style={{ width: '100%' }}>
+              <Space direction="vertical" size={8}>
+                <div>
+                  <strong>项目名称：</strong>企业级管理系统
+                </div>
+                <div>
+                  <strong>技术栈：</strong>React、TypeScript、Ant Design
+                </div>
+                <div>
+                  <strong>职责：</strong>负责前端架构设计与核心功能开发
+                </div>
+              </Space>
+              <Card title="内嵌 antd Card" size="small" extra={<Button type="link">详情</Button>}>
+                Part 内放置普通 Card，应保持 antd 默认样式（标题栏边框、内边距、背景等不受 Part 影响）。
+              </Card>
+            </Space>
+          </InfoPage.Part>
+
+          <InfoPage.Collapse
+            items={[
+              {
+                key: '1',
+                label: '教育背景',
+                children: (
+                  <Space direction="vertical" size={8}>
+                    <div>
+                      <strong>学校：</strong>深圳大学
+                    </div>
+                    <div>
+                      <strong>专业：</strong>计算机科学与技术
+                    </div>
+                    <div>
+                      <strong>学历：</strong>本科
+                    </div>
+                    <div>
+                      <strong>毕业时间：</strong>2018年6月
+                    </div>
+                  </Space>
+                )
+              },
+              {
+                key: '2',
+                label: '技能证书',
+                children: (
+                  <Space wrap>
+                    <Tag color="blue">PMP项目管理</Tag>
+                    <Tag color="green">阿里云ACP认证</Tag>
+                    <Tag color="purple">AWS解决方案架构师</Tag>
+                  </Space>
+                )
+              }
+            ]}
+          />
+
+          <Report title="绩效报告" subtitle="半透明白底容器" border={false}>
+            <Space direction="vertical" size={24} style={{ width: '100%' }}>
+              <Report.Result
+                report={{
+                  total: { score: '88.5', label: '综合评分' },
+                  list: [
+                    {
+                      label: '代码质量',
+                      score: '95',
+                      content: '风格规范，注释完整，组件拆分合理。'
+                    },
+                    {
+                      label: '协作沟通',
+                      score: '86',
+                      content: '跨团队沟通顺畅，评审反馈及时。'
+                    }
+                  ]
+                }}
+              />
+              <Report.Part
+                report={{
+                  list: [
+                    {
+                      label: '备注',
+                      hasBgColor: true,
+                      content: (
+                        <ul>
+                          <li>
+                            <Score value={4} total={5} /> 能力达标
+                          </li>
+                          <li className="warning">需继续加强文档沉淀</li>
+                        </ul>
+                      )
+                    }
+                  ]
+                }}
+              />
+            </Space>
+          </Report>
+
+          <InfoPage.Part>
+            <div style={{ color: '#666' }}>
+              <strong>备注：</strong>以上信息仅供示例展示，不代表真实数据
+            </div>
+          </InfoPage.Part>
+        </InfoPage>
+      </div>
     </Flex>
   );
 };
