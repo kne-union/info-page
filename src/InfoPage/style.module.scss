@@ -172,7 +172,8 @@
       }
     }
 
-    > :global(.ant-card-body) {
+    // 内层 bordered 保留自身左内边距，避免被嵌套 Part 的 padding: 8px 0 清掉
+    &:not(.bordered) > :global(.ant-card-body) {
       padding: 8px 0;
       white-space: pre-wrap;
       word-break: break-word;
