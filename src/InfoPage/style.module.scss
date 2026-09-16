@@ -215,6 +215,39 @@
     word-break: break-word;
   }
 
+  // 兜底：外部若仍注入旧版「.part .ant-card-head」后代选择器（如 components-core 打包的旧 info-page CSS），
+  // 会误伤 Part 内普通 antd Card；这里用更高优先级写回 antd token，嵌套 InfoPage.Part 不受影响。
+  :global(.ant-card):not(.part) {
+    > :global(.ant-card-head) {
+      border-bottom: var(--ant-line-width) var(--ant-line-type) var(--ant-color-border-secondary);
+      min-height: var(--ant-card-header-height);
+      padding: 0 var(--ant-card-header-padding);
+      background: var(--ant-card-header-bg);
+
+      :global(.ant-card-extra) {
+        padding-inline-end: var(--ant-padding);
+      }
+    }
+
+    > :global(.ant-card-body) {
+      padding: var(--ant-card-body-padding);
+      background: transparent;
+      white-space: normal;
+      word-break: normal;
+    }
+
+    &:global(.ant-card-small) {
+      > :global(.ant-card-head) {
+        min-height: var(--ant-card-header-height-sm);
+        padding: 0 var(--ant-card-header-padding-sm);
+      }
+
+      > :global(.ant-card-body) {
+        padding: var(--ant-card-body-padding-sm);
+      }
+    }
+  }
+
   .part {
     > :global(.ant-card-head) {
       padding-left: 0;
