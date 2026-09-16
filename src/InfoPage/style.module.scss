@@ -110,6 +110,30 @@
         > :global(.ant-card-body) {
           padding: 8px 0 0;
         }
+
+        // part-level-root 重设为一级根：恢复 bordered 一级标题（色条贴边）与 body 左内边距
+        &:global(.part-level-root) {
+          > :global(.ant-card-head) {
+            padding-left: 0;
+
+            .part-title:before {
+              margin-right: 20px;
+              border-radius: 0 4px 4px 0;
+            }
+
+            .part-title-sub {
+              padding-left: 24px;
+            }
+          }
+
+          > :global(.ant-card-body) {
+            padding: 16px 0 0 24px;
+
+            @include resp.mobile-container {
+              padding: 8px 0 0 12px;
+            }
+          }
+        }
       }
     }
 
@@ -218,11 +242,21 @@
       }
     }
 
-    // 内层 bordered 保留自身左内边距，避免被嵌套 Part 的 padding: 8px 0 清掉
+    // 内层非 bordered 收紧；bordered 须显式写回左 24px，否则嵌套选择器 / 等权规则会盖掉
     &:not(.bordered) > :global(.ant-card-body) {
       padding: 8px 0;
       white-space: pre-wrap;
       word-break: break-word;
+    }
+
+    &.bordered > :global(.ant-card-body) {
+      padding: 16px 0 0 24px;
+      white-space: pre-wrap;
+      word-break: break-word;
+
+      @include resp.mobile-container {
+        padding: 8px 0 0 12px;
+      }
     }
   }
 }
@@ -237,7 +271,8 @@
   }
 
   &.bordered > :global(.ant-card-head) {
-    padding-left: 0; // 自身重置为一级：色条贴边
+    // 一级 bordered：色条贴边（与普通 .part.bordered 一致）
+    padding-left: 0;
 
     .part-title:before {
       margin-right: 20px;
@@ -246,6 +281,17 @@
 
     .part-title-sub {
       padding-left: 24px;
+    }
+  }
+
+  // 自身 bordered：嵌套在外层 .part 下时仍保住 body 左内边距
+  &.bordered > :global(.ant-card-body) {
+    padding: 16px 0 0 24px;
+    white-space: pre-wrap;
+    word-break: break-word;
+
+    @include resp.mobile-container {
+      padding: 8px 0 0 12px;
     }
   }
 
@@ -279,6 +325,16 @@
       white-space: pre-wrap;
       word-break: break-word;
     }
+
+    &.bordered > :global(.ant-card-body) {
+      padding: 16px 0 0 24px;
+      white-space: pre-wrap;
+      word-break: break-word;
+
+      @include resp.mobile-container {
+        padding: 8px 0 0 12px;
+      }
+    }
   }
 }
 
@@ -291,7 +347,8 @@
     }
 
     &.bordered > :global(.ant-card-head) {
-      padding-left: 0; // 重置为一级：色条贴边
+      // 一级 bordered：色条贴边
+      padding-left: 0;
 
       .part-title:before {
         margin-right: 20px;
@@ -300,6 +357,16 @@
 
       .part-title-sub {
         padding-left: 24px;
+      }
+    }
+
+    &.bordered > :global(.ant-card-body) {
+      padding: 16px 0 0 24px;
+      white-space: pre-wrap;
+      word-break: break-word;
+
+      @include resp.mobile-container {
+        padding: 8px 0 0 12px;
       }
     }
 
@@ -332,6 +399,16 @@
         padding: 8px 0;
         white-space: pre-wrap;
         word-break: break-word;
+      }
+
+      &.bordered > :global(.ant-card-body) {
+        padding: 16px 0 0 24px;
+        white-space: pre-wrap;
+        word-break: break-word;
+
+        @include resp.mobile-container {
+          padding: 8px 0 0 12px;
+        }
       }
     }
   }
