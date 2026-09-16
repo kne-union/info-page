@@ -1,23 +1,27 @@
+// Flow Steps：图标样式对齐升级前；连线居中交给 antd6（同步 icon-size 变量，勿覆盖 rail 定位）
 .steps {
-  :global(.ant-steps-item-title) {
+  :global(.kne-info-flow-item-title) {
     padding: 0;
     margin-bottom: 3px;
     font-size: var(--font-size-default) !important;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     font-weight: 500;
     color: var(--font-color);
+    line-height: 20px;
 
-    :global(.ant-steps-item-subtitle) {
+    :global(.kne-info-flow-item-subtitle) {
       color: var(--font-color-grey-1);
       font-size: var(--font-size-small);
       font-weight: 400;
     }
   }
 
-  :global(.ant-steps-item-description) {
+  :global(.kne-info-flow-item-content) {
     font-size: var(--font-size-small);
     color: var(--font-color-grey);
+    line-height: 16px;
 
     :global(.ant-space),
     :global(.ant-typography) {
@@ -25,103 +29,81 @@
     }
   }
 
-  :global(.ant-steps-item) {
-    > :global(.ant-steps-item-container) {
-      > :global(.ant-steps-item-content) {
-        > :global(.ant-steps-item-title) {
-          color: var(--font-color);
-          line-height: 20px;
-        }
-
-        > :global(.ant-steps-item-description) {
-          color: var(--font-color-grey);
-          line-height: 16px;
-        }
+  // active 图标底色（与升级前一致）
+  &:not(:global(.kne-info-flow-dot)):not(.steps-dot) {
+    :global(.kne-info-flow-item.ant-steps-item-active):not(.ant-steps-item-custom) {
+      :global(.kne-info-flow-item-icon) {
+        background: var(--ant-cmp-steps-item-icon-bg-color);
       }
     }
   }
 
-  &:global {
-    &:not(.ant-steps-dot) .ant-steps-item:not(.ant-steps-item-custom).ant-steps-item-active {
-      .ant-steps-item-icon {
-        background: var(--ant-cmp-steps-item-icon-bg-color);
-      }
-    }
-
-    &.ant-steps-dot .ant-steps-item .ant-steps-item-rail {
+  &:global(.kne-info-flow-dot),
+  &.steps-dot {
+    :global(.kne-info-flow-item-rail) {
       border-block-start-width: 1px;
       border-inline-start-width: 1px;
     }
   }
 
-  &:global(.ant-steps-vertical) {
-    :global(.ant-steps-item-rail) {
-      top: 28px !important;
-      bottom: 0 !important;
-    }
+  &:global(.kne-info-flow-vertical),
+  &.steps-vertical {
+    // 上下对称留白；勿改 rail 的 top/bottom/left（antd 靠它们居中并撑高度）
+    --ant-cmp-steps-vertical-rail-margin: 6px;
 
-    > :global(.ant-steps-item) {
-      :global(.ant-steps-item-title) {
+    > :global(.kne-info-flow-item) {
+      :global(.kne-info-flow-item-title) {
         justify-content: space-between;
       }
 
-      :global(.ant-steps-item-description) {
+      :global(.kne-info-flow-item-content) {
         padding-bottom: 16px;
       }
     }
   }
 
-  :global(.ant-steps-item-error) {
-    :global(.ant-steps-item-tail) {
-      &::after {
-        background-color: #f0f0f0;
-      }
+  :global(.kne-info-flow-item.ant-steps-item-error) {
+    :global(.kne-info-flow-item-rail)::after {
+      background-color: #f0f0f0;
     }
 
-    :global(.ant-steps-item-icon) {
-      > :global(.ant-steps-icon) {
-        color: #d73737;
-
-        :global(.ant-steps-icon-dot) {
-          background: #d73737;
-        }
-      }
+    :global(.kne-info-flow-item-icon) {
+      color: #d73737;
     }
 
-    :global(.ant-steps-item-container) {
-      > :global(.ant-steps-item-content) {
-        > :global(.ant-steps-item-title) {
-          color: var(--font-color);
-        }
-      }
+    :global(.kne-info-flow-item-title) {
+      color: var(--font-color);
     }
   }
 
-  :global(.ant-steps-item-wait) {
-    :global(.ant-steps-item-container) {
-      > :global(.ant-steps-item-content) {
-        > :global(.ant-steps-item-title),
-        > :global(.ant-steps-item-description) {
-          color: var(--font-color-grey-2);
-        }
-      }
+  :global(.kne-info-flow-item.ant-steps-item-wait) {
+    :global(.kne-info-flow-item-title),
+    :global(.kne-info-flow-item-content) {
+      color: var(--font-color-grey-2);
     }
   }
 
-  &:not(.steps-dot) {
-    :global(.ant-steps-icon) {
-      display: none;
-    }
-
-    :global(.ant-steps-item-icon) {
+  &:not(:global(.kne-info-flow-dot)):not(.steps-dot) {
+    :global(.kne-info-flow-item-icon) {
       position: relative;
       border: none;
-      transform: translate(8px, 8px);
+      transform: none;
+      box-sizing: border-box;
+      // 尺寸与 antd rail 计算变量对齐，保证横/竖连线过圆心
+      width: var(--default-size);
+      height: var(--default-size);
+      --ant-cmp-steps-icon-size: var(--default-size);
+
+      :global([class*='icon-number']),
+      :global([class*='icon-finish']),
+      :global([class*='icon-dot']),
+      > :global(*) {
+        display: none !important;
+      }
     }
 
-    //:global(.ant-steps-item-active),
-    :global(.ant-steps-item-finish) {
-      :global(.ant-steps-item-icon) {
+    :global(.kne-info-flow-item.ant-steps-item-finish) {
+      :global(.kne-info-flow-item-icon) {
         &::before {
           display: block;
           font-family: 'iconfont';
@@ -131,12 +113,14 @@
           left: 50%;
           transform: translate(-50%, -50%);
           color: var(--primary-color);
+          font-size: var(--default-size);
+          line-height: 1;
         }
       }
     }
 
-    :global(.ant-steps-item-error) {
-      :global(.ant-steps-item-icon) {
+    :global(.kne-info-flow-item.ant-steps-item-error) {
+      :global(.kne-info-flow-item-icon) {
         &::before {
           display: block;
           font-family: 'iconfont';
@@ -147,231 +131,66 @@
           transform: translate(-50%, -50%);
           color: #d73737;
           background-color: #fff;
+          font-size: var(--default-size);
+          line-height: 1;
         }
       }
     }
 
-    :global(.ant-steps-item-wait) {
-      :global(.ant-steps-item-icon) {
-        > :global(.ant-steps-icon) {
-          color: var(--font-color-grey-2);
-
-          .ant-steps-icon-dot {
-            color: var(--font-color-grey-2);
-          }
-        }
-
+    :global(.kne-info-flow-item.ant-steps-item-wait) {
+      :global(.kne-info-flow-item-icon) {
         border: 1px solid var(--font-color-grey-2) !important;
       }
 
-      > :global(.ant-steps-item-container) {
-        > :global(.ant-steps-item-content) {
-          > :global(.ant-steps-item-title),
-          > :global(.ant-steps-item-description) {
-            color: var(--font-color-grey-2);
-          }
-        }
+      :global(.kne-info-flow-item-title),
+      :global(.kne-info-flow-item-content) {
+        color: var(--font-color-grey-2);
       }
     }
 
-    &:global(.ant-steps-vertical) {
-      :global(.ant-steps-item-process) {
-        //:global(.ant-steps-item-container) {
-        :global(.ant-steps-item-icon) {
+    &:global(.kne-info-flow-vertical),
+    &.steps-vertical {
+      :global(.kne-info-flow-item.ant-steps-item-process) {
+        :global(.kne-info-flow-item-icon) {
           background: var(--primary-color-2) !important;
-          position: relative;
-          display: inline-flex;
+          display: flex;
           align-items: center;
           justify-content: center;
 
-          &:after {
+          &::after {
             content: ' ';
             width: calc(var(--default-size) / 2);
             height: calc(var(--default-size) / 2);
             background: var(--primary-color);
-            display: inline-block !important;
+            display: block !important;
             border-radius: 50%;
           }
         }
-
-        //}
       }
     }
   }
 
-  &-default:not(.steps-dot) {
+  &-default:not(:global(.kne-info-flow-dot)):not(.steps-dot) {
     --default-size: 24px;
-
-    :global(.ant-steps-item-tail) {
-      top: 8px;
-    }
-
-    &:global(.ant-steps-label-vertical) {
-      :global(.ant-steps-item-icon) {
-        margin-left: 46px;
-      }
-
-      :global(.ant-steps-item-tail) {
-        margin-left: 57px;
-        padding: 3.5px 18px;
-      }
-    }
-
-    &:global(.ant-steps-vertical) {
-      > :global(.ant-steps-item) {
-        > :global(.ant-steps-item-container) {
-          > :global(.ant-steps-item-icon) {
-            margin-top: 4px;
-          }
-
-          > :global(.ant-steps-item-tail) {
-            left: 12px;
-            padding: 34px 0 0;
-          }
-        }
-      }
-    }
-
-    :global(.ant-steps-item-icon) {
-      width: var(--default-size);
-      height: var(--default-size);
-    }
-
-    :global(.ant-steps-item-active),
-    :global(.ant-steps-item-finish) {
-      :global(.ant-steps-item-icon) {
-        &::before {
-          font-size: var(--default-size);
-        }
-      }
-    }
-
-    :global(.ant-steps-item-error) {
-      :global(.ant-steps-item-icon) {
-        &::before {
-          font-size: var(--default-size);
-        }
-      }
-    }
   }
 
-  &-small:not(.steps-dot) {
+  &-small:not(:global(.kne-info-flow-dot)):not(.steps-dot) {
     --default-size: 16px;
-
-    :global(.ant-steps-item-tail) {
-      top: 4px;
-    }
-
-    &:global(.ant-steps-label-vertical) {
-      :global(.ant-steps-item-icon) {
-        margin-left: 48px;
-      }
-
-      :global(.ant-steps-item-tail) {
-        margin-left: 56px;
-        padding: 3.5px 14px;
-      }
-    }
-
-    &:global(.ant-steps-vertical) {
-      > :global(.ant-steps-item) {
-        > :global(.ant-steps-item-container) {
-          > :global(.ant-steps-item-icon) {
-            margin-top: 4px;
-          }
-
-          > :global(.ant-steps-item-tail) {
-            left: 8px;
-            padding: 24px 0 0;
-          }
-        }
-      }
-    }
-
-    :global(.ant-steps-item-icon) {
-      width: var(--default-size);
-      height: var(--default-size);
-    }
-
-    :global(.ant-steps-item-active),
-    :global(.ant-steps-item-finish) {
-      :global(.ant-steps-item-icon) {
-        &::before {
-          font-size: var(--default-size);
-        }
-      }
-    }
-
-    :global(.ant-steps-item-error) {
-      :global(.ant-steps-item-icon) {
-        &::before {
-          font-size: var(--default-size);
-        }
-      }
-    }
   }
 
-  &.steps-dot {
-    :global(.ant-steps-item-process) {
-      :global(.ant-steps-item-container) {
-        :global(.ant-steps-item-icon) {
-          width: 8px;
-          height: 8px;
-
-          :global(.ant-steps-icon-dot) {
-            left: 1px;
-          }
-        }
-      }
-    }
-
-    &:global(.ant-steps-vertical) {
-      :global(.ant-steps-item-icon) {
-        margin-top: 8px !important;
-      }
-
-      :global(.ant-steps-item) {
-        > :global(.ant-steps-item-container) {
-          > :global(.ant-steps-item-tail) {
-            padding: 6px 0 6px;
-          }
-        }
-      }
-    }
-
-    &:global(:not(.ant-steps-vertical)) {
-      :global(.ant-steps-item) {
-        > :global(.ant-steps-item-container) {
-          > :global(.ant-steps-item-tail) {
-            top: 3px;
-
-            &::after {
-              height: 1px;
-            }
-          }
-        }
-      }
+  // 点状：勿覆盖 rail 定位；process 圆点尺寸跟 antd dot token
+  &.steps-dot,
+  &:global(.kne-info-flow-dot) {
+    &:global(.kne-info-flow-vertical),
+    &.steps-vertical {
+      --ant-cmp-steps-vertical-rail-margin: 6px;
     }
   }
 
   &.steps-dot.steps-record {
-    :global(.ant-steps-item) {
-      > :global(.ant-steps-item-container) {
-        > :global(.ant-steps-item-tail) {
-          &::after {
-            background-color: #f0f0f0;
-          }
-        }
-      }
+    :global(.kne-info-flow-item-rail)::after {
+      background-color: #f0f0f0;
     }
-  }
-
-  :global(.ant-steps-item-icon-number) {
-    display: none;
-  }
-
-  :global(.ant-steps-item-icon-finish) {
-    display: none;
   }
 }
 

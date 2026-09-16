@@ -125,9 +125,17 @@ export interface FlowProps extends BaseComponentProps {
   valueIsEmpty?: (value: any) => boolean;
   placeholder?: ReactNode;
   emptyIsPlaceholder?: boolean;
+  /** @deprecated 请优先使用 type="dot" */
   progressDot?: boolean;
+  /** @deprecated 请优先使用 titlePlacement */
   labelPlacement?: 'horizontal' | 'vertical';
+  titlePlacement?: 'horizontal' | 'vertical';
+  /** @deprecated 请优先使用 orientation */
   direction?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical';
+  type?: 'default' | 'navigation' | 'inline' | 'panel' | 'dot';
+  /** 透传 antd Steps classNames，与 FLOW_STEPS_CLASS_NAMES 合并 */
+  classNames?: Record<string, string> | ((info: any) => Record<string, string>);
 }
 
 // SplitLine 组件类型
@@ -210,6 +218,8 @@ export declare const computeColumnsValue: {
 export declare const InfoPage: FC<InfoPageProps> & {
   Part: FC<InfoPagePartProps>;
   Collapse: ComponentType<any>;
+  /** 挂到祖先或 Part 上，使标题从一级重新起算（根内再嵌套仍为二级胶囊） */
+  partRootClassName: 'part-level-root';
 };
 
 export declare const Content: FC<ContentProps> & {
@@ -226,7 +236,21 @@ export declare const TableView: FC<TableViewProps> & {
 
 export declare const Flow: FC<FlowProps> & {
   ActionList: FC<FlowActionListItem>;
+  classNames: {
+    item: string;
+    itemWrapper: string;
+    itemIcon: string;
+    itemSection: string;
+    itemHeader: string;
+    itemTitle: string;
+    itemSubtitle: string;
+    itemContent: string;
+    itemRail: string;
+  };
 };
+
+export declare const FLOW_STEPS_CLASS_NAMES: Flow['classNames'];
+export declare const mergeFlowStepsClassNames: (classNames?: Record<string, string> | ((info: any) => Record<string, string>)) => Record<string, string> | ((info: any) => Record<string, string>);
 
 export declare const SplitLine: FC<SplitLineProps>;
 

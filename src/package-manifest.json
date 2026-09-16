@@ -244,16 +244,32 @@
           "type": "boolean"
         },
         "progressDot": {
-          "description": "是否使用点状步骤条",
+          "description": "是否使用点状步骤条（已废弃，请用 type=dot）",
           "type": "boolean"
         },
+        "type": {
+          "description": "步骤条类型；点状为 dot",
+          "type": "string"
+        },
         "labelPlacement": {
+          "description": "标签放置位置（已废弃，请用 titlePlacement）",
+          "type": "string"
+        },
+        "titlePlacement": {
           "description": "标签放置位置",
           "type": "string"
         },
         "direction": {
+          "description": "步骤条方向（已废弃，请用 orientation）",
+          "type": "string"
+        },
+        "orientation": {
           "description": "步骤条方向",
           "type": "string"
+        },
+        "classNames": {
+          "description": "透传 antd Steps 语义 classNames",
+          "type": "object"
         },
         "className": {
           "description": "自定义样式类名",

@@ -6,6 +6,9 @@ import React from 'react';
 import Collapse from './Collapse';
 import style from './style.module.scss';
 
+/** 挂到祖先或 Part 上，使标题从一级重新起算（根内再嵌套仍为二级胶囊） */
+const PART_ROOT_CLASS_NAME = 'part-level-root';
+
 const Part = ({ className, title, subtitle, extra, children, bordered, ...props }) => {
   return (
     <Card
@@ -43,4 +46,5 @@ const InfoPage = ({ className, children, ...props }) => {
 
 InfoPage.Part = Part;
 InfoPage.Collapse = Collapse;
+InfoPage.partRootClassName = PART_ROOT_CLASS_NAME;
 export default InfoPage;
