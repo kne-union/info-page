@@ -7,6 +7,6 @@ export { default as TableView } from '@kne/table-view';
 export { default as formatView, defaultFormat } from './formatView';
 export { default as computeColumnsValue, computeDisplay, computeColumnsDisplay } from './computeColumnsValue';
 export { default as SplitLine } from './SplitLine';
-export { default as Flow } from './Flow';
+export { default as Flow, FLOW_STEPS_CLASS_NAMES, mergeFlowStepsClassNames } from './Flow';
 export { default as Report } from './Report';
 export { default as Score } from './Score';

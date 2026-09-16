@@ -141,14 +141,20 @@
 | columns            | array     | 否  | []         | 列定义数组                            |
 | size               | string    | 否  | 'small'    | 步骤条大小                            |
 | current            | number    | 否  | -          | 当前步骤（从0开始）                       |
-| direction          | string    | 否  | 'vertical' | 步骤条方向，可选 'vertical'、'horizontal' |
-| progressDot        | boolean   | 否  | false      | 是否使用点状步骤条                        |
-| labelPlacement     | string    | 否  | 'vertical' | 标签位置，可选 'vertical'、'horizontal'  |
+| orientation        | string    | 否  | 'vertical' | 步骤条方向（antd 6）；旧 `direction` 仍兼容 |
+| direction          | string    | 否  | 'vertical' | 已废弃，请用 orientation                |
+| type               | string    | 否  | -          | 步骤类型；点状用 `dot`                   |
+| progressDot        | boolean   | 否  | false      | 已废弃，请用 `type="dot"`               |
+| titlePlacement     | string    | 否  | 'vertical' | 标签位置（antd 6）；旧 `labelPlacement` 仍兼容 |
+| labelPlacement     | string    | 否  | 'vertical' | 已废弃，请用 titlePlacement             |
+| classNames         | object \| function | 否 | - | 透传 antd Steps 语义 classNames，与 `FLOW_STEPS_CLASS_NAMES` 合并 |
 | empty              | ReactNode | 否  | <Empty />  | 空数据展示内容                          |
 | valueIsEmpty       | function  | 否  | isEmpty    | 值为空的判断函数                         |
 | placeholder        | ReactNode | 否  | '-'        | 空值占位符                            |
 | emptyIsPlaceholder | boolean   | 否  | false      | 空值是否显示占位符                        |
 | className          | string    | 否  | -          | 自定义样式类名                          |
+
+依赖 **antd >= 6**。步骤条样式通过 `classNames` 语义槽位挂载稳定类名（`Flow.classNames` / `FLOW_STEPS_CLASS_NAMES`），不再覆盖 `.ant-steps-*` 内部节点。
 
 #### columns 列定义支持的 type 类型
 

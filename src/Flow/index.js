@@ -6,6 +6,7 @@ import style from './style.module.scss';
 import get from 'lodash/get';
 import formatView from '../formatView';
 import { isEmpty } from '@kne/is-empty';
+import { FLOW_STEPS_CLASS_NAMES, mergeFlowStepsClassNames } from './stepsClassNames';
 
 export const ActionList = ({ name, action, options, content }) => {
   return (
@@ -23,7 +24,24 @@ export const ActionList = ({ name, action, options, content }) => {
 };
 
 const Flow = p => {
-  const { className, dataSource, size, columns, empty, valueIsEmpty, placeholder, emptyIsPlaceholder, ...props } = Object.assign(
+  const {
+    className,
+    dataSource,
+    size,
+    columns,
+    empty,
+    valueIsEmpty,
+    placeholder,
+    emptyIsPlaceholder,
+    classNames: stepsSemanticClassNames,
+    progressDot,
+    labelPlacement,
+    titlePlacement,
+    direction,
+    orientation,
+    type,
+    ...props
+  } = Object.assign(
     {},
     {
       size: 'small',
@@ -56,9 +74,21 @@ const Flow = p => {
     return empty;
   }
 
+  const isDot = type === 'dot' || !!progressDot;
+  const stepsOrientation = orientation || direction || 'vertical';
+  const stepsTitlePlacement = titlePlacement || labelPlacement || 'vertical';
+  const stepsSize = size === 'default' ? 'middle' : size;
+
   return (
     <Steps
       {...props}
+      size={stepsSize}
+      type={isDot ? 'dot' : type}
+      orientation={stepsOrientation}
+      direction={stepsOrientation}
+      titlePlacement={stepsTitlePlacement}
+      labelPlacement={stepsTitlePlacement}
+      classNames={mergeFlowStepsClassNames(stepsSemanticClassNames)}
       items={dataSource.map((dataItem, index) => {
         const computedDisplayValue = (target, dataItem, context) => {
           const itemValue =
@@ -180,40 +210,50 @@ const Flow = p => {
           {}
         );
 
+        let description = renderData.description;
         if (actionList && actionList.length > 0) {
-          return Object.assign({}, renderData, {
-            description: (
-              <>
-                {renderData.description}
-                {actionList.map((item, index) => (
-                  <ActionList {...Object.assign({}, item)} key={index} />
-                ))}
-              </>
-            )
-          });
+          description = (
+            <>
+              {renderData.description}
+              {actionList.map((item, index) => (
+                <ActionList {...Object.assign({}, item)} key={index} />
+              ))}
+            </>
+          );
+        } else if (renderData.content) {
+          description = (
+            <>
+              {renderData.description}
+              <div className={classnames('step-content-wrap', style['step-content-wrap'])}>
+                <div className={classnames('step-content', style['step-content'])}>{renderData.content}</div>
+              </div>
+            </>
+          );
         }
 
-        if (renderData.content) {
-          return Object.assign({}, renderData, {
-            description: (
-              <>
-                {renderData.description}
-                <div className={classnames('step-content-wrap', style['step-content-wrap'])}>
-                  <div className={classnames('step-content', style['step-content'])}>{renderData.content}</div>
-                </div>
-              </>
-            )
-          });
-        }
-
-        return renderData;
+        const status = renderData.status || undefined;
+        return Object.assign({}, renderData, {
+          description,
+          content: description,
+          status,
+          className: classnames(status && `kne-info-flow-item-${status}`)
+        });
       })}
-      className={classnames(className, style['steps'], style[`steps-${size}`], {
-        'steps-dot': props.progressDot,
-        [style['steps-dot']]: props.progressDot
+      className={classnames(className, 'kne-info-flow', style['steps'], style[`steps-${size}`], {
+        'kne-info-flow-dot': isDot,
+        [style['steps-dot']]: isDot,
+        'kne-info-flow-vertical': stepsOrientation === 'vertical',
+        [style['steps-vertical']]: stepsOrientation === 'vertical',
+        // 仅横向 Steps + 标题在下才加；竖向默认标题在旁，勿套 label-vertical 偏移
+        'kne-info-flow-title-vertical': stepsOrientation === 'horizontal' && stepsTitlePlacement === 'vertical',
+        [style['steps-title-vertical']]: stepsOrientation === 'horizontal' && stepsTitlePlacement === 'vertical'
       })}
     />
   );
 };
 
+Flow.classNames = FLOW_STEPS_CLASS_NAMES;
+Flow.ActionList = ActionList;
+
 export default Flow;
+export { FLOW_STEPS_CLASS_NAMES, mergeFlowStepsClassNames };
