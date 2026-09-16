@@ -24,6 +24,12 @@
 | children  | ReactNode | 否  | -     | 区块内容       |
 | bordered  | boolean   | 否  | false | 是否显示额外边框样式 |
 
+#### 嵌套标题层级
+
+默认：任意 `.part` 内再出现 `.part`，内层标题为二级胶囊样式。
+
+在祖先节点或 Part 自身加上 `InfoPage.partRootClassName`（值为 `part-level-root`）后，其下 Part 标题从一级（左侧色条）重新起算；该根内部再嵌套的 Part 仍为二级胶囊。适用于 FormCreator 等嵌入外层 FormInfo Part 的场景。
+
 ### Content / InfoList
 
 通用内容展示组件，支持标签-内容的灵活布局

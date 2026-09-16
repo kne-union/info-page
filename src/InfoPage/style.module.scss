@@ -1,5 +1,48 @@
 @use '~@kne/responsive-utils/scss' as resp;
 
+// 一级标题（色条）：用于嵌套重置后恢复
+@mixin part-title-primary {
+  display: block;
+  border-radius: 0;
+  background: transparent;
+  color: var(--font-color);
+  font-size: var(--font-size-default);
+  font-weight: 600;
+  line-height: 20px;
+  padding: 0;
+  flex: none;
+  white-space: pre-wrap;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 14px;
+    background: var(--primary-color);
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-right: 8px;
+    transform: translateY(-2px);
+  }
+}
+
+// 二级标题（胶囊标签）：嵌套 Part 默认样式
+@mixin part-title-secondary {
+  display: inline-block;
+  border-radius: 12px;
+  background: var(--primary-color-06);
+  color: var(--primary-color);
+  font-size: var(--font-size-small);
+  line-height: 16px;
+  padding: 4px 8px;
+  flex: none;
+  white-space: pre-wrap;
+
+  &:before {
+    content: normal;
+  }
+}
+
 .part {
   //border: none;
   //width: 100%;
@@ -152,19 +195,7 @@
       padding-right: 0;
 
       :global(.ant-card-head-title) > .part-title {
-        display: inline-block;
-        border-radius: 12px;
-        background: var(--primary-color-06);
-        color: var(--primary-color);
-        font-size: var(--font-size-small);
-        line-height: 16px;
-        padding: 4px 8px;
-        flex: none;
-        white-space: pre-wrap;
-
-        &:before {
-          content: normal;
-        }
+        @include part-title-secondary;
       }
 
       :global(.ant-card-extra) {
@@ -177,6 +208,88 @@
       padding: 8px 0;
       white-space: pre-wrap;
       word-break: break-word;
+    }
+  }
+}
+
+// InfoPage.partRootClassName（全局类 part-level-root）：祖先或 Part 上挂载后，标题从一级重新起算；根内再嵌套仍为二级
+// 全局类名，便于业务/FormCreator 等用 className 字符串挂载，不依赖 CSS Module hash
+.part:global(.part-level-root) {
+  > :global(.ant-card-head) {
+    :global(.ant-card-head-title) > .part-title {
+      @include part-title-primary;
+    }
+  }
+
+  &.bordered > :global(.ant-card-head) {
+    .part-title:before {
+      margin-right: 20px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .part-title-sub {
+      padding-left: 24px;
+    }
+  }
+
+  &:not(.bordered) > :global(.ant-card-body) {
+    padding: 16px 0 0 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .part {
+    > :global(.ant-card-head) {
+      :global(.ant-card-head-title) > .part-title {
+        @include part-title-secondary;
+      }
+    }
+
+    &:not(.bordered) > :global(.ant-card-body) {
+      padding: 8px 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  }
+}
+
+.part :global(.part-level-root) {
+  .part {
+    > :global(.ant-card-head) {
+      :global(.ant-card-head-title) > .part-title {
+        @include part-title-primary;
+      }
+    }
+
+    &.bordered > :global(.ant-card-head) {
+      .part-title:before {
+        margin-right: 20px;
+        border-radius: 0 4px 4px 0;
+      }
+
+      .part-title-sub {
+        padding-left: 24px;
+      }
+    }
+
+    &:not(.bordered) > :global(.ant-card-body) {
+      padding: 16px 0 0 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .part {
+      > :global(.ant-card-head) {
+        :global(.ant-card-head-title) > .part-title {
+          @include part-title-secondary;
+        }
+      }
+
+      &:not(.bordered) > :global(.ant-card-body) {
+        padding: 8px 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
     }
   }
 }

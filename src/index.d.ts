@@ -210,6 +210,8 @@ export declare const computeColumnsValue: {
 export declare const InfoPage: FC<InfoPageProps> & {
   Part: FC<InfoPagePartProps>;
   Collapse: ComponentType<any>;
+  /** 挂到祖先或 Part 上，使标题从一级重新起算（根内再嵌套仍为二级胶囊） */
+  partRootClassName: 'part-level-root';
 };
 
 export declare const Content: FC<ContentProps> & {
