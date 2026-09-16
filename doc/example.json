@@ -110,6 +110,24 @@
       ]
     },
     {
+      "title": "重设一级标题",
+      "description": "InfoPage.partRootClassName：嵌入外层 Part 时把标题从一级重新起算；根内再嵌套仍为二级胶囊",
+      "code": "./part-level-root.js",
+      "scope": [
+        {
+          "name": "_InfoPage",
+          "packageName": "@kne/current-lib_info-page"
+        },
+        {
+          "packageName": "@kne/current-lib_info-page/dist/index.css"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        }
+      ]
+    },
+    {
       "title": "Modal中展示",
       "description": "展示InfoPage在Modal弹窗中的典型用法",
       "code": "./modal-example.js",
